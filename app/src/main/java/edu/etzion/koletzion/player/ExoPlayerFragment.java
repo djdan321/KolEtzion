@@ -52,7 +52,7 @@ public class ExoPlayerFragment extends Fragment {
 		
 		//bind to a view
 		playerView.setPlayer(player);
-		
+
 		// Produces DataSource instances through which media data is loaded.
 		Uri audioUri = Uri.parse(mp4VodUrl);
 		ExtractorMediaSource audioSource =
