@@ -120,6 +120,7 @@ public class RegisterFragment extends Fragment implements Button.OnClickListener
 						//todo, send user Details to server.
 						// ...
 						User.getInstance().setPassword(null);
+						//
 					}
 				});
 		
