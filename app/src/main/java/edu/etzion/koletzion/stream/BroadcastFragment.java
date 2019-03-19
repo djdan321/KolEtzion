@@ -11,7 +11,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class BroadcastFragment extends Fragment {
+public class BroadcastFragment {
 	private Retrofit retrofit;
 	private CompositeDisposable compositeDisposable;
 	
@@ -50,12 +50,12 @@ public class BroadcastFragment extends Fragment {
 				});
 	}
 	
-	
-	@Override
-	public void onDestroy() {
-		if (!compositeDisposable.isDisposed()) {
-			compositeDisposable.dispose();
-		}
-		super.onDestroy();
-	}
+	//todo ondestroy for fragment
+//	@Override
+//	public void onDestroy() {
+//		if (!compositeDisposable.isDisposed()) {
+//			compositeDisposable.dispose();
+//		}
+//		super.onDestroy();
+//	}
 }
