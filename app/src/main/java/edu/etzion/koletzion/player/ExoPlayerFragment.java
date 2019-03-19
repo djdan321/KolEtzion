@@ -1,7 +1,6 @@
 package edu.etzion.koletzion.player;
 
 
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,8 +13,6 @@ import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 
-import java.io.IOException;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -27,6 +24,7 @@ public class ExoPlayerFragment extends Fragment {
 	PlayerView playerView;
 	String mp4VodUrl;
 	final static String APP_PATH = "http://be.repoai.com/WebRTCAppEE/";
+	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,14 +43,13 @@ public class ExoPlayerFragment extends Fragment {
 	}
 	
 	
-	
 	private void initPlayer(String mp4VodUrl) {
 		//instantiate
 		player = ExoPlayerFactory.newSimpleInstance(getContext());
 		
 		//bind to a view
 		playerView.setPlayer(player);
-
+		
 		// Produces DataSource instances through which media data is loaded.
 		Uri audioUri = Uri.parse(mp4VodUrl);
 		ExtractorMediaSource audioSource =
