@@ -20,7 +20,7 @@ import edu.etzion.koletzion.R;
  */
 public class PersonalAreaFragment extends Fragment {
 
-
+    //todo BUG with returning to this fragment after launch
     public PersonalAreaFragment() {
         // Required empty public constructor
     }
