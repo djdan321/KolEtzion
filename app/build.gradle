@@ -30,6 +30,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
     implementation 'com.google.android.material:material:1.0.0-beta01'
     implementation 'com.google.android.gms:play-services-auth:12.0.1'
+    implementation 'com.google.firebase:firebase-core:16.0.1'
     implementation 'com.google.firebase:firebase-auth:16.0.3'
     implementation 'com.google.firebase:firebase-messaging:12.0.1'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
@@ -46,3 +47,4 @@ dependencies {
 
 
 }
+apply plugin: 'com.google.gms.google-services'
