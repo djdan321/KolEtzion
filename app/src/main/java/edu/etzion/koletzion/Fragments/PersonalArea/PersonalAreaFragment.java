@@ -15,9 +15,7 @@ import edu.etzion.koletzion.Adapters.CustomViewPager;
 import edu.etzion.koletzion.Adapters.ViewPagerAdapter;
 import edu.etzion.koletzion.R;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class PersonalAreaFragment extends Fragment {
 
     //todo BUG with returning to this fragment after launch
