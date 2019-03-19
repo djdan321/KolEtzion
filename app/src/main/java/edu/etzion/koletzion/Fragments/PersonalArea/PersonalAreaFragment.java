@@ -1,4 +1,4 @@
-package edu.etzion.koletzion.Fragments;
+package edu.etzion.koletzion.Fragments.PersonalArea;
 
 
 import android.os.Bundle;
@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.viewpager.widget.ViewPager;
 import edu.etzion.koletzion.Adapters.CustomViewPager;
 import edu.etzion.koletzion.Adapters.ViewPagerAdapter;
 import edu.etzion.koletzion.R;

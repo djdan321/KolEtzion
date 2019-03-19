@@ -12,8 +12,9 @@ import androidx.appcompat.widget.Toolbar;
 
 import androidx.viewpager.widget.ViewPager;
 import edu.etzion.koletzion.Adapters.ViewPagerAdapter;
+import edu.etzion.koletzion.Fragments.Feed.FeedFragment;
 import edu.etzion.koletzion.Fragments.SuggestContentFragment;
-import edu.etzion.koletzion.Fragments.PersonalAreaFragment;
+import edu.etzion.koletzion.Fragments.PersonalArea.PersonalAreaFragment;
 import edu.etzion.koletzion.player.ExoPlayerFragment;
 
 import android.view.Menu;
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity
         ViewPagerAdapter vpMainAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         vpMainAdapter.addFragment(new PersonalAreaFragment(),"PersonalAreaFragment");
         vpMainAdapter.addFragment(new SuggestContentFragment(), "SuggestContentFragment");
+        vpMainAdapter.addFragment(new FeedFragment(),"FeedFragment");
         vpMain.setAdapter(vpMainAdapter);
     }
 
