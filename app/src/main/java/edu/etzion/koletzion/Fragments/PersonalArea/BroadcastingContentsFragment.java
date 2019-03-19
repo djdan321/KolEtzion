@@ -1,4 +1,4 @@
-package edu.etzion.koletzion.Fragments;
+package edu.etzion.koletzion.Fragments.PersonalArea;
 
 
 import android.os.Bundle;
@@ -13,12 +13,11 @@ import edu.etzion.koletzion.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * TODO create a recyclerviewer<Post>  > feed for the posts that the user favored.
  */
-public class UserAreaFragment extends Fragment {
+public class BroadcastingContentsFragment extends Fragment {
 
 
-    public UserAreaFragment() {
+    public BroadcastingContentsFragment() {
         // Required empty public constructor
     }
 
@@ -27,7 +26,7 @@ public class UserAreaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_area, container, false);
+        return inflater.inflate(R.layout.fragment_broadcasting_contents, container, false);
     }
 
 }

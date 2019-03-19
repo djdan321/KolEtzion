@@ -1,4 +1,4 @@
-package edu.etzion.koletzion.Fragments;
+package edu.etzion.koletzion.Fragments.PersonalArea;
 
 
 import android.os.Bundle;

@@ -13,7 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 import edu.etzion.koletzion.Adapters.ViewPagerAdapter;
 import edu.etzion.koletzion.Fragments.SuggestContentFragment;
-import edu.etzion.koletzion.Fragments.PersonalAreaFragment;
+import edu.etzion.koletzion.Fragments.PersonalArea.PersonalAreaFragment;
 import edu.etzion.koletzion.player.ExoPlayerFragment;
 
 import android.view.Menu;

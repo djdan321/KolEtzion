@@ -1,4 +1,4 @@
-package edu.etzion.koletzion.Fragments;
+package edu.etzion.koletzion.Fragments.PersonalArea;
 
 
 import android.os.Bundle;
@@ -19,8 +19,6 @@ import edu.etzion.koletzion.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * TODO create tab layout between two fragments:
- * BroadcasterProfile | ContentsToBroadcast
  *
  */
 public class BroadcasterAreaFragment extends Fragment {
@@ -40,6 +38,11 @@ public class BroadcasterAreaFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        /*
+         * tab layout between two fragments:
+         * BroadcasterProfile | ContentsToBroadcast
+         */
+
         TabLayout tlBroadCaster = view.findViewById(R.id.tlBroadCaster);
         ViewPager vpBroadCaster = view.findViewById(R.id.vpBroadCaster);
         ViewPagerAdapter vpBroadCasterAdapter = new ViewPagerAdapter(getFragmentManager());
