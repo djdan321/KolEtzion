@@ -3,7 +3,6 @@ package edu.etzion.koletzion;
 import android.os.Bundle;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.FirebaseApp;
 
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -16,8 +15,6 @@ import edu.etzion.koletzion.Adapters.ViewPagerAdapter;
 import edu.etzion.koletzion.Fragments.Feed.FeedFragment;
 import edu.etzion.koletzion.Fragments.SuggestContentFragment;
 import edu.etzion.koletzion.Fragments.PersonalArea.PersonalAreaFragment;
-import edu.etzion.koletzion.authentication.LoginFragment;
-import edu.etzion.koletzion.authentication.RegisterFragment;
 import edu.etzion.koletzion.player.ExoPlayerFragment;
 
 import android.view.Menu;
@@ -37,6 +34,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         //method that includes all the FindViewById
 		findviews();
+
         setSupportActionBar(toolbar);
 
 		getSupportFragmentManager().beginTransaction().replace(frame.getId(),
@@ -62,8 +60,6 @@ public class MainActivity extends AppCompatActivity
         vpMainAdapter.addFragment(new PersonalAreaFragment(),"PersonalAreaFragment");
         vpMainAdapter.addFragment(new SuggestContentFragment(), "SuggestContentFragment");
         vpMainAdapter.addFragment(new FeedFragment(),"FeedFragment");
-        vpMainAdapter.addFragment(new RegisterFragment(),"RegisterFragment");
-        vpMainAdapter.addFragment(new LoginFragment(),"LoginFragment");
         vpMain.setAdapter(vpMainAdapter);
     }
 
