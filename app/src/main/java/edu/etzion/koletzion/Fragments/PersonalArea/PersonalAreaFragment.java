@@ -51,7 +51,7 @@ public class PersonalAreaFragment extends Fragment {
         //if(user instanceOf User)
 //        vpProfileType.setCurrentItem(1);
 //        if(user instanceof Broadcaster)
-        vpProfileType.setCurrentItem(0);
+//        vpProfileType.setCurrentItem(0);
 
     }
 }
