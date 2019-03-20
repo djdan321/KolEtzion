@@ -10,14 +10,13 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 import edu.etzion.koletzion.Adapters.ViewPagerAdapter;
 import edu.etzion.koletzion.Fragments.Feed.FeedFragment;
 import edu.etzion.koletzion.Fragments.SuggestContentFragment;
 import edu.etzion.koletzion.Fragments.PersonalArea.PersonalAreaFragment;
 import edu.etzion.koletzion.player.ExoPlayerFragment;
-import edu.etzion.koletzion.player.VodDataSource;
-import edu.etzion.koletzion.player.VodListTask;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,7 +24,7 @@ import android.widget.FrameLayout;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    ExoPlayerFragment playerFragment;
     FrameLayout frame;
     Toolbar toolbar;
     ViewPager vpMain;
@@ -38,10 +37,10 @@ public class MainActivity extends AppCompatActivity
         findviews();
         
         setSupportActionBar(toolbar);
-
+        
 		getSupportFragmentManager().beginTransaction().replace(frame.getId(),
-				new ExoPlayerFragment()).commit();
-
+				playerFragment).commit();
+        
 
         ViewPagerAdapterMainActivity();
 
@@ -52,7 +51,7 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -67,8 +66,9 @@ public class MainActivity extends AppCompatActivity
 
     private void findviews() {
         frame = findViewById(R.id.frame);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         vpMain = findViewById(R.id.vpMain);
+        playerFragment = new ExoPlayerFragment();
     }
 
     @Override
@@ -127,6 +127,10 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    
+    public void initPlayer(String filePath){
+        playerFragment.initPlayer(filePath);
     }
 }
 
