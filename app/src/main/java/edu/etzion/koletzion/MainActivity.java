@@ -16,6 +16,8 @@ import edu.etzion.koletzion.Fragments.Feed.FeedFragment;
 import edu.etzion.koletzion.Fragments.SuggestContentFragment;
 import edu.etzion.koletzion.Fragments.PersonalArea.PersonalAreaFragment;
 import edu.etzion.koletzion.player.ExoPlayerFragment;
+import edu.etzion.koletzion.player.VodDataSource;
+import edu.etzion.koletzion.player.VodListTask;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,8 +35,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //method that includes all the FindViewById
-		findviews();
-
+        findviews();
+        
         setSupportActionBar(toolbar);
 
 		getSupportFragmentManager().beginTransaction().replace(frame.getId(),

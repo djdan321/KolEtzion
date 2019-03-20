@@ -8,14 +8,14 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static edu.etzion.koletzion.player.ExoPlayerFragment.APP_PATH;
+
 public class VodDataSource {
 	public static List<Vod> getVodList(){
-		List<Vod> vodList = new ArrayList<>();
 		
 		//instantiate retrofit
 		Retrofit retrofit = new Retrofit.Builder()
-				//todo: set url
-				.baseUrl("")
+				.baseUrl(APP_PATH)
         .addConverterFactory(GsonConverterFactory.create())
 				.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
 				.build();
@@ -23,9 +23,7 @@ public class VodDataSource {
 		// create an instance of the ApiService
 		VodApiService apiService = retrofit.create(VodApiService.class);
 	// make a request by calling the corresponding method
-		Single<Vod> vod = apiService.getVodData(0);
-		
-		
-		return vodList;
+		Single<List<Vod>> vods = apiService.getVodData(0, 50);
+		return null;
 	}
 }

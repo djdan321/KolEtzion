@@ -47,7 +47,7 @@ public class BroadcasterAreaFragment extends Fragment {
         TabLayout tlBroadCaster = view.findViewById(R.id.tlBroadCaster);
         CustomViewPager vpBroadCaster = view.findViewById(R.id.vpBroadCaster);
         vpBroadCaster.setPagingEnabled(false);
-        ViewPagerAdapter vpBroadCasterAdapter = new ViewPagerAdapter(getFragmentManager());
+        ViewPagerAdapter vpBroadCasterAdapter = new ViewPagerAdapter(getChildFragmentManager());
         vpBroadCasterAdapter.addFragment(new BroadcasterProfileFragment(),"הפיד שלי");
         vpBroadCasterAdapter.addFragment(new BroadcastingContentsFragment(),"תכנים לשידור");
         vpBroadCaster.setAdapter(vpBroadCasterAdapter);
