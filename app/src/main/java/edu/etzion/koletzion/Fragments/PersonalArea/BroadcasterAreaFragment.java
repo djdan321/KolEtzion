@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.viewpager.widget.ViewPager;
+import edu.etzion.koletzion.Adapters.CustomViewPager;
 import edu.etzion.koletzion.Adapters.ViewPagerAdapter;
 import edu.etzion.koletzion.R;
 
@@ -44,8 +45,9 @@ public class BroadcasterAreaFragment extends Fragment {
          */
 
         TabLayout tlBroadCaster = view.findViewById(R.id.tlBroadCaster);
-        ViewPager vpBroadCaster = view.findViewById(R.id.vpBroadCaster);
-        ViewPagerAdapter vpBroadCasterAdapter = new ViewPagerAdapter(getFragmentManager());
+        CustomViewPager vpBroadCaster = view.findViewById(R.id.vpBroadCaster);
+        vpBroadCaster.setPagingEnabled(false);
+        ViewPagerAdapter vpBroadCasterAdapter = new ViewPagerAdapter(getChildFragmentManager());
         vpBroadCasterAdapter.addFragment(new BroadcasterProfileFragment(),"הפיד שלי");
         vpBroadCasterAdapter.addFragment(new BroadcastingContentsFragment(),"תכנים לשידור");
         vpBroadCaster.setAdapter(vpBroadCasterAdapter);

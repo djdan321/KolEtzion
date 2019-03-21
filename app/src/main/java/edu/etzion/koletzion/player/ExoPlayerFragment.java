@@ -22,8 +22,8 @@ import edu.etzion.koletzion.R;
 public class ExoPlayerFragment extends Fragment {
 	SimpleExoPlayer player;
 	PlayerView playerView;
-	String mp4VodUrl;
-	final static String APP_PATH = "http://be.repoai.com/WebRTCAppEE/";
+	String filePath;
+	final static String APP_PATH = "http://be.repoai.com:5080/WebRTCAppEE/";
 	
 	
 	@Override
@@ -37,26 +37,28 @@ public class ExoPlayerFragment extends Fragment {
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		//class level instances
 		playerView = view.findViewById(R.id.pvPlayer);
-		mp4VodUrl = APP_PATH + "streams/home/תוכנית_הכתבות_והראיונות_של_תלמידי_ביהס_עציון_בית_אשקטיין.mp4";
-		initPlayer(mp4VodUrl);
+		
+		
 		super.onViewCreated(view, savedInstanceState);
 	}
 	
 	
-	private void initPlayer(String mp4VodUrl) {
-		//instantiate
+	public void initPlayer(String filePath) {
+		//todo check how to swap the 3 to player.STATE_READY
+		if(player != null && player.getPlaybackState() == 3) player.stop(true);
+		//instantiate exoplayer
 		player = ExoPlayerFactory.newSimpleInstance(getContext());
 		
-		//bind to a view
+		//bind exoplayer to a view
 		playerView.setPlayer(player);
-		
 		// Produces DataSource instances through which media data is loaded.
-		Uri audioUri = Uri.parse(mp4VodUrl);
+		Uri audioUri = Uri.parse(APP_PATH + filePath);
 		ExtractorMediaSource audioSource =
 				new ExtractorMediaSource.Factory(
 						new DefaultHttpDataSourceFactory("exoplayer-codelab")).
 						createMediaSource(audioUri);
 		// Prepare the player with the source.
 		player.prepare(audioSource);
+		player.setPlayWhenReady(true);
 	}
 }

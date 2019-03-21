@@ -17,40 +17,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import edu.etzion.koletzion.Adapters.RecyclerViewAdapter;
 import edu.etzion.koletzion.R;
+import edu.etzion.koletzion.player.VodDataSource;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class FeedFragment extends Fragment {
-
-    private ArrayList<String> headers;
-    private ArrayList<String> descriptions;
-    public FeedFragment() {
-        headers= new ArrayList<>();
-        descriptions= new ArrayList<>();
-        headers.add("1");
-        headers.add("2");
-        headers.add("3");
-        headers.add("4");
-        headers.add("5");
-        headers.add("6");
-        headers.add("7");
-        headers.add("8");
-        headers.add("9");
-
-        descriptions.add("aaaaaaaaaaaaa");
-        descriptions.add("aaaaaaaaaaaaaaaaaaaaaaaaa");
-        descriptions.add("bbbbbbbbbbb");
-        descriptions.add("aaaaaaaa   aaaaaaaaaaaaa");
-        descriptions.add("aaaaaaaaaaatetasrs    testt ta");
-        descriptions.add("aaa63463476865856756aaa");
-        descriptions.add("aaaaa tetre   earear   eraa");
-        descriptions.add("aaaaaaaa5466666666666654");
-        descriptions.add("aaartgbfhfghhhhhhhhhhhhh");
-        // Required empty public constructor
-    }
-
-
+    
+    RecyclerView rv;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -61,10 +35,7 @@ public class FeedFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        RecyclerView recyclerView =view.findViewById(R.id.rvPost);
-        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(headers,descriptions,getContext());
-        recyclerView.setAdapter(recyclerViewAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
+        rv = view.findViewById(R.id.rvPost);
+        new VodDataSource(rv).execute();
     }
 }
