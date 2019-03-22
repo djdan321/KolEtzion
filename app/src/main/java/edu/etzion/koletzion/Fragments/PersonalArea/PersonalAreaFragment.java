@@ -15,9 +15,7 @@ import edu.etzion.koletzion.Adapters.CustomViewPager;
 import edu.etzion.koletzion.Adapters.ViewPagerAdapter;
 import edu.etzion.koletzion.R;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class PersonalAreaFragment extends Fragment {
 
     //todo BUG with returning to this fragment after launch
@@ -45,7 +43,7 @@ public class PersonalAreaFragment extends Fragment {
         // the displayed fragment is depend on the Type of the user that connected (Regular/BroadCaster)
         CustomViewPager vpProfileType = view.findViewById(R.id.vpProfileType);
         vpProfileType.setPagingEnabled(false);
-        ViewPagerAdapter vpProfileTypeAdapter = new ViewPagerAdapter(getFragmentManager());
+        ViewPagerAdapter vpProfileTypeAdapter = new ViewPagerAdapter(getChildFragmentManager());
         vpProfileTypeAdapter.addFragment(new BroadcasterAreaFragment(),"BroadCasterAreaFragment"); //item 0
         vpProfileTypeAdapter.addFragment(new UserAreaFragment(),"UserAreaFragment");// item 1
         vpProfileType.setAdapter(vpProfileTypeAdapter);
