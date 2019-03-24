@@ -1,6 +1,5 @@
 package edu.etzion.koletzion.player;
 
-import android.content.Context;
 import android.os.AsyncTask;
 
 import org.json.JSONArray;
@@ -11,20 +10,13 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import edu.etzion.koletzion.Adapters.RecyclerViewAdapter;
-import io.reactivex.Single;
+import edu.etzion.koletzion.Adapters.rvFeedAdapter;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-import static edu.etzion.koletzion.player.ExoPlayerFragment.APP_PATH;
 
 public class VodDataSource extends AsyncTask<Void, Void, List<Vod>> {
 	private WeakReference<RecyclerView> rv;
@@ -84,6 +76,6 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Vod>> {
 		//changing feed fragment recyclerview
 		RecyclerView rv = this.rv.get();
 		rv.setLayoutManager(new LinearLayoutManager(this.rv.get().getContext()));
-		rv.setAdapter(new RecyclerViewAdapter(rv.getContext(), vods));
+		rv.setAdapter(new rvFeedAdapter(rv.getContext(), vods));
 	}
 }
