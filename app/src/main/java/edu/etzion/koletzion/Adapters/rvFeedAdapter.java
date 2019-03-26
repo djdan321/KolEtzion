@@ -18,11 +18,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import edu.etzion.koletzion.player.Vod;
 
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder> {
     private List<Vod> vods;
     private Context context;
 
-    public RecyclerViewAdapter(Context context, List<Vod> vods) {
+    public rvFeedAdapter(Context context, List<Vod> vods) {
         this.context = context;
         this.vods = vods;
     }
