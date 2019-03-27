@@ -16,6 +16,7 @@ import edu.etzion.koletzion.Fragments.BroadcastersListFragment;
 import edu.etzion.koletzion.Fragments.FeedFragment;
 import edu.etzion.koletzion.Fragments.SuggestContentFragment;
 import edu.etzion.koletzion.Fragments.PersonalAreaFragment;
+import edu.etzion.koletzion.models.Profile;
 import edu.etzion.koletzion.player.ExoPlayerFragment;
 
 import android.view.Menu;
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity
     ExoPlayerFragment playerFragment;
     FrameLayout frame;
     Toolbar toolbar;
-    ViewPager vpMain;
+    private static ViewPager vpMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +59,19 @@ public class MainActivity extends AppCompatActivity
     private void ViewPagerAdapterMainActivity() {
         //this method includes the viewpager adapter that includes all the mainactivity fragments.
         ViewPagerAdapter vpMainAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        vpMainAdapter.addFragment(new PersonalAreaFragment(),"PersonalAreaFragment");
+        vpMainAdapter.addFragment(PersonalAreaFragment.newInstance(/*todo get from firebsae*/
+        new Profile("yair", "frid")),"PersonalAreaFragment");
         vpMainAdapter.addFragment(new BroadcastersListFragment(), "BroadcastersListFragment");
         vpMainAdapter.addFragment(new FeedFragment(),"FeedFragment");
 
         vpMain.setAdapter(vpMainAdapter);
         vpMain.setCurrentItem(2);
+    }
+
+    public static void test(int id){
+
+        vpMain.setCurrentItem(2,false);
+
     }
 
     private void findviews() {
