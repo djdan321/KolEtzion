@@ -49,7 +49,7 @@ public class LoginFragment extends Fragment {
 						Log.d(TAG, "signInWithEmail:success");
 						//todo: send to MainActivity
 						//handle getting UserCredentials from server;
-						User.getInstance().setCredentials(email, "nameFromServer"//todo: get name from server
+						User.getInstance().setCredentials(email, "m", ""//todo: get name from server
 								,password);
 					} else {
 						// If sign in fails, display a message to the user.

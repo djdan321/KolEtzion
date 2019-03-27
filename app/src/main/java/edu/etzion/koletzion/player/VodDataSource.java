@@ -14,21 +14,29 @@ import java.util.List;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import edu.etzion.koletzion.Adapters.rvFeedAdapter;
+import edu.etzion.koletzion.models.Profile;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
 public class VodDataSource extends AsyncTask<Void, Void, List<Vod>> {
 	private WeakReference<RecyclerView> rv;
+	private Profile profile;
+	
+	public VodDataSource(RecyclerView rv, Profile profile) {
+		this.rv = new WeakReference<>(rv);
+		this.profile = profile;
+	}
+	
 	public VodDataSource(RecyclerView rv) {
 		this.rv = new WeakReference<>(rv);
 	}
 	
-	private List<Vod> getVodList(){
+	private List<Vod> getVodList() {
 		List<Vod> vods = new ArrayList<>();
 		String link = "http://be.repoai.com:5080/WebRTCAppEE/rest/broadcast/getVodList/0/100";
 		OkHttpClient client = new OkHttpClient();
-		try(Response response = client.newCall(new Request.Builder().url(link).build())
+		try (Response response = client.newCall(new Request.Builder().url(link).build())
 				.execute()) {
 			if (response.body() == null) return vods;
 			String json = response.body().string();
@@ -67,6 +75,7 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Vod>> {
 	@Override
 	protected List<Vod> doInBackground(Void... voids) {
 		List<Vod> vods = new ArrayList<>();
+		//todo if profile instanceof broadcaster get his arraylist.
 		vods = getVodList();
 		return vods;
 	}
