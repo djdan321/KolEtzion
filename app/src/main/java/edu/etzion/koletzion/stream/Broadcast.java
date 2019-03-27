@@ -37,7 +37,7 @@ public class Broadcast {
 	private Integer duration;
 	@SerializedName("endPointList")
 	@Expose
-	private List<EndPointList> endPointList = null;
+	private List<EndPointList> endPointList;
 	@SerializedName("publicStream")
 	@Expose
 	private Boolean publicStream;
