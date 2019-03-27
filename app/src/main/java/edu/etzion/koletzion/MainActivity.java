@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity
     ExoPlayerFragment playerFragment;
     FrameLayout frame;
     Toolbar toolbar;
-    ViewPager vpMain;
+    private static ViewPager vpMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +64,12 @@ public class MainActivity extends AppCompatActivity
 
         vpMain.setAdapter(vpMainAdapter);
         vpMain.setCurrentItem(2);
+    }
+
+    public static void test(int id){
+
+        vpMain.setCurrentItem(2,false);
+
     }
 
     private void findviews() {

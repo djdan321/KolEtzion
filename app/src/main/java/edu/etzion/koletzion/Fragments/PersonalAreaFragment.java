@@ -20,9 +20,23 @@ import edu.etzion.koletzion.player.VodDataSource;
 
 public class PersonalAreaFragment extends Fragment {
     RecyclerView rv;
-    //todo BUG with returning to this fragment after launch
-    public PersonalAreaFragment() {
-        // Required empty public constructor
+    //todo put profile through to set fields
+    //if no profile, set user profile.
+    public static PersonalAreaFragment newInstance() {
+
+        Bundle args = new Bundle();
+        //user.getprofile
+        PersonalAreaFragment fragment = new PersonalAreaFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+    public static PersonalAreaFragment newInstance(Profile p) {
+
+        Bundle args = new Bundle();
+
+        PersonalAreaFragment fragment = new PersonalAreaFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
 
