@@ -1,298 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--tools:context=".Fragments.PersonalArea.PersonalAreaFragment">-->
-
-    <!--<ImageView-->
-        <!--android:id="@+id/imagePersonalArea"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginTop="16dp"-->
-        <!--android:layout_marginEnd="16dp"-->
-        <!--android:layout_marginBottom="8dp" />-->
-
-    <!--<TextView-->
-        <!--android:id="@+id/tvPersonalArea"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginStart="8dp"-->
-        <!--android:layout_marginEnd="8dp"-->
-        <!--android:text="דניאל גדג"-->
-        <!--android:textSize="36sp" />-->
-
-    <!--<androidx.constraintlayout.widget.Guideline-->
-        <!--android:id="@+id/guideline"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content" />-->
-
-    <!--<edu.etzion.koletzion.Adapters.CustomViewPager-->
-        <!--android:id="@+id/vpProfileType"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="0dp" />-->
-<!--</RelativeLayout>-->
-
-
-
-
-
-
-<!-- -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
-
-
-
-
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-    <!--<android.support.design.widget.TabLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--app:tabGravity="fill"-->
-    <!--app:tabMode="fixed"-->
-    <!--android:id="@+id/MainTab"-->
-    <!--app:tabTextColor="@color/white"-->
-    <!--android:background="@drawable/grad3"-->
-    <!--app:tabIndicatorColor="@color/gradStart"/>-->
+    tools:context=".Fragments.PersonalAreaFragment">
 
-    <!--<android.support.v4.view.ViewPager-->
-    <!--android:layout_below="@id/MainTab"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:id="@+id/viewPagerMain_id">-->
+    <ImageView
+        android:id="@+id/imagePersonalArea"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/tvPersonalArea"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-
-    <!--</android.support.v4.view.ViewPager>-->
-
-
-
-
-
-    <!--  <LinearLayout
-          android:id="@+id/tabBar"
-          android:layout_below="@id/MainTab"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:orientation="horizontal">
-          //START
-
-          <RelativeLayout
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_gravity="center"
-              android:layout_weight="1"
-              android:paddingTop="5dp"
-              android:paddingBottom="5dp"
-              android:background="@drawable/grad3"
-              android:gravity="center">
-              <LinearLayout
-                  android:layout_width="wrap_content"
-                  android:orientation="vertical"
-                  android:gravity="center_horizontal"
-                  android:layout_height="wrap_content">
-
-
-                  <TextView
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                     android:background="@drawable/ic_home"
-
-                      android:textColor="@color/white"
-                      android:fontFamily="sans-serif-light"/>
-                  <TextView
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text=" דף הבית"
-                      android:textAllCaps="true"
-                      android:textSize="19sp"
-                      android:textColor="@color/white"
-                      android:fontFamily="sans-serif-light"/>
-              </LinearLayout>
-              //END
-          </RelativeLayout>
-          <RelativeLayout
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_gravity="center"
-              android:layout_weight="1"
-              android:paddingTop="5dp"
-              android:paddingBottom="5dp"
-              android:background="@drawable/grad3"
-              android:gravity="center">
-              <LinearLayout
-                  android:layout_width="wrap_content"
-                  android:orientation="vertical"
-                  android:gravity="center_horizontal"
-                  android:layout_height="wrap_content">
-
-
-                  <TextView
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="הצעת "
-                      android:textSize="25sp"
-                      android:textColor="@color/white"
-                      android:fontFamily="sans-serif-light"/>
-                  <TextView
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="תוכן"
-                      android:textAllCaps="true"
-                      android:textSize="19sp"
-                      android:textColor="@color/white"
-                      android:fontFamily="sans-serif-light"/>
-              </LinearLayout>
-              //END
-          </RelativeLayout>
-          <RelativeLayout
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_gravity="center"
-              android:layout_weight="1"
-              android:paddingTop="5dp"
-              android:paddingBottom="5dp"
-              android:background="@drawable/grad3"
-              android:gravity="center">
-              <LinearLayout
-                  android:layout_width="wrap_content"
-                  android:orientation="vertical"
-                  android:gravity="center_horizontal"
-                  android:layout_height="wrap_content">
-
-
-                  <TextView
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="לוח"
-                      android:textSize="25sp"
-                      android:textColor="@color/white"
-                      android:fontFamily="sans-serif-light"
-                      />
-                  <TextView
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="שידורים"
-                      android:textAllCaps="true"
-                      android:textSize="19sp"
-                      android:textColor="@color/white"
-                      android:fontFamily="sans-serif-light"/>
-              </LinearLayout>
-
-          </RelativeLayout>
-          <RelativeLayout
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_gravity="center"
-              android:layout_weight="1"
-              android:paddingTop="5dp"
-              android:paddingBottom="5dp"
-              android:background="@drawable/grad3"
-              android:gravity="center">
-              <LinearLayout
-                  android:layout_width="wrap_content"
-                  android:orientation="vertical"
-                  android:gravity="center"
-                  android:layout_height="wrap_content">
-
-
-                  <TextView
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:gravity="center_vertical"
-                      android:textSize="25sp"
-
-                      android:textColor="@color/white"
-                      android:fontFamily="sans-serif-light"
-                      />
-                  <TextView
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-
-                      android:textAllCaps="true"
-                      android:text="אודות"
-                      android:textSize="19sp"
-                      android:textColor="@color/white"
-                      android:fontFamily="sans-serif-light"/>
-              </LinearLayout>-->
-
-
-
-    <RelativeLayout
-        android:id="@+id/rellay"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tvPersonalArea"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/grad"
-        android:paddingBottom="20dp">
+        android:layout_marginBottom="16dp"
+        android:text="דניאל גדג"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="@+id/imagePersonalArea"
+        app:layout_constraintStart_toStartOf="@+id/imagePersonalArea" />
 
-        <RelativeLayout
-            android:id="@+id/imgUser"
-            android:layout_marginTop="20dp"
-            android:layout_width="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_height="wrap_content"
-            android:background="@drawable/circle_border">
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
 
-            <ImageView
-                android:id="@+id/imagePersonalArea"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_marginStart="9dp"
-                android:layout_marginTop="9dp"
-                android:layout_marginEnd="9dp"
-                android:layout_marginBottom="9dp"
-                android:adjustViewBounds="true"
-                android:background="@drawable/circle"
-                android:padding="3dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/dude" />
-        </RelativeLayout>
+    <TextView
+        android:id="@+id/tvProfileType"
+        android:layout_width="0dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="הפרופיל שלי"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
 
-        <TextView
-            android:id="@+id/tvPersonalArea"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/imgUser"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="15sp"
-            android:fontFamily="sans-serif-light"
-            android:text="General Aladin"
-            android:textColor="@color/white"
-            android:textSize="32dp" />
-
-
-
-    </RelativeLayout>
-
-
-
-
-
-
-    <!--<android.support.design.widget.TabLayout-->
-    <!--android:layout_below="@id/rellay"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--app:tabGravity="fill"-->
-    <!--app:tabMode="fixed"-->
-    <!--android:id="@+id/tabLayout"-->
-    <!--app:tabTextColor="@color/white"-->
-    <!--app:tabIndicatorColor="@color/black"-->
-    <!--android:background="@drawable/grad3"/>-->
-
-    <edu.etzion.koletzion.Adapters.CustomViewPager
-        android:id="@+id/vpProfileType"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/rellay">
-
-
-    </edu.etzion.koletzion.Adapters.CustomViewPager>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvProfileType"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvProfileType" />
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 

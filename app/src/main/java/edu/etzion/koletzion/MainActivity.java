@@ -3,7 +3,6 @@ package edu.etzion.koletzion;
 import android.os.Bundle;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.FirebaseApp;
 
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -13,11 +12,10 @@ import androidx.appcompat.widget.Toolbar;
 
 import androidx.viewpager.widget.ViewPager;
 import edu.etzion.koletzion.Adapters.ViewPagerAdapter;
-import edu.etzion.koletzion.Fragments.Feed.FeedFragment;
+import edu.etzion.koletzion.Fragments.BroadcastersListFragment;
+import edu.etzion.koletzion.Fragments.FeedFragment;
 import edu.etzion.koletzion.Fragments.SuggestContentFragment;
-import edu.etzion.koletzion.Fragments.PersonalArea.PersonalAreaFragment;
-import edu.etzion.koletzion.authentication.LoginFragment;
-import edu.etzion.koletzion.authentication.RegisterFragment;
+import edu.etzion.koletzion.Fragments.PersonalAreaFragment;
 import edu.etzion.koletzion.player.ExoPlayerFragment;
 
 import android.view.Menu;
@@ -26,22 +24,23 @@ import android.widget.FrameLayout;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    ExoPlayerFragment playerFragment;
     FrameLayout frame;
     Toolbar toolbar;
-    ViewPager vpMain;
+    private static ViewPager vpMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //method that includes all the FindViewById
-		findviews();
+        findviews();
+        
         setSupportActionBar(toolbar);
-
+        
 		getSupportFragmentManager().beginTransaction().replace(frame.getId(),
-				new ExoPlayerFragment()).commit();
-
+				playerFragment).commit();
+        
 
         ViewPagerAdapterMainActivity();
 
@@ -52,7 +51,7 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -60,17 +59,24 @@ public class MainActivity extends AppCompatActivity
         //this method includes the viewpager adapter that includes all the mainactivity fragments.
         ViewPagerAdapter vpMainAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         vpMainAdapter.addFragment(new PersonalAreaFragment(),"PersonalAreaFragment");
-        vpMainAdapter.addFragment(new SuggestContentFragment(), "SuggestContentFragment");
+        vpMainAdapter.addFragment(new BroadcastersListFragment(), "BroadcastersListFragment");
         vpMainAdapter.addFragment(new FeedFragment(),"FeedFragment");
-        vpMainAdapter.addFragment(new RegisterFragment(),"RegisterFragment");
-        vpMainAdapter.addFragment(new LoginFragment(),"LoginFragment");
+
         vpMain.setAdapter(vpMainAdapter);
+        vpMain.setCurrentItem(2);
+    }
+
+    public static void test(int id){
+
+        vpMain.setCurrentItem(2,false);
+
     }
 
     private void findviews() {
         frame = findViewById(R.id.frame);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         vpMain = findViewById(R.id.vpMain);
+        playerFragment = new ExoPlayerFragment();
     }
 
     @Override
@@ -129,6 +135,10 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    
+    public void initPlayer(String filePath){
+        playerFragment.initPlayer(filePath);
     }
 }
 

@@ -7,25 +7,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
+import edu.etzion.koletzion.MainActivity;
 import edu.etzion.koletzion.R;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+import edu.etzion.koletzion.player.Vod;
 
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
-    ArrayList<String> headers = new ArrayList<>();
-    ArrayList<String> descriptions = new ArrayList<>();
-    Context mContext;
+public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder> {
+    private List<Vod> vods;
+    private Context context;
 
-    public RecyclerViewAdapter(ArrayList<String> headers, ArrayList<String> descriptions, Context mContext) {
-        this.headers = headers;
-        this.descriptions = descriptions;
-        this.mContext = mContext;
+    public rvFeedAdapter(Context context, List<Vod> vods) {
+        this.context = context;
+        this.vods = vods;
     }
 
     @NonNull
@@ -38,19 +37,23 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.tvPostHeader.setText(headers.get(position));
-        holder.tvPostDescription.setText(descriptions.get(position));
+        if (vods == null || vods.size() == 0) return;
+        String name = vods.get(position).getVodName().replaceAll("_", " ");
+        name = name.substring(0, name.length()-4);
+        holder.tvPostHeader.setText(name);
+        holder.tvPostDescription.setText("TEMP: " + vods.get(position).getStreamId());
         holder.imagePostPlayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, headers.get(position), Toast.LENGTH_SHORT).show();
+                if (context instanceof MainActivity) ((MainActivity) context)
+                        .initPlayer(vods.get(position).getFilePath());
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return headers.size();
+        return vods.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
