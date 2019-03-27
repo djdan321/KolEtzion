@@ -48,6 +48,8 @@ dependencies {
 
     implementation 'de.hdodenhof:circleimageview:3.0.0'
 
+    implementation 'com.cloudant:cloudant-client:2.9.0'
+    implementation 'com.cloudant:cloudant-sync-datastore-android:latest.release'
 
 }
 apply plugin: 'com.google.gms.google-services'

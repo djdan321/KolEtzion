@@ -17,6 +17,7 @@ import edu.etzion.koletzion.Fragments.FeedFragment;
 import edu.etzion.koletzion.Fragments.MainViewPagerFragment;
 import edu.etzion.koletzion.Fragments.SuggestContentFragment;
 import edu.etzion.koletzion.Fragments.PersonalAreaFragment;
+import edu.etzion.koletzion.database.MyData;
 import edu.etzion.koletzion.models.Profile;
 import edu.etzion.koletzion.player.ExoPlayerFragment;
 
@@ -46,8 +47,9 @@ public class MainActivity extends AppCompatActivity
         getSupportFragmentManager().beginTransaction().replace(R.id.contentMain,new MainViewPagerFragment()).commit();
 //        ViewPagerAdapterMainActivity();
 
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        MyData myData = new MyData("yossi","25",25,"adress","phone",555,555,this);
+        myData.writeDB();
+        myData.readDb();        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
