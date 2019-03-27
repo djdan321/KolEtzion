@@ -3,4 +3,23 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="colorAddress">#2F7092</color>
+    <color name="colorFollowers">#0D5D98</color>
+    <color name="colorHeadings">#3797CF</color>
+    <color name="solidCircle">#AAFFFFFF</color>
+    <color name="circleBorder">#50FFFFFF</color>
+    <color name="gradEnd">#b1f4cf</color>
+    <color name="gradStart">#9890e3</color>
+    <color name="grad2End">#005bea</color>
+    <color name="grad3Start">#a3bded</color>
+    <color name="grad3End">#8989ba</color>
+    <color name="grad4Start">#accbee</color>
+    <color name="grad4End">#04befe</color>
+    <color name="grad2Start">#09203f</color>
+    <color name="followersBg">#30cfd0</color>
+    <color name="followingBg">#49BEFF</color>
+    <color name="grey">#E5E5E5</color>
+    <color name="black">#434343</color>
+
+    <color name="white">#FFFFFF</color>
 </resources>

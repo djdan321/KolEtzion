@@ -19,6 +19,7 @@ import edu.etzion.koletzion.player.VodDataSource;
 
 
 public class PersonalAreaFragment extends Fragment {
+<<<<<<< HEAD
 	RecyclerView rv;
 	//todo put profile through to set fields
 	//if no profile, set user profile.
@@ -70,4 +71,27 @@ public class PersonalAreaFragment extends Fragment {
 		profile = getArguments().getParcelable("profile");
 	}
 	
+=======
+    RecyclerView rv;
+    //todo put profile through to set fields
+    //if no profile, set user profile.
+   public PersonalAreaFragment(){
+   }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_personal_area, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        rv = view.findViewById(R.id.rvProfileType);
+        new VodDataSource(rv).execute();
+    }
+
+>>>>>>> 9ac0560cdce30899b81445d49737e73d54bbc9c6
 }
