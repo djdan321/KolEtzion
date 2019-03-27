@@ -61,7 +61,7 @@ public class rvBroadcastersAdapter extends RecyclerView.Adapter<rvBroadcastersAd
                 @Override
                 public void onClick(View view) {
 //                    AppCompatActivity activity= (AppCompatActivity) view.getContext();
-                    MainActivity.test(0);
+                    //todo open PersonalAreaFragment with the profile of the clicked view.
                 }
             });
             }

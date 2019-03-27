@@ -66,9 +66,10 @@ public class MainActivity extends AppCompatActivity
         vpMain.setCurrentItem(2);
     }
 
-    public static void test(int num){
+    public static void test(int id){
 
-        vpMain.setCurrentItem(num,false);
+        vpMain.setCurrentItem(2,false);
+
     }
 
     private void findviews() {
