@@ -10,8 +10,10 @@ import android.widget.TextView;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+import edu.etzion.koletzion.MainActivity;
 import edu.etzion.koletzion.R;
 import edu.etzion.koletzion.authentication.BroadcasterUser;
 import edu.etzion.koletzion.stream.Broadcast;
@@ -55,6 +57,14 @@ public class rvBroadcastersAdapter extends RecyclerView.Adapter<rvBroadcastersAd
             cvBroadcaster = itemView.findViewById(R.id.cvBroadcaster);
             ivBroadcaster = itemView.findViewById(R.id.imageBroadcaster);
             tvBroadcaster = itemView.findViewById(R.id.tvBroadcaster);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+//                    AppCompatActivity activity= (AppCompatActivity) view.getContext();
+                    MainActivity.test(0);
+                }
+            });
+            }
         }
     }
-}
+
