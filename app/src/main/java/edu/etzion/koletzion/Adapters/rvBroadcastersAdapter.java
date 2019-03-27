@@ -57,15 +57,14 @@ public class rvBroadcastersAdapter extends RecyclerView.Adapter<rvBroadcastersAd
 			cvBroadcaster = itemView.findViewById(R.id.cvBroadcaster);
 			ivBroadcaster = itemView.findViewById(R.id.imageBroadcaster);
 			tvBroadcaster = itemView.findViewById(R.id.tvBroadcaster);
-			
-			itemView.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					AppCompatActivity activity = (AppCompatActivity) view.getContext();
-					activity.getSupportFragmentManager().beginTransaction().replace(
-							R.id.layoutPersonalArea, PersonalAreaFragment.newInstance()//todo get profile by id
-					);
-				}
+			//fixme
+			//todo PersonalAreaFragment.newInstance(profile)
+			//replace entire
+			itemView.setOnClickListener(view -> {
+				AppCompatActivity activity = (AppCompatActivity) view.getContext();
+				activity.getSupportFragmentManager().beginTransaction().replace(
+						R.id.frameLayout2, PersonalAreaFragment.newInstance(new Profile("Yair", "frid"))//todo get profile by id
+				).commit();
 			});
 		}
 	}
