@@ -20,7 +20,6 @@ import edu.etzion.koletzion.Fragments.BroadcastersListFragment;
 import edu.etzion.koletzion.Fragments.FeedFragment;
 import edu.etzion.koletzion.Fragments.PersonalAreaFragment;
 import edu.etzion.koletzion.authentication.AuthenticationActivity;
-import edu.etzion.koletzion.authentication.LoginFragment;
 import edu.etzion.koletzion.models.Profile;
 import edu.etzion.koletzion.player.ExoPlayerFragment;
 
@@ -38,7 +37,7 @@ public class MainActivity extends AppCompatActivity
 		setContentView(R.layout.activity_main);
 		//method that includes all the FindViewById
 		findviews();
-		if(auth.getCurrentUser() == null){
+		if (auth.getCurrentUser() == null) {
 			startActivity(new Intent(this, AuthenticationActivity.class).
 					addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
 		}
@@ -221,10 +220,6 @@ public class MainActivity extends AppCompatActivity
 		} else if (id == R.id.nav_slideshow) {
 		
 		} else if (id == R.id.nav_manage) {
-		
-		} else if (id == R.id.nav_login) {
-		
-		} else if (id == R.id.nav_send) {
 		
 		}
 		
