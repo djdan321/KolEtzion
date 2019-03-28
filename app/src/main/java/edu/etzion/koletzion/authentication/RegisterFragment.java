@@ -91,12 +91,12 @@ public class RegisterFragment extends Fragment implements Button.OnClickListener
 	@Override
 	public void onClick(View v) {
 		if (match && etRegisterPassword.getText().toString().length() >= 6) {
-			createUser(etRegisterEmail.getText().toString(), etRegisterName.getText().toString(),
-					etRegisterPassword.getText().toString());
+			createUser(etRegisterEmail.getText().toString(), etRegisterName.getText().toString(), "",
+					etRegisterPassword.getText().toString());//todo fix fragment with last name
 		}
 	}
 	
-	public void createUser(String email, String name, String password) {
+	public void createUser(String email, String firstName, String lastName, String password) {
 		//todo auth create user
 		auth.createUserWithEmailAndPassword(email, password)
 				.addOnCompleteListener(Objects.requireNonNull(getActivity()), new OnCompleteListener<AuthResult>() {
@@ -114,7 +114,7 @@ public class RegisterFragment extends Fragment implements Button.OnClickListener
 							Toast.makeText(getContext(), "Authentication failed.",
 									Toast.LENGTH_SHORT).show();
 						}
-						User.getInstance().setCredentials(email, name, password);
+						User.getInstance().setCredentials(email, firstName, lastName, password);
 						//todo, send user Details to server.
 						// ...
 						User.getInstance().setPassword(null);
