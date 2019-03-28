@@ -36,9 +36,11 @@ public class BroadcastersListFragment extends Fragment {
 	                         Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
 		broadcasters = new ArrayList<>();
+		for (int i = 0; i < 5; i++) {
 		broadcasters.add(new Profile("yair", "frid"));
 		broadcasters.add(new Profile("yossi", "appo"));
 		broadcasters.add(new Profile("joe", "joy"));
+		}
 		return inflater.inflate(R.layout.fragment_broadcasters_list, container, false);
 	}
 	
