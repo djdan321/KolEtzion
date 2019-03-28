@@ -51,6 +51,8 @@ public class MainViewPagerFragment extends Fragment {
         vpMainAdapter.addFragment(new BroadcastersListFragment(), "BroadcastersListFragment");
         vpMainAdapter.addFragment(new FeedFragment(),"FeedFragment");
 
+        vpMainAdapter.addFragment(new SuggestContentFragment(),"Suggest Content Fragment");
+
         vpMain.setAdapter(vpMainAdapter);
         vpMain.setCurrentItem(2);
     }
