@@ -53,9 +53,15 @@ public class PersonalAreaFragment extends Fragment {
 				profile.getLastName()));
 		//todo picasso
 		//todo switch case on type for tvPersonalExtra
+		displayMyFeed();
+	}
+
+	private void displayMyFeed() {
+		//todo now it displays the intire feed from the rest api, we should display specific feed for each profile.
+		//todo this method will be written here and change the method below.
 		new VodDataSource(rv, profile).execute();
 	}
-	
+
 	private void findViews(@NonNull View view) {
 		rv = view.findViewById(R.id.rvProfileType);
 		imagePersonalArea = view.findViewById(R.id.imagePersonalArea);
