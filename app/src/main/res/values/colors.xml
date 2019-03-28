@@ -22,4 +22,7 @@
     <color name="black">#434343</color>
 
     <color name="white">#FFFFFF</color>
+    
+    <color name="startBlue">#09c6df</color>
+    <color name="endBlue">#0bcce6</color>
 </resources>
