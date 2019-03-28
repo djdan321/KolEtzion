@@ -14,8 +14,10 @@ import androidx.viewpager.widget.ViewPager;
 import edu.etzion.koletzion.Adapters.ViewPagerAdapter;
 import edu.etzion.koletzion.Fragments.BroadcastersListFragment;
 import edu.etzion.koletzion.Fragments.FeedFragment;
+import edu.etzion.koletzion.Fragments.MainViewPagerFragment;
 import edu.etzion.koletzion.Fragments.SuggestContentFragment;
 import edu.etzion.koletzion.Fragments.PersonalAreaFragment;
+import edu.etzion.koletzion.database.MyData;
 import edu.etzion.koletzion.models.Profile;
 import edu.etzion.koletzion.player.ExoPlayerFragment;
 
@@ -28,7 +30,7 @@ public class MainActivity extends AppCompatActivity
     ExoPlayerFragment playerFragment;
     FrameLayout frame;
     Toolbar toolbar;
-    private static ViewPager vpMain;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +44,12 @@ public class MainActivity extends AppCompatActivity
 		getSupportFragmentManager().beginTransaction().replace(frame.getId(),
 				playerFragment).commit();
         
+        getSupportFragmentManager().beginTransaction().replace(R.id.contentMain,new MainViewPagerFragment()).commit();
+//        ViewPagerAdapterMainActivity();
 
-        ViewPagerAdapterMainActivity();
-
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        MyData myData = new MyData("yossi","25",25,"adress","phone",555,555,this);
+        myData.writeDB();
+        myData.readDb();        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -54,30 +57,25 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-    }
-
-    private void ViewPagerAdapterMainActivity() {
-        //this method includes the viewpager adapter that includes all the mainactivity fragments.
-        ViewPagerAdapter vpMainAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        vpMainAdapter.addFragment(PersonalAreaFragment.newInstance(/*todo get from firebsae*/
-        new Profile("yair", "frid")),"PersonalAreaFragment");
-        vpMainAdapter.addFragment(new BroadcastersListFragment(), "BroadcastersListFragment");
-        vpMainAdapter.addFragment(new FeedFragment(),"FeedFragment");
-
-        vpMain.setAdapter(vpMainAdapter);
-        vpMain.setCurrentItem(2);
-    }
-
-    public static void test(int id){
-
-        vpMain.setCurrentItem(2,false);
 
     }
+//
+//    private void ViewPagerAdapterMainActivity() {
+//        //this method includes the viewpager adapter that includes all the mainactivity fragments.
+//        ViewPagerAdapter vpMainAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+//        vpMainAdapter.addFragment(PersonalAreaFragment.newInstance(/*todo get from firebsae*/
+//        new Profile("yair", "frid")),"PersonalAreaFragment");
+//        vpMainAdapter.addFragment(new BroadcastersListFragment(), "BroadcastersListFragment");
+//        vpMainAdapter.addFragment(new FeedFragment(),"FeedFragment");
+//
+//        vpMain.setAdapter(vpMainAdapter);
+//        vpMain.setCurrentItem(2);
+//    }
 
     private void findviews() {
         frame = findViewById(R.id.frame);
         toolbar = findViewById(R.id.toolbar);
-        vpMain = findViewById(R.id.vpMain);
+//        vpMain = findViewById(R.id.vpMain);
         playerFragment = new ExoPlayerFragment();
     }
 
@@ -87,8 +85,11 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            finish();
         }
+    }
+    public void setBackStack(boolean bol){
+        System.out.println(bol);
     }
 
     @Override
@@ -121,7 +122,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
-            vpMain.setCurrentItem(0);
+//            vpMain.setCurrentItem(0);
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
@@ -138,7 +139,6 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    
     public void initPlayer(String filePath){
         playerFragment.initPlayer(filePath);
     }

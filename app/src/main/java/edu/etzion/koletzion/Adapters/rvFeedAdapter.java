@@ -49,6 +49,7 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
                         .initPlayer(vods.get(position).getFilePath());
             }
         });
+        holder.imagePostPlayBtn.setVisibility(View.INVISIBLE);
     }
 
     @Override
