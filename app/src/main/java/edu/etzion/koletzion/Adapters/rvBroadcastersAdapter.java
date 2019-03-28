@@ -63,10 +63,11 @@ public class rvBroadcastersAdapter extends RecyclerView.Adapter<rvBroadcastersAd
 			itemView.setOnClickListener(view -> {
 				AppCompatActivity activity = (AppCompatActivity) view.getContext();
 				activity.getSupportFragmentManager().beginTransaction().replace(
-						R.id.frameLayout2, PersonalAreaFragment.newInstance(new Profile("Yair", "frid"))//todo get profile by id
+						R.id.contentMain, PersonalAreaFragment.newInstance(new Profile("yossi", "appo"))//todo get profile by id
 				).commit();
 			});
 		}
 	}
+
 }
 
