@@ -15,11 +15,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
-
-
-
 import edu.etzion.koletzion.Fragments.MainViewPagerFragment;
-
 import edu.etzion.koletzion.authentication.AuthenticationActivity;
 import edu.etzion.koletzion.player.ExoPlayerFragment;
 
@@ -36,58 +32,55 @@ public class MainActivity extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		//method that includes all the FindViewById
-		findviews();
-//		if (auth.getCurrentUser() == null) {
-//			startActivity(new Intent(this, AuthenticationActivity.class).
-//					addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-//		}
+		findViews();
+		startAuthenticationActivityIfNeeded();
 		setSupportActionBar(toolbar);
 		
 		getSupportFragmentManager().beginTransaction().replace(frame.getId(),
 				playerFragment).commit();
-
-        
-        getSupportFragmentManager().beginTransaction().replace(R.id.contentMain,new MainViewPagerFragment()).commit();
-
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-    }
-
-
-
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            finish();
-        }
-    }
-
 		
-
 		
-
+		getSupportFragmentManager().beginTransaction().replace(R.id.contentMain, new MainViewPagerFragment()).commit();
+		
+		
+		DrawerLayout drawer = findViewById(R.id.drawer_layout);
+		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+				this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+		drawer.addDrawerListener(toggle);
+		toggle.syncState();
+		
+		NavigationView navigationView = findViewById(R.id.nav_view);
+		navigationView.setNavigationItemSelectedListener(this);
+		
+	}
 	
-
-	private void findviews() {
+	private void startAuthenticationActivityIfNeeded() {
+		if (auth.getCurrentUser() == null) {
+			startActivity(new Intent(this, AuthenticationActivity.class));
+			finish();
+		}
+	}
+	
+	
+	@Override
+	public void onBackPressed() {
+		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+		if (drawer.isDrawerOpen(GravityCompat.START)) {
+			drawer.closeDrawer(GravityCompat.START);
+		} else {
+			finish();
+		}
+	}
+	
+	
+	private void findViews() {
 		auth = FirebaseAuth.getInstance();
 		frame = findViewById(R.id.frame);
 		toolbar = findViewById(R.id.toolbar);
 		vpMain = findViewById(R.id.vpMain);
 		playerFragment = new ExoPlayerFragment();
 	}
-
+	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -102,37 +95,35 @@ public class MainActivity extends AppCompatActivity
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-
+		
 		//noinspection SimplifiableIfStatement
 		if (id == R.id.action_settings) {
 			return true;
 		}
-
+		
 		return super.onOptionsItemSelected(item);
 	}
-
+	
 	@SuppressWarnings("StatementWithEmptyBody")
 	@Override
 	public boolean onNavigationItemSelected(MenuItem item) {
 		// Handle navigation view item clicks here.
 		int id = item.getItemId();
-
+		
 		if (id == R.id.nav_camera) {
 			// Handle the camera action
 			vpMain.setCurrentItem(0);
-		} else if (id == R.id.nav_gallery) {
-
-		} else if (id == R.id.nav_slideshow) {
-
-		} else if (id == R.id.nav_manage) {
-
+		} else if (id == R.id.logOut){
+			auth.signOut();
+			//todo set user credentials to null??
+			startAuthenticationActivityIfNeeded();
 		}
-
+		
 		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 		drawer.closeDrawer(GravityCompat.START);
 		return true;
 	}
-
+	
 	public void initPlayer(String filePath) {
 		playerFragment.initPlayer(filePath);
 	}

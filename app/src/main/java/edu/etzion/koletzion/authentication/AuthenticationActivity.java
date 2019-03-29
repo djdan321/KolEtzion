@@ -10,6 +10,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
 
+import edu.etzion.koletzion.MainActivity;
 import edu.etzion.koletzion.R;
 
 public class AuthenticationActivity extends AppCompatActivity {
@@ -20,9 +21,8 @@ public class AuthenticationActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_authentication);
 		Toolbar toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
-		
 		getSupportFragmentManager().beginTransaction().
 				replace(R.id.authenticationFrame, new LoginFragment()).commit();
 	}
-	
+
 }
