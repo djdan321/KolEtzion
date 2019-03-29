@@ -27,9 +27,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="16dp"
             android:text="header"
             app:layout_constraintBottom_toTopOf="@+id/guideline3"
+            app:layout_constraintEnd_toStartOf="@+id/imagePostPlayClick"
             app:layout_constraintStart_toEndOf="@+id/imagePostBroadcaster"
             app:layout_constraintTop_toTopOf="@+id/imagePostBroadcaster" />
 
@@ -114,14 +116,28 @@
             android:id="@+id/imagePostPlayClick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@+id/guideline3"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvPostDescription"
             app:layout_constraintTop_toTopOf="@+id/imagePostBroadcaster"
+            app:layout_constraintVertical_bias="0.977"
             app:srcCompat="@drawable/play" />
 
+        <ImageView
+            android:id="@+id/imageView10"
+            android:layout_width="60dp"
+            android:layout_height="43dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/imagePostBroadcaster"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/kol" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
