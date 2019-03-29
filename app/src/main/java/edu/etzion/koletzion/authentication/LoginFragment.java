@@ -19,9 +19,12 @@ import edu.etzion.koletzion.R;
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
 
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment implements View.OnClickListener {
 	private FirebaseAuth auth;
-	
+	EditText etLoginEmail;
+	EditText etLoginPassword;
+	String email;
+	String password;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,10 +37,16 @@ public class LoginFragment extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		view.findViewById(R.id.btnLoginSubmit).setOnClickListener(v -> {
-			signIn(((EditText) view.findViewById(R.id.etLoginEmail)).getText().toString(),
-					((EditText) view.findViewById(R.id.etLoginPassword)).getText().toString());
-		});
+		findViews(view);
+		
+		String email;
+		String password;
+		view.findViewById(R.id.btnLoginSubmit).setOnClickListener(this);
+	}
+	
+	private void findViews(@NonNull View view) {
+		etLoginEmail = view.findViewById(R.id.etLoginEmail);
+		etLoginPassword = view.findViewById(R.id.etLoginPassword);
 	}
 	
 	private void signIn(String email, String password) {
@@ -59,5 +68,12 @@ public class LoginFragment extends Fragment {
 								Toast.LENGTH_SHORT).show();
 					}
 				});
+	}
+	
+	@Override
+	public void onClick(View v) {
+		email = etLoginEmail.getText().toString();
+		if(email == null ||email.length() < 3)
+		password = etLoginPassword.getText().toString();
 	}
 }

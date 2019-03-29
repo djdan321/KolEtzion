@@ -20,6 +20,7 @@
     <color name="followingBg">#49BEFF</color>
     <color name="grey">#E5E5E5</color>
     <color name="black">#434343</color>
+    <color name="blackTrans">#7A000000 </color>
 
     <color name="white">#FFFFFF</color>
     
