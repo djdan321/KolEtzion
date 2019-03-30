@@ -17,6 +17,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 import edu.etzion.koletzion.Fragments.MainViewPagerFragment;
 import edu.etzion.koletzion.authentication.AuthenticationActivity;
+import edu.etzion.koletzion.database.DataDAO;
+import edu.etzion.koletzion.models.BroadcastPost;
+import edu.etzion.koletzion.models.MyProfile;
 import edu.etzion.koletzion.player.ExoPlayerFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -39,7 +42,6 @@ public class MainActivity extends AppCompatActivity
 		getSupportFragmentManager().beginTransaction().replace(frame.getId(),
 				playerFragment).commit();
 		
-		
 		getSupportFragmentManager().beginTransaction().replace(R.id.contentMain, new MainViewPagerFragment()).commit();
 		
 		
@@ -60,11 +62,10 @@ public class MainActivity extends AppCompatActivity
 			finish();
 		}
 	}
-	
-	
+
 	@Override
 	public void onBackPressed() {
-		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+		DrawerLayout drawer = findViewById(R.id.drawer_layout);
 		if (drawer.isDrawerOpen(GravityCompat.START)) {
 			drawer.closeDrawer(GravityCompat.START);
 		} else {
@@ -119,7 +120,7 @@ public class MainActivity extends AppCompatActivity
 			startAuthenticationActivityIfNeeded();
 		}
 		
-		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+		DrawerLayout drawer =  findViewById(R.id.drawer_layout);
 		drawer.closeDrawer(GravityCompat.START);
 		return true;
 	}

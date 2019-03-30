@@ -15,12 +15,13 @@ import androidx.viewpager.widget.ViewPager;
 import edu.etzion.koletzion.Adapters.ViewPagerAdapter;
 import edu.etzion.koletzion.R;
 import edu.etzion.koletzion.models.Profile;
+import edu.etzion.koletzion.models.StudentProfile;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class MainViewPagerFragment extends Fragment {
-    ViewPager vpMain;
+    private ViewPager vpMain;
 
     public MainViewPagerFragment() {
         // Required empty public constructor
