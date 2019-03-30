@@ -57,8 +57,6 @@ public class rvBroadcastersAdapter extends RecyclerView.Adapter<rvBroadcastersAd
 			cvBroadcaster = itemView.findViewById(R.id.cvBroadcaster);
 			ivBroadcaster = itemView.findViewById(R.id.imageBroadcaster);
 			tvBroadcaster = itemView.findViewById(R.id.tvBroadcaster);
-			//fixme
-			//todo PersonalAreaFragment.newInstance(profile)
 			//replace entire
 			itemView.setOnClickListener(view -> {
 				AppCompatActivity activity = (AppCompatActivity) view.getContext();

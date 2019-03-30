@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import edu.etzion.koletzion.Adapters.rvBroadcastersAdapter;
 import edu.etzion.koletzion.R;
-import edu.etzion.koletzion.authentication.BroadcasterUser;
 import edu.etzion.koletzion.models.Profile;
 import edu.etzion.koletzion.player.VodDataSource;
 

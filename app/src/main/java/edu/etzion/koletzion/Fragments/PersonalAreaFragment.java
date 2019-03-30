@@ -22,10 +22,10 @@ public class PersonalAreaFragment extends Fragment {
 	RecyclerView rv;
 	//todo put profile through to set fields
 	//if no profile, set user profile.
-	Profile profile;
-	ImageView imagePersonalArea;
-	TextView tvPersonalName;
-	TextView tvPersonalExtra;
+	private Profile profile;
+	private ImageView imagePersonalArea;
+	private TextView tvPersonalName;
+	private TextView tvPersonalExtra;
 	public static PersonalAreaFragment newInstance() {
 		
 		Bundle args = new Bundle();
@@ -52,10 +52,10 @@ public class PersonalAreaFragment extends Fragment {
 		tvPersonalName.setText(String.format("%s %s", profile.getFirstName(),
 				profile.getLastName()));
 		//todo picasso
-		//todo switch case on type for tvPersonalExtra
+		//todo if(broadcaster) tvPersonalExtra.setText("Broadcast list")
+		// else tvPersonalExtra.setText("Favorites")
 		displayMyFeed();
 	}
-
 	private void displayMyFeed() {
 		//todo now it displays the intire feed from the rest api, we should display specific feed for each profile.
 		//todo this method will be written here and change the method below.

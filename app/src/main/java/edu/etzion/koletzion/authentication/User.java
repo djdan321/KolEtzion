@@ -13,6 +13,7 @@ public class User {
 	
 	private User() {
 //		this.setProfile(); fixme
+		//todo find profile
 	}
 	
 	public Profile getProfile() {

@@ -47,7 +47,7 @@ public class MainViewPagerFragment extends Fragment {
     private void ViewPagerAdapterMainActivity() {
         //this method includes the viewpager adapter that includes all the mainactivity fragments.
         ViewPagerAdapter vpMainAdapter = new ViewPagerAdapter(getFragmentManager());
-        vpMainAdapter.addFragment(PersonalAreaFragment.newInstance(/*todo get from firebsae*/
+        vpMainAdapter.addFragment(PersonalAreaFragment.newInstance(//todo get profile from firebase, current user
                 new Profile("yair", "frid")),"PersonalAreaFragment");
         vpMainAdapter.addFragment(new BroadcastersListFragment(), "BroadcastersListFragment");
         vpMainAdapter.addFragment(new FeedFragment(),"FeedFragment");

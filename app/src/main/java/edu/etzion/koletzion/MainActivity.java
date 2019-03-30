@@ -111,10 +111,8 @@ public class MainActivity extends AppCompatActivity
 		
 		if (id == R.id.nav_camera) {
 			// Handle the camera action
-			vpMain.setCurrentItem(0);
 		} else if (id == R.id.logOut){
 			auth.signOut();
-			//todo set user credentials to null??
 			startAuthenticationActivityIfNeeded();
 		}
 		
