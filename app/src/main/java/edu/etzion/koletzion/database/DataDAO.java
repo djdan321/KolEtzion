@@ -93,7 +93,7 @@ public class DataDAO {
 
             @Override
             protected void onPostExecute(Void aVoid) {
-                Toast.makeText(context, "Data Ok", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context.get(), "Data Ok", Toast.LENGTH_SHORT).show();
             }
         }.execute();
     }
