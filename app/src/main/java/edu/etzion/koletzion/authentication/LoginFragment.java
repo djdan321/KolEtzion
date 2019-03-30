@@ -1,8 +1,10 @@
 package edu.etzion.koletzion.authentication;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +16,18 @@ import com.google.firebase.auth.FirebaseAuth;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import edu.etzion.koletzion.MainActivity;
 import edu.etzion.koletzion.R;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
 
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment implements View.OnClickListener {
 	private FirebaseAuth auth;
+	private EditText etLoginEmail;
+	private EditText etLoginPassword;
+	private String email;
+	private String password;
 	
 	
 	@Override
@@ -34,10 +41,26 @@ public class LoginFragment extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		view.findViewById(R.id.btnLoginSubmit).setOnClickListener(v -> {
-			signIn(((EditText) view.findViewById(R.id.etLoginEmail)).getText().toString(),
-					((EditText) view.findViewById(R.id.etLoginPassword)).getText().toString());
-		});
+		findViews(view);
+		setOnClickListeners(view);
+		
+		etLoginEmail.requestFocus();
+	}
+	
+	private void setOnClickListeners(@NonNull View view) {
+		view.findViewById(R.id.btnLoginSubmit).setOnClickListener(this);
+		view.findViewById(R.id.tvRegisterFromLogin).
+				setOnClickListener(v -> {
+					((AuthenticationActivity) getContext()).getSupportFragmentManager().
+							beginTransaction().addToBackStack("loginFragment").
+							replace(R.id.authenticationFrame, new RegisterFragment()).
+							commit();
+				});
+	}
+	
+	private void findViews(@NonNull View view) {
+		etLoginEmail = view.findViewById(R.id.etLoginEmail);
+		etLoginPassword = view.findViewById(R.id.etLoginPassword);
 	}
 	
 	private void signIn(String email, String password) {
@@ -47,17 +70,40 @@ public class LoginFragment extends Fragment {
 					if (task.isSuccessful()) {
 						// Sign in success, update UI with the signed-in user's information
 						Log.d(TAG, "signInWithEmail:success");
-						//todo: send to MainActivity
 						//handle getting UserCredentials from server;
-						User.getInstance().setCredentials(email, "m", ""//todo: get name from server
-								,password);
+						User.getInstance().setCredentials(email, password);
+						startActivity(new Intent(getContext(), MainActivity.class));
 					} else {
 						// If sign in fails, display a message to the user.
 						Log.w(TAG, "signInWithEmail:failure", task.getException());
-						//todo: handle authentication failed
-						Toast.makeText(getContext(), "Authentication failed.",
-								Toast.LENGTH_SHORT).show();
+						toast("התחברות נכשלה, שם משתמש או סיסמא לא נכונים.");
 					}
 				});
+	}
+	
+	private void toast(String text) {
+		//todo only do this if keyboard is open, else do normal toast
+		Toast t = Toast.makeText(getContext(), text,
+				Toast.LENGTH_SHORT);
+		t.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL,
+				0, 0);
+		t.show();
+	}
+	
+	@Override
+	public void onClick(View v) {
+		email = etLoginEmail.getText().toString();
+		if (email.length() < 5) {
+			etLoginEmail.setError("כתובת הדואר קצרה מדי");
+			etLoginEmail.requestFocus();
+			return;
+		}
+		password = etLoginPassword.getText().toString();
+		if (password.length() < 3) {
+			etLoginPassword.setError("סיסמא קצרה מדי");
+			etLoginPassword.requestFocus();
+			return;
+		}
+		signIn(email, password);
 	}
 }

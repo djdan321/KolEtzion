@@ -50,5 +50,13 @@
         android:text="google"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLoginSubmit" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvRegisterFromLogin"
+        android:text="לא רשום עדיין? לחץ כאן להרשם עכשיו!"
+        android:layout_margin="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLoginGoogle"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

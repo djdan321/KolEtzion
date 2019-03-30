@@ -4,7 +4,7 @@ import edu.etzion.koletzion.models.Profile;
 
 public class User {
 	private static final User ourInstance = new User();
-	private String email, firstName, lastName, password;
+	private String email, password;
 	private Profile profile;
 	
 	public static User getInstance() {
@@ -12,24 +12,25 @@ public class User {
 	}
 	
 	private User() {
-		profile = new Profile(firstName, lastName);
+//		this.setProfile(); fixme
 	}
 	
-	public Profile getProfile(){
+	public Profile getProfile() {
 		return profile;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	
+	private User setProfile() {
+		ourInstance.profile = getProfileFromServer();
+		return ourInstance;
 	}
 	
-	public void setPassword(String password) {
-		this.password = password;
+	private Profile getProfileFromServer() {
+		//todo: yossi todo
+		return null;
 	}
 	
-	public void setCredentials(String email, String firstName, String lastName, String password) {
+	public void setCredentials(String email, String password) {
 		this.email = email;
-		this.firstName = firstName;
-		this.lastName = lastName;
 		this.password = password;
 	}
 	
@@ -37,4 +38,11 @@ public class User {
 		return email;
 	}
 	
+	public String getPassword() {
+		return password;
+	}
+	
+	void setPassword(String password) {
+		this.password = password;
+	}
 }
