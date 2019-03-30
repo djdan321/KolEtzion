@@ -2,24 +2,23 @@ package edu.etzion.koletzion.models;
 
 import java.util.List;
 
-public class BroadcastPost{
+public class BroadcastPost implements Comparable<BroadcastPost>{
     private BroadcastCategory type;
     private String description;
     private String streamURL;
-    private List<MyProfile> broadcasters;
-    private List<MyProfile> listeners;
+    private List<Profile> broadcasters;
+    private List<Profile> listeners;
     private long duration;
     private String _id;
     private String _rev;
-    private int count;
     private String title;
     private List<Comment> comments;
-    private List<MyProfile> likes;
+    private List<Profile> likes;
     private long timeStamp;
 
     // Constructors
 
-    public BroadcastPost(BroadcastCategory type, String description, String streamURL, List<MyProfile> broadcasters, List<MyProfile> listeners, long duration, String _id, String _rev, int count, String title, List<Comment> comments, List<MyProfile> likes) {
+    public BroadcastPost(BroadcastCategory type, String description, String streamURL, List<Profile> broadcasters, List<Profile> listeners, long duration, String _id, String _rev, String title, List<Comment> comments, List<Profile> likes, long timestamp) {
         this.type = type;
         this.description = description;
         this.streamURL = streamURL;
@@ -28,20 +27,19 @@ public class BroadcastPost{
         this.duration = duration;
         this._id = _id;
         this._rev = _rev;
-        this.count = count;
         this.title = title;
         this.comments = comments;
         this.likes = likes;
+        this.timeStamp=timestamp;
     }
 
-    public BroadcastPost(BroadcastCategory type, String description, String streamURL, List<MyProfile> broadcasters, List<MyProfile> listeners, long duration, int count, String title, List<Comment> comments, List<MyProfile> likes) {
+    public BroadcastPost(BroadcastCategory type, String description, String streamURL, List<Profile> broadcasters, List<Profile> listeners, long duration, String title, List<Comment> comments, List<Profile> likes) {
         this.type = type;
         this.description = description;
         this.streamURL = streamURL;
         this.broadcasters = broadcasters;
         this.listeners = listeners;
         this.duration = duration;
-        this.count = count;
         this.title = title;
         this.comments = comments;
         this.likes = likes;
@@ -58,10 +56,10 @@ public class BroadcastPost{
     public String getStreamURL() {
         return streamURL;
     }
-    public List<MyProfile> getBroadcasters() {
+    public List<Profile> getBroadcasters() {
         return broadcasters;
     }
-    public List<MyProfile> getListeners() {
+    public List<Profile> getListeners() {
         return listeners;
     }
     public long getDuration() {
@@ -73,16 +71,13 @@ public class BroadcastPost{
     public String get_rev() {
         return _rev;
     }
-    public int getCount() {
-        return count;
-    }
     public String getTitle() {
         return title;
     }
     public List<Comment> getComments() {
         return comments;
     }
-    public List<MyProfile> getLikes() {
+    public List<Profile> getLikes() {
         return likes;
     }
     public long getTimeStamp() {
@@ -107,6 +102,12 @@ public class BroadcastPost{
                 ", broadcasters=" + broadcasters +
                 ", listeners=" + listeners +
                 ", duration=" + duration +
+                ", _id='" + _id + '\'' +
+                ", _rev='" + _rev + '\'' +
+                ", title='" + title + '\'' +
+                ", comments=" + comments +
+                ", likes=" + likes +
+                ", timeStamp=" + timeStamp +
                 '}';
     }
 
@@ -114,7 +115,7 @@ public class BroadcastPost{
     // Methods
 
     // this method add a listener to the listeners's list
-    public void addListener(MyProfile profile){
+    public void addListener(Profile profile){
         listeners.add(profile);
     }
 
@@ -124,7 +125,13 @@ public class BroadcastPost{
     }
 
     //this method add a like to the likes's list
-    public void addLike(MyProfile myProfile){
-        likes.add(myProfile);
+    public void addLike(Profile profile){
+        likes.add(profile);
+    }
+
+
+    @Override
+    public int compareTo(BroadcastPost o) {
+        return (int) (this.timeStamp-o.getTimeStamp());
     }
 }

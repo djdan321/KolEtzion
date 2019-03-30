@@ -54,6 +54,10 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Vod>> {
 	}
 	
 	private void parseJson(List<Vod> vods, String json) throws JSONException {
+		//todo read all the broadcasts from the server and than compare the size of the lists between
+		//todo the rest api and the broadcasts on the cloud, if there is a new broadcast then write it to the cloud.
+
+
 		JSONArray jsonArray = new JSONArray(json);
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject o = (JSONObject) jsonArray.get(i);
@@ -74,10 +78,7 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Vod>> {
 	
 	@Override
 	protected List<Vod> doInBackground(Void... voids) {
-		List<Vod> vods = new ArrayList<>();
-		//todo if profile instanceof broadcaster get his arraylist.
-		vods = getVodList();
-		return vods;
+		return getVodList();
 	}
 	
 	@Override

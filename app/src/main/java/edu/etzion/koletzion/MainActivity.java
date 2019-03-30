@@ -2,6 +2,7 @@ package edu.etzion.koletzion;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
@@ -11,6 +12,8 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +25,12 @@ import edu.etzion.koletzion.Fragments.MainViewPagerFragment;
 import edu.etzion.koletzion.authentication.AuthenticationActivity;
 
 
+import edu.etzion.koletzion.database.DataDAO;
+import edu.etzion.koletzion.models.BroadcastCategory;
+import edu.etzion.koletzion.models.BroadcastPost;
+import edu.etzion.koletzion.models.Comment;
+import edu.etzion.koletzion.models.Profile;
+import edu.etzion.koletzion.models.SuggestedContent;
 import edu.etzion.koletzion.player.ExoPlayerFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -30,7 +39,9 @@ public class MainActivity extends AppCompatActivity
 	ExoPlayerFragment playerFragment;
 	FrameLayout frame;
 	Toolbar toolbar;
-
+	List<Profile> profiles1;
+	Profile profile1;
+	Profile p;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,6 +56,7 @@ public class MainActivity extends AppCompatActivity
 		
 		getSupportFragmentManager().beginTransaction().replace(R.id.contentMain, MainViewPagerFragment.newInstance()).commit();
 
+		testDB();
 
 		DrawerLayout drawer = findViewById(R.id.drawer_layout);
 		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -56,6 +68,23 @@ public class MainActivity extends AppCompatActivity
 		navigationView.setNavigationItemSelectedListener(this);
 		
 	}
+
+	private void testDB() {
+		DataDAO db = DataDAO.getInstance(this);
+		List<BroadcastPost> posts = new ArrayList<>();
+		List<Profile> profiles = new ArrayList<>();
+		List<Comment> comments = new ArrayList<>();
+		Profile profile = new Profile("yossi","yossi","appo",true,posts,true, Profile.MOOD_FINE);
+//		db.writeSuggestedContent(new SuggestedContent(profile,"you should right this"));
+//		db.writeMyProfile(profile);
+//		db.writeMyProfile(profile);
+//		db.writeBroadcastPost(new BroadcastPost(BroadcastCategory.POLITICS,"blablablabla","URL",profiles,profiles,43545,"title",comments,profiles));
+//		List<BroadcastPost> list = db.getAllPosts();
+//		profiles1 = db.getBroadcasters();
+		profiles1 = db.getProfileByUserName("yossi");
+
+	}
+
 
 	private void startAuthenticationActivityIfNeeded() {
 		if (auth.getCurrentUser() == null) {
@@ -114,9 +143,9 @@ public class MainActivity extends AppCompatActivity
 		
 		if (id == R.id.homePage) {
 			// Handle the camera action
+			getSupportFragmentManager().beginTransaction().replace(R.id.contentMain,MainViewPagerFragment.newInstance()).commit();
 		} else if (id == R.id.logOut){
 			auth.signOut();
-			//todo set user credentials to null??
 			startAuthenticationActivityIfNeeded();
 		}
 		

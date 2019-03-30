@@ -57,6 +57,8 @@ public class SuggestContentFragment extends Fragment {
             photoPickerIntent.setType("image/*");
             startActivityForResult(photoPickerIntent, RESULT_LOAD_IMAGE);
         }));
+
+        //todo add button listener"suggest content"and write the data to the server.
     }
 
     @Override

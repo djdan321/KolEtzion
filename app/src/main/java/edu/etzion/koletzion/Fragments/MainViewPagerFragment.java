@@ -22,10 +22,6 @@ import edu.etzion.koletzion.models.Profile;
 public class MainViewPagerFragment extends Fragment {
     private ViewPager vpMain;
 
-//    public MainViewPagerFragment() {
-//        // Required empty public constructor
-//    }
-
     public static MainViewPagerFragment newInstance() {
 
         Bundle args = new Bundle();
@@ -53,8 +49,8 @@ public class MainViewPagerFragment extends Fragment {
     private void ViewPagerAdapterMainActivity() {
         //this method includes the viewpager adapter that includes all the mainactivity fragments.
         ViewPagerAdapter vpMainAdapter = new ViewPagerAdapter(getFragmentManager());
-        vpMainAdapter.addFragment(PersonalAreaFragment.newInstance(/*todo get from firebsae*/
-                new Profile("yair", "frid")),"PersonalAreaFragment");
+//        vpMainAdapter.addFragment(PersonalAreaFragment.newInstance(/*todo method getProfileByUserName() from server*/
+//                new Profile("yair", "frid")),"PersonalAreaFragment");
         vpMainAdapter.addFragment(new BroadcastersListFragment(), "BroadcastersListFragment");
         vpMainAdapter.addFragment(new FeedFragment(),"FeedFragment");
 

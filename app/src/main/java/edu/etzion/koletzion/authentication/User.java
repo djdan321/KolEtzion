@@ -11,9 +11,8 @@ public class User {
 	public static User getInstance() {
 		return ourInstance;
 	}
-	
+	//todo YAIR delete that class , make sure that i can get username from firebase
 	private User() {
-//		this.setProfile(); fixme
 	}
 	
 	public Profile getProfile() {
@@ -26,7 +25,6 @@ public class User {
 	}
 	
 	private Profile getProfileFromServer() {
-		//todo: yossi todo
 		return null;
 	}
 	

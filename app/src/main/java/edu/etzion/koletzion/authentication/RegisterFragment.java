@@ -123,7 +123,7 @@ public class RegisterFragment extends Fragment implements Button.OnClickListener
 					FirebaseUser currentUser = auth.getCurrentUser();
 					if (task.isSuccessful()) {
 						User.getInstance().setCredentials(email, password);
-						//todo write to server with method parameters
+						//todo write to server with method parameters (create profile)write (yossi)
 						// Sign in success, update UI with the signed-in user's information
 						startActivity(new Intent(getContext(), MainActivity.class));
 						Log.d(TAG, "createUserWithEmail:success");
