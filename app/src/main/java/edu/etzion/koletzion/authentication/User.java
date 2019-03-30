@@ -6,6 +6,7 @@ public class User {
 	private static final User ourInstance = new User();
 	private String email, password;
 	private Profile profile;
+	private long timeStamp;
 	
 	public static User getInstance() {
 		return ourInstance;
@@ -44,5 +45,13 @@ public class User {
 	
 	void setPassword(String password) {
 		this.password = password;
+	}
+
+	public void setTimeStamp(long timeStamp) {
+		this.timeStamp = timeStamp;
+	}
+
+	public long getTimeStamp() {
+		return timeStamp;
 	}
 }

@@ -15,7 +15,6 @@ import androidx.viewpager.widget.ViewPager;
 import edu.etzion.koletzion.Adapters.ViewPagerAdapter;
 import edu.etzion.koletzion.R;
 import edu.etzion.koletzion.models.Profile;
-import edu.etzion.koletzion.models.StudentProfile;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,11 +22,18 @@ import edu.etzion.koletzion.models.StudentProfile;
 public class MainViewPagerFragment extends Fragment {
     private ViewPager vpMain;
 
-    public MainViewPagerFragment() {
-        // Required empty public constructor
+//    public MainViewPagerFragment() {
+//        // Required empty public constructor
+//    }
+
+    public static MainViewPagerFragment newInstance() {
+
+        Bundle args = new Bundle();
+
+        MainViewPagerFragment fragment = new MainViewPagerFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

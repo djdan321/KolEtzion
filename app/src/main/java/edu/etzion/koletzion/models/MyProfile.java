@@ -2,6 +2,7 @@ package edu.etzion.koletzion.models;
 
 import android.os.Bundle;
 
+import java.util.Date;
 import java.util.List;
 
 public class MyProfile {
@@ -9,31 +10,47 @@ public class MyProfile {
     private String _rev;
     private String username; // from current user.
     private int count;
-    private String fullName;
+    private String firstName;
+    private String lastName;
     private boolean isBroadcaster;
     private List<BroadcastPost> relatedPosts;
+    private long timeStamp;
+    private boolean isStudent;
+    private int mood;
+    // constant mood's options
+    public static final int HAPPY=1;
+    public static final int FINE=2;
+    public static final int SAD=3;
+    public static final int NONE=-1;
 //todo add image(learn how to save the image to the database)
 
 
     // Constructors
 
-
-    public MyProfile(String username, int count, String fullName, boolean isBroadcaster, List<BroadcastPost> relatedPosts) {
-        this.username = username;
-        this.count = count;
-        this.fullName = fullName;
-        this.isBroadcaster = isBroadcaster;
-        this.relatedPosts = relatedPosts;
-    }
-
-    public MyProfile(String _id, String _rev, String username, int count, String fullName, boolean isBroadcaster, List<BroadcastPost> relatedPosts) {
+    public MyProfile(String _id, String _rev, String username, int count, String firstName, String lastName, boolean isBroadcaster, List<BroadcastPost> relatedPosts, long timeStamp, boolean isStudent,int mood ) {
         this._id = _id;
         this._rev = _rev;
         this.username = username;
         this.count = count;
-        this.fullName = fullName;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.isBroadcaster = isBroadcaster;
         this.relatedPosts = relatedPosts;
+        this.timeStamp = timeStamp;
+        this.isStudent = isStudent;
+        this.mood=mood;
+    }
+
+    public MyProfile(String username, int count, String firstName, String lastName, boolean isBroadcaster, List<BroadcastPost> relatedPosts, long timeStamp, boolean isStudent, int mood) {
+        this.username = username;
+        this.count = count;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.isBroadcaster = isBroadcaster;
+        this.relatedPosts = relatedPosts;
+        this.timeStamp = timeStamp;
+        this.isStudent = isStudent;
+        this.mood=mood;
     }
 
     // Getters
@@ -50,8 +67,11 @@ public class MyProfile {
     public int getCount() {
         return count;
     }
-    public String getFullName() {
-        return fullName;
+    public String getFirstName() {
+        return firstName;
+    }
+    public String getLastName() {
+        return lastName;
     }
     public boolean isBroadcaster() {
         return isBroadcaster;
@@ -59,20 +79,31 @@ public class MyProfile {
     public List<BroadcastPost> getRelatedPosts() {
         return relatedPosts;
     }
+    public long getTimeStamp() {
+        return timeStamp;
+    }
 
     // Setters
 
     public void setUsername(String username) {
         this.username = username;
     }
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
     public void setBroadcaster(boolean broadcaster) {
         isBroadcaster = broadcaster;
     }
 
+    public void setTimeStamp(long timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
     // toString
+
     @Override
     public String toString() {
         return "MyProfile{" +
@@ -80,11 +111,14 @@ public class MyProfile {
                 ", _rev='" + _rev + '\'' +
                 ", username='" + username + '\'' +
                 ", count=" + count +
-                ", fullName='" + fullName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", isBroadcaster=" + isBroadcaster +
-                ", RelatedPosts=" + relatedPosts +
+                ", relatedPosts=" + relatedPosts +
+                ", timeStamp=" + timeStamp +
                 '}';
     }
+
 
     //methods
 

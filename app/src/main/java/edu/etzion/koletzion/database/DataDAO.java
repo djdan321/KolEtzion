@@ -11,23 +11,23 @@ import com.cloudant.client.api.CloudantClient;
 import com.cloudant.client.api.Database;
 
 import java.lang.ref.WeakReference;
+import java.util.Date;
 
 import edu.etzion.koletzion.authentication.User;
 import edu.etzion.koletzion.models.BroadcastPost;
 import edu.etzion.koletzion.models.MyProfile;
-import edu.etzion.koletzion.models.StudentProfile;
 import edu.etzion.koletzion.models.SuggestedContent;
-import edu.etzion.koletzion.models.TextPost;
-//todo test all the write/update methods
+
+//todo test all the update methods
 public class DataDAO {
 
     private static DataDAO instance;
     private WeakReference<Context> context;
+    private final String DB_USER_NAME = "41c99d88-3264-4be5-b546-ff5a5be07dfb-bluemix";
 
     //posts,profiles,suggested content , users
     private final String TEXT_API_KEY = "alfuldstonglareaderignot";
     private final String TEXT_API_SECRET = "550b2221df5ab5695899f57f26b0ef76550e9fb3";
-    private final String DB_USER_NAME = "41c99d88-3264-4be5-b546-ff5a5be07dfb-bluemix";
     private final String DB_NAME = "demo";
 
      // profiles db credentials
@@ -114,6 +114,7 @@ public class DataDAO {
                         .build();
 
                 Database db = client.database(PROFILES_DB, false);
+                myProfile.setTimeStamp(new Date().getTime());
                 db.save(myProfile);
                 Log.e("TAG", "doInBackground: cloudant data was saved.... ");
                 return null;
@@ -126,32 +127,7 @@ public class DataDAO {
         }.execute();
     }
 
-    // this method writes StudentProfile Object to the server
-    @SuppressLint("StaticFieldLeak")
-    public void writeStudentProfile(StudentProfile studentProfile) {
 
-
-        new AsyncTask<Void, Void, Void>() {
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                CloudantClient client = ClientBuilder.account(DB_USER_NAME)
-                        .username(PROFILES_API_KEY)
-                        .password(PROFILES_API_SECRET)
-                        .build();
-
-                Database db = client.database(PROFILES_DB, false);
-                db.save(studentProfile);
-                Log.e("TAG", "doInBackground: cloudant data was saved.... ");
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                Log.e("TAG","onPostExecute");
-            }
-        }.execute();
-    }
 
 
     // this method writes BroadcastPost Object to the server
@@ -169,6 +145,7 @@ public class DataDAO {
                         .build();
 
                 Database db = client.database(POSTS_DB, false);
+                broadcastPost.setTimeStamp(new Date().getTime());
                 db.save(broadcastPost);
                 Log.e("TAG", "doInBackground: cloudant data was saved.... ");
                 return null;
@@ -183,32 +160,6 @@ public class DataDAO {
 
 
 
-    // this method writes TextPost Object to the server
-    @SuppressLint("StaticFieldLeak")
-    public void writeTextPost(TextPost textPost) {
-
-
-        new AsyncTask<Void, Void, Void>() {
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                CloudantClient client = ClientBuilder.account(DB_USER_NAME)
-                        .username(POSTS_API_KEY)
-                        .password(POSTS_API_SECRET)
-                        .build();
-
-                Database db = client.database(POSTS_DB, false);
-                db.save(textPost);
-                Log.e("TAG", "doInBackground: cloudant data was saved.... ");
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                Log.e("TAG","onPostExecute");
-            }
-        }.execute();
-    }
 
 
     // this method writes SuggestedContent Object to the server
@@ -226,6 +177,7 @@ public class DataDAO {
                         .build();
 
                 Database db = client.database(SC_DB, false);
+                suggestedContent.setTimestamp(new Date().getTime());
                 db.save(suggestedContent);
                 Log.e("TAG", "doInBackground: cloudant data was saved.... ");
                 return null;
@@ -254,6 +206,7 @@ public class DataDAO {
                         .build();
 
                 Database db = client.database(USERS_DB, false);
+                user.setTimeStamp(new Date().getTime());
                 db.save(user);
                 Log.e("TAG", "doInBackground: cloudant data was saved.... ");
                 return null;
@@ -294,32 +247,7 @@ public class DataDAO {
         }.execute();
     }
 
-    // this method updates StudentProfile Object to the server
-    @SuppressLint("StaticFieldLeak")
-    public void updateStudentProfile(StudentProfile studentProfile) {
 
-
-        new AsyncTask<Void, Void, Void>() {
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                CloudantClient client = ClientBuilder.account(DB_USER_NAME)
-                        .username(PROFILES_API_KEY)
-                        .password(PROFILES_API_SECRET)
-                        .build();
-
-                Database db = client.database(PROFILES_DB, false);
-                db.update(studentProfile);
-                Log.e("TAG", "doInBackground: cloudant data was saved.... ");
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                Log.e("TAG","onPostExecute");
-            }
-        }.execute();
-    }
 
 
     // this method updates BroadcastPost Object to the server
@@ -350,33 +278,6 @@ public class DataDAO {
     }
 
 
-
-    // this method updates TextPost Object to the server
-    @SuppressLint("StaticFieldLeak")
-    public void updateTextPost(TextPost textPost) {
-
-
-        new AsyncTask<Void, Void, Void>() {
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                CloudantClient client = ClientBuilder.account(DB_USER_NAME)
-                        .username(POSTS_API_KEY)
-                        .password(POSTS_API_SECRET)
-                        .build();
-
-                Database db = client.database(POSTS_DB, false);
-                db.update(textPost);
-                Log.e("TAG", "doInBackground: cloudant data was saved.... ");
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                Log.e("TAG","onPostExecute");
-            }
-        }.execute();
-    }
 
 
     // this method updates User Object to the server

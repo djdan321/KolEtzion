@@ -1,11 +1,14 @@
 package edu.etzion.koletzion.models;
 
+import java.util.Date;
+
 public class SuggestedContent {
     private String _id;
     private String _rev;
     private MyProfile profile;
     private String content;
     private int count;
+    private long timeStamp;
     //todo add image (learn how to add to server)
 
     //Constructors
@@ -42,7 +45,14 @@ public class SuggestedContent {
     public int getCount() {
         return count;
     }
+    public long getTimeStamp() {
+        return timeStamp;
+    }
 
+    //setter
+    public void setTimestamp(long timestamp) {
+        this.timeStamp = timestamp;
+    }
 
     // toString
     @Override
