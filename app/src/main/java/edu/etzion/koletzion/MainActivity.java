@@ -17,9 +17,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 import edu.etzion.koletzion.Fragments.MainViewPagerFragment;
 import edu.etzion.koletzion.authentication.AuthenticationActivity;
-import edu.etzion.koletzion.database.DataDAO;
-import edu.etzion.koletzion.models.BroadcastPost;
-import edu.etzion.koletzion.models.MyProfile;
+
 import edu.etzion.koletzion.player.ExoPlayerFragment;
 
 public class MainActivity extends AppCompatActivity

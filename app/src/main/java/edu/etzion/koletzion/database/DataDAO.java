@@ -10,10 +10,7 @@ import com.cloudant.client.api.ClientBuilder;
 import com.cloudant.client.api.CloudantClient;
 import com.cloudant.client.api.Database;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.List;
+import java.lang.ref.WeakReference;
 
 import edu.etzion.koletzion.authentication.User;
 import edu.etzion.koletzion.models.BroadcastPost;
@@ -23,6 +20,9 @@ import edu.etzion.koletzion.models.SuggestedContent;
 import edu.etzion.koletzion.models.TextPost;
 //todo test all the write/update methods
 public class DataDAO {
+
+    private static DataDAO instance;
+    private WeakReference<Context> context;
 
     //posts,profiles,suggested content , users
     private final String TEXT_API_KEY = "alfuldstonglareaderignot";
@@ -50,14 +50,21 @@ public class DataDAO {
     private final String USERS_API_SECRET = "1ade9e9b6fe0a6928b2031803f6d54ea68c37ae8";
     private final String USERS_DB = "users";
 
-    public Context context;
-    public DataDAO(){}
+    private DataDAO(){}
 
-    public DataDAO(Context context) {
+    private DataDAO(Context context) {
 
-        this.context=context;
+        this.context= new WeakReference<>(context);
     }
 
+
+
+
+    public static DataDAO getInstance(Context context) {
+        if (instance == null)
+            instance = new DataDAO(context);
+        return instance;
+    }
 
     //todo delete this method writeDB()
 
