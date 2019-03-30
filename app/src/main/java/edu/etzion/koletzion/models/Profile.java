@@ -8,38 +8,36 @@ public class Profile implements Parcelable {
 	private String firstName;
 	private String lastName;
 	private String imgURL;
-	
+
+	// Constructor
+
 	public Profile(String firstName, String lastName) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		//todo get image url from server
 		//todo get ID from server
 	}
-	
+
+	// Getters and setters
+
 	public int getId() {
 		return id;
 	}
-	
 	public String getFirstName() {
 		return firstName;
 	}
-	
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-	
 	public String getLastName() {
 		return lastName;
 	}
-	
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	
 	public String getImgURL() {
 		return imgURL;
 	}
-	
 	public void setImgURL(String imgURL) {
 		this.imgURL = imgURL;
 	}
