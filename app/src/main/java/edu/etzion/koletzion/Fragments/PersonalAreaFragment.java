@@ -1,7 +1,6 @@
 package edu.etzion.koletzion.Fragments;
 
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import edu.etzion.koletzion.R;
-import edu.etzion.koletzion.authentication.User;
 import edu.etzion.koletzion.models.Profile;
 import edu.etzion.koletzion.player.VodDataSource;
 
@@ -31,7 +29,7 @@ public class PersonalAreaFragment extends Fragment {
 	public static PersonalAreaFragment newInstance() {
 		
 		Bundle args = new Bundle();
-		args.putParcelable("profile" ,User.getInstance().getProfile());
+		//todo get profile from current user
 		PersonalAreaFragment fragment = new PersonalAreaFragment();
 		fragment.setArguments(args);
 		return fragment;

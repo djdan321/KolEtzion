@@ -127,7 +127,6 @@ public class RegisterFragment extends Fragment implements Button.OnClickListener
 				.addOnCompleteListener(Objects.requireNonNull(getActivity()), task -> {
 					FirebaseUser currentUser = auth.getCurrentUser();
 					if (task.isSuccessful()) {
-						User.getInstance().setCredentials(email, password);
 						//creating a new profile and saving to the server.
 						List<BroadcastPost> relatedBroadcasts = new ArrayList<>();
 						Profile profile = new Profile(email,firstName,lastName,false,relatedBroadcasts,false,Profile.MOOD_NONE);
