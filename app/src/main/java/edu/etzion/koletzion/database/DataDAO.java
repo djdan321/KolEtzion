@@ -207,13 +207,7 @@ public class DataDAO {
         }.execute();
     }
 
-    /*
-
-    todo add readers
-
-    smart and generic readers using find querys and bringing only relevant data.
-
-     */
+//todo delete readers from here when donr writing them.(YOSSI)
 
     // this method returns list of all the broadcasts from server.
     @SuppressLint("StaticFieldLeak")
