@@ -96,6 +96,7 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
                 DataDAO.getInstance().updateBroadcastPost(broadcasts.get(position));
                 commentsCounter++;
                 holder.tvCommentsCount.setText(commentsCounter + " תגובות");
+                holder.etComment.setText("");
             }
         }));
 
