@@ -31,15 +31,14 @@ public class CommentsDataSource extends AsyncTask<Void,Void, BroadcastPost> {
 
     @Override
     protected BroadcastPost doInBackground(Void... voids) {
-        getBroadcastPostById(postClicked.get_id());
-        return null;
+       
+        return getBroadcastPostById(postClicked.get_id());
     }
     @Override
     protected void onPostExecute(BroadcastPost broadcastPost) {
         RecyclerView rv = this.rv.get();
+        rv.setAdapter(new CommentAdapter(broadcastPost));
         rv.setLayoutManager(new LinearLayoutManager(this.rv.get().getContext()));
-//        rv.setAdapter(new CommentAdapter(broadcastPost));
-//        rv.setAdapter() create adapter instance using the broadcast.
     }
 
     // gets the updated current broadcastpost from the server.
