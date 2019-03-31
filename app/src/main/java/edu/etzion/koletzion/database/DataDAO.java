@@ -4,30 +4,32 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.cloudant.client.api.ClientBuilder;
 import com.cloudant.client.api.CloudantClient;
 import com.cloudant.client.api.Database;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
-import edu.etzion.koletzion.authentication.User;
+
 import edu.etzion.koletzion.models.BroadcastPost;
-import edu.etzion.koletzion.models.MyProfile;
-import edu.etzion.koletzion.models.StudentProfile;
+import edu.etzion.koletzion.models.Profile;
 import edu.etzion.koletzion.models.SuggestedContent;
-import edu.etzion.koletzion.models.TextPost;
-//todo test all the write/update methods
+
+//todo test all the update methods
 public class DataDAO {
 
     private static DataDAO instance;
-    private WeakReference<Context> context;
+
+    private final String DB_USER_NAME = "41c99d88-3264-4be5-b546-ff5a5be07dfb-bluemix";
 
     //posts,profiles,suggested content , users
     private final String TEXT_API_KEY = "alfuldstonglareaderignot";
     private final String TEXT_API_SECRET = "550b2221df5ab5695899f57f26b0ef76550e9fb3";
-    private final String DB_USER_NAME = "41c99d88-3264-4be5-b546-ff5a5be07dfb-bluemix";
     private final String DB_NAME = "demo";
 
      // profiles db credentials
@@ -45,63 +47,19 @@ public class DataDAO {
     private final String SC_API_SECRET = "b873ae0e2398ad46034ed603fe12c721c1b90b5b";
     private final String SC_DB = "suggested_content";
 
- // users db credentials
-    private final String USERS_API_KEY = "heyrenthoughessecelecief";
-    private final String USERS_API_SECRET = "1ade9e9b6fe0a6928b2031803f6d54ea68c37ae8";
-    private final String USERS_DB = "users";
-
     private DataDAO(){}
 
-    private DataDAO(Context context) {
 
-        this.context= new WeakReference<>(context);
-    }
-
-
-
-
-    public static DataDAO getInstance(Context context) {
+    public static DataDAO getInstance() {
         if (instance == null)
-            instance = new DataDAO(context);
+            instance = new DataDAO();
         return instance;
     }
 
-    //todo delete this method writeDB()
 
-
+    // this method writes Profile Object to the server
     @SuppressLint("StaticFieldLeak")
-    public void writeDB() {
-
-
-        new AsyncTask<Void, Void, Void>() {
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                CloudantClient client = ClientBuilder.account(DB_USER_NAME)
-                        .username(TEXT_API_KEY)
-                        .password(TEXT_API_SECRET)
-                        .build();
-
-                //return databases.toString();
-                Database db = client.database(DB_NAME, false);
-                // A Java type that can be serialized to JSON
-                DataDAO myData = new DataDAO();
-                db.save(myData);
-                Log.e("TAG", "doInBackground: cloudant data was saved.... ");
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                Toast.makeText(context.get(), "Data Ok", Toast.LENGTH_SHORT).show();
-            }
-        }.execute();
-    }
-
-
-    // this method writes MyProfile Object to the server
-    @SuppressLint("StaticFieldLeak")
-    public void writeMyProfile(MyProfile myProfile) {
+    public void writeMyProfile(Profile profile) {
 
 
         new AsyncTask<Void, Void, Void>() {
@@ -114,7 +72,8 @@ public class DataDAO {
                         .build();
 
                 Database db = client.database(PROFILES_DB, false);
-                db.save(myProfile);
+                profile.setTimeStamp(new Date().getTime());
+                db.save(profile);
                 Log.e("TAG", "doInBackground: cloudant data was saved.... ");
                 return null;
             }
@@ -126,32 +85,7 @@ public class DataDAO {
         }.execute();
     }
 
-    // this method writes StudentProfile Object to the server
-    @SuppressLint("StaticFieldLeak")
-    public void writeStudentProfile(StudentProfile studentProfile) {
 
-
-        new AsyncTask<Void, Void, Void>() {
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                CloudantClient client = ClientBuilder.account(DB_USER_NAME)
-                        .username(PROFILES_API_KEY)
-                        .password(PROFILES_API_SECRET)
-                        .build();
-
-                Database db = client.database(PROFILES_DB, false);
-                db.save(studentProfile);
-                Log.e("TAG", "doInBackground: cloudant data was saved.... ");
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                Log.e("TAG","onPostExecute");
-            }
-        }.execute();
-    }
 
 
     // this method writes BroadcastPost Object to the server
@@ -169,6 +103,7 @@ public class DataDAO {
                         .build();
 
                 Database db = client.database(POSTS_DB, false);
+                broadcastPost.setTimeStamp(new Date().getTime());
                 db.save(broadcastPost);
                 Log.e("TAG", "doInBackground: cloudant data was saved.... ");
                 return null;
@@ -183,32 +118,6 @@ public class DataDAO {
 
 
 
-    // this method writes TextPost Object to the server
-    @SuppressLint("StaticFieldLeak")
-    public void writeTextPost(TextPost textPost) {
-
-
-        new AsyncTask<Void, Void, Void>() {
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                CloudantClient client = ClientBuilder.account(DB_USER_NAME)
-                        .username(POSTS_API_KEY)
-                        .password(POSTS_API_SECRET)
-                        .build();
-
-                Database db = client.database(POSTS_DB, false);
-                db.save(textPost);
-                Log.e("TAG", "doInBackground: cloudant data was saved.... ");
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                Log.e("TAG","onPostExecute");
-            }
-        }.execute();
-    }
 
 
     // this method writes SuggestedContent Object to the server
@@ -226,6 +135,7 @@ public class DataDAO {
                         .build();
 
                 Database db = client.database(SC_DB, false);
+                suggestedContent.setTimestamp(new Date().getTime());
                 db.save(suggestedContent);
                 Log.e("TAG", "doInBackground: cloudant data was saved.... ");
                 return null;
@@ -239,37 +149,12 @@ public class DataDAO {
     }
 
 
-    // this method writes User Object to the server
+
+
+
+    // this method updates Profile Object to the server
     @SuppressLint("StaticFieldLeak")
-    public void writeUser(User user) {
-
-
-        new AsyncTask<Void, Void, Void>() {
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                CloudantClient client = ClientBuilder.account(DB_USER_NAME)
-                        .username(USERS_API_KEY)
-                        .password(USERS_API_SECRET)
-                        .build();
-
-                Database db = client.database(USERS_DB, false);
-                db.save(user);
-                Log.e("TAG", "doInBackground: cloudant data was saved.... ");
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                Log.e("TAG","onPostExecute");
-            }
-        }.execute();
-    }
-
-
-    // this method updates MyProfile Object to the server
-    @SuppressLint("StaticFieldLeak")
-    public void updateMyProfile(MyProfile myProfile) {
+    public void updateMyProfile(Profile profile) {
 
 
         new AsyncTask<Void, Void, Void>() {
@@ -282,7 +167,7 @@ public class DataDAO {
                         .build();
 
                 Database db = client.database(PROFILES_DB, false);
-                db.update(myProfile);
+                db.update(profile);
                 Log.e("TAG", "doInBackground: cloudant data was saved.... ");
                 return null;
             }
@@ -294,32 +179,7 @@ public class DataDAO {
         }.execute();
     }
 
-    // this method updates StudentProfile Object to the server
-    @SuppressLint("StaticFieldLeak")
-    public void updateStudentProfile(StudentProfile studentProfile) {
 
-
-        new AsyncTask<Void, Void, Void>() {
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                CloudantClient client = ClientBuilder.account(DB_USER_NAME)
-                        .username(PROFILES_API_KEY)
-                        .password(PROFILES_API_SECRET)
-                        .build();
-
-                Database db = client.database(PROFILES_DB, false);
-                db.update(studentProfile);
-                Log.e("TAG", "doInBackground: cloudant data was saved.... ");
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                Log.e("TAG","onPostExecute");
-            }
-        }.execute();
-    }
 
 
     // this method updates BroadcastPost Object to the server
@@ -349,62 +209,6 @@ public class DataDAO {
         }.execute();
     }
 
-
-
-    // this method updates TextPost Object to the server
-    @SuppressLint("StaticFieldLeak")
-    public void updateTextPost(TextPost textPost) {
-
-
-        new AsyncTask<Void, Void, Void>() {
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                CloudantClient client = ClientBuilder.account(DB_USER_NAME)
-                        .username(POSTS_API_KEY)
-                        .password(POSTS_API_SECRET)
-                        .build();
-
-                Database db = client.database(POSTS_DB, false);
-                db.update(textPost);
-                Log.e("TAG", "doInBackground: cloudant data was saved.... ");
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                Log.e("TAG","onPostExecute");
-            }
-        }.execute();
-    }
-
-
-    // this method updates User Object to the server
-    @SuppressLint("StaticFieldLeak")
-    public void updateUser(User user) {
-
-
-        new AsyncTask<Void, Void, Void>() {
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                CloudantClient client = ClientBuilder.account(DB_USER_NAME)
-                        .username(USERS_API_KEY)
-                        .password(USERS_API_SECRET)
-                        .build();
-
-                Database db = client.database(USERS_DB, false);
-                db.update(user);
-                Log.e("TAG", "doInBackground: cloudant data was saved.... ");
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                Log.e("TAG","onPostExecute");
-            }
-        }.execute();
-    }
     /*
 
     todo add readers
@@ -413,6 +217,117 @@ public class DataDAO {
 
      */
 
+    // this method returns list of all the broadcasts from server.
+    @SuppressLint("StaticFieldLeak")
+    public void getAllPosts() {
+        new AsyncTask<Void, Void, List<BroadcastPost>>() {
+
+            @Override
+            protected List<BroadcastPost> doInBackground(Void... voids) {
+                List<BroadcastPost> postsList = new ArrayList<>();
+                CloudantClient client = ClientBuilder.account(DB_USER_NAME)
+                        .username(POSTS_API_KEY)
+                        .password(POSTS_API_SECRET)
+                        .build();
+
+                Database db = client.database("posts", false);
+
+                List<BroadcastPost> list = db.findByIndex("{\n" +
+                        "   \"selector\": {\n" +
+                        "      \"_id\": {\n" +
+                        "         \"$gt\": \"0\"\n" +
+                        "      }\n" +
+                        "   }\n" +
+                        "}", BroadcastPost.class);
+
+                for (BroadcastPost item : list) {
+                    Log.e("check", "checkResult: "+item.toString());
+                    postsList.add(item);
+                }
+                Log.e("check", list.toString());
+                Collections.sort(postsList);
+                return postsList;
+            }
+
+            @Override
+            protected void onPostExecute(List<BroadcastPost> posts) {
+
+            }
+        }.execute();
+    }
+
+    // this method returns a list with all the broadcasters.
+    @SuppressLint("StaticFieldLeak")
+    public void getBroadcasters() {
+        new AsyncTask<Void, Void, List<Profile>>() {
+
+            @Override
+            protected List<Profile> doInBackground(Void... voids) {
+                List<Profile> profiles = new ArrayList<>();
+                CloudantClient client = ClientBuilder.account(DB_USER_NAME)
+                        .username(PROFILES_API_KEY)
+                        .password(PROFILES_API_SECRET)
+                        .build();
+
+                Database db = client.database("profiles", false);
+
+                List<Profile> list = db.findByIndex("{\n"+
+                        "   \"selector\": {\n"+
+                        "      \"isBroadcaster\": true\n"+
+                        "   }\n"+
+                        "}", Profile.class);
+                for (Profile item : list) {
+                    Log.e("check", "checkResult: "+item.toString());
+                    profiles.add(item);
+                }
+                Log.e("check", list.toString());
+                Collections.sort(profiles);
+                return profiles;
+            }
+
+            @Override
+            protected void onPostExecute(List<Profile> profiles) {
+
+            }
+        }.execute();
+
+    }
 
 
+    //this method returns a Profile object
+    @SuppressLint("StaticFieldLeak")
+    public void getProfileByUserName(String userName) {
+
+
+        new AsyncTask<Void, Void, Profile>() {
+
+            @Override
+            protected Profile doInBackground(Void... voids) {
+                Profile profile = null;
+                CloudantClient client = ClientBuilder.account(DB_USER_NAME)
+                        .username(PROFILES_API_KEY)
+                        .password(PROFILES_API_SECRET)
+                        .build();
+
+                Database db = client.database("profiles", false);
+
+                List<Profile> list = db.findByIndex("{\n" +
+                        "   \"selector\": {\n" +
+                        "      \"username\": \""+userName+"\"\n" +
+                        "   }\n" +
+                        "}", Profile.class);
+                for (Profile item : list) {
+                    Log.e("check", "checkResult: "+item.toString());
+                    profile=item;
+                }
+                Log.e("check", list.toString());
+                return profile;
+            }
+
+            @Override
+            protected void onPostExecute(Profile profile) {
+
+            }
+        }.execute();
+    }
 }

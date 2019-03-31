@@ -19,9 +19,10 @@ import edu.etzion.koletzion.player.VodDataSource;
 
 
 public class PersonalAreaFragment extends Fragment {
-	RecyclerView rv;
-	//todo put profile through to set fields
-	//if no profile, set user profile.
+
+	private RecyclerView rv;
+	 //if no profile, set user profile.
+
 	private Profile profile;
 	private ImageView imagePersonalArea;
 	private TextView tvPersonalName;
@@ -51,14 +52,17 @@ public class PersonalAreaFragment extends Fragment {
 		findViews(view);
 		tvPersonalName.setText(String.format("%s %s", profile.getFirstName(),
 				profile.getLastName()));
-		//todo picasso
+
+		//todo get image from profile.
+		
+
 		//todo if(broadcaster) tvPersonalExtra.setText("Broadcast list")
 		// else tvPersonalExtra.setText("Favorites")
+
 		displayMyFeed();
 	}
 	private void displayMyFeed() {
-		//todo now it displays the intire feed from the rest api, we should display specific feed for each profile.
-		//todo this method will be written here and change the method below.
+		//todo change to rvFeedAdapter instance with related posts
 		new VodDataSource(rv, profile).execute();
 	}
 

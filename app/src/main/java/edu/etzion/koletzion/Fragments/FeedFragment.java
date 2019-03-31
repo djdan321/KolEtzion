@@ -16,26 +16,27 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import edu.etzion.koletzion.Adapters.rvBroadcastersAdapter;
 import edu.etzion.koletzion.R;
+
 import edu.etzion.koletzion.models.Profile;
 import edu.etzion.koletzion.player.VodDataSource;
 
 public class FeedFragment extends Fragment {
 	
-	RecyclerView rvFeed;
-	RecyclerView rvBroadcasters;
-	List<Profile> broadcasters;
+	private RecyclerView rvFeed;
+	private RecyclerView rvBroadcasters;
+	private List<Profile> broadcasters;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
 		broadcasters= new ArrayList<>();
-		for (int i = 0; i < 10; i++) {
-
-		broadcasters.add(new Profile("yair", "frid"));
-		broadcasters.add(new Profile("yossi", "appo"));
-		broadcasters.add(new Profile("joe", "joy"));
-		}
+//		for (int i = 0; i < 10; i++) {
+//
+//		broadcasters.add(new Profile("yair", "frid"));
+//		broadcasters.add(new Profile("yossi", "appo"));
+//		broadcasters.add(new Profile("joe", "joy"));
+//		}
 		return inflater.inflate(R.layout.fragment_feed, container, false);
 		
 	}
@@ -48,6 +49,12 @@ public class FeedFragment extends Fragment {
 	
 		rvBroadcasters.setAdapter(new rvBroadcastersAdapter(broadcasters, getContext()));
 		rvBroadcasters.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-		new VodDataSource(rvFeed).execute();
+
+//todo get the profile from the server.
+		List<BroadcastPost> posts = new ArrayList<>();
+		Profile profile = new Profile("yossi","yossi","appo",true,posts,true, Profile.MOOD_FINE);
+
+
+		new VodDataSource(rvFeed,profile).execute();
 	}
 }

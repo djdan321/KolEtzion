@@ -6,14 +6,14 @@ public class User {
 	private static final User ourInstance = new User();
 	private String email, password;
 	private Profile profile;
+	private long timeStamp;
 	
 	public static User getInstance() {
 		return ourInstance;
 	}
-	
+	//todo YAIR delete that class , make sure that i can get username from firebase
 	private User() {
-//		this.setProfile(); fixme
-		//todo find profile
+
 	}
 	
 	public Profile getProfile() {
@@ -26,7 +26,6 @@ public class User {
 	}
 	
 	private Profile getProfileFromServer() {
-		//todo: yossi todo
 		return null;
 	}
 	
@@ -45,5 +44,13 @@ public class User {
 	
 	void setPassword(String password) {
 		this.password = password;
+	}
+
+	public void setTimeStamp(long timeStamp) {
+		this.timeStamp = timeStamp;
+	}
+
+	public long getTimeStamp() {
+		return timeStamp;
 	}
 }

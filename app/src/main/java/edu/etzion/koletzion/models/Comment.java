@@ -1,20 +1,20 @@
 package edu.etzion.koletzion.models;
 
 public class Comment {
-    private MyProfile myProfile;
+    private Profile profile;
     private String content;
 
     //constructor
 
-    public Comment(MyProfile myProfile, String content) {
-        this.myProfile = myProfile;
+    public Comment(Profile profile, String content) {
+        this.profile = profile;
         this.content = content;
     }
 
     // all the getter methods
 
-    public MyProfile getMyProfile() {
-        return myProfile;
+    public Profile getProfile() {
+        return profile;
     }
     public String getContent() {
         return content;
@@ -25,7 +25,7 @@ public class Comment {
     @Override
     public String toString() {
         return "Comment{" +
-                "myProfile=" + myProfile +
+                "profile=" + profile +
                 ", content='" + content + '\'' +
                 '}';
     }

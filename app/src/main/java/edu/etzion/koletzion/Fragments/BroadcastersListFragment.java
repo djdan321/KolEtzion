@@ -23,8 +23,8 @@ import edu.etzion.koletzion.models.Profile;
  */
 public class BroadcastersListFragment extends Fragment {
 	
-	RecyclerView rvBroadcastersList;
-	List<Profile> broadcasters;
+	private RecyclerView rvBroadcastersList;
+	private List<Profile> broadcasters;
 	
 	public BroadcastersListFragment() {
 		// Required empty public constructor
@@ -36,11 +36,11 @@ public class BroadcastersListFragment extends Fragment {
 	                         Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
 		broadcasters = new ArrayList<>();
-		for (int i = 0; i < 5; i++) {
-		broadcasters.add(new Profile("yair", "frid"));
-		broadcasters.add(new Profile("yossi", "appo"));
-		broadcasters.add(new Profile("joe", "joy"));
-		}
+//		for (int i = 0; i < 5; i++) {
+//		broadcasters.add(new Profile("yair", "frid"));
+//		broadcasters.add(new Profile("yossi", "appo"));
+//		broadcasters.add(new Profile("joe", "joy"));
+//		}
 		return inflater.inflate(R.layout.fragment_broadcasters_list, container, false);
 	}
 	

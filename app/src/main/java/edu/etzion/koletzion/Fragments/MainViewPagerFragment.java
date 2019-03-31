@@ -11,11 +11,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.viewpager.widget.ViewPager;
 import edu.etzion.koletzion.Adapters.ViewPagerAdapter;
 import edu.etzion.koletzion.R;
+import edu.etzion.koletzion.models.BroadcastPost;
 import edu.etzion.koletzion.models.Profile;
-import edu.etzion.koletzion.models.StudentProfile;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,11 +26,14 @@ import edu.etzion.koletzion.models.StudentProfile;
 public class MainViewPagerFragment extends Fragment {
     private ViewPager vpMain;
 
-    public MainViewPagerFragment() {
-        // Required empty public constructor
+    public static MainViewPagerFragment newInstance() {
+
+        Bundle args = new Bundle();
+
+        MainViewPagerFragment fragment = new MainViewPagerFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -47,8 +53,12 @@ public class MainViewPagerFragment extends Fragment {
     private void ViewPagerAdapterMainActivity() {
         //this method includes the viewpager adapter that includes all the mainactivity fragments.
         ViewPagerAdapter vpMainAdapter = new ViewPagerAdapter(getFragmentManager());
-        vpMainAdapter.addFragment(PersonalAreaFragment.newInstance(//todo get profile from firebase, current user
-                new Profile("yair", "frid")),"PersonalAreaFragment");
+
+        /*todo get current profile from the server*/
+        List<BroadcastPost> posts = new ArrayList<>();
+        vpMainAdapter.addFragment(PersonalAreaFragment.newInstance(
+                new Profile("yossi","yossi","appo",true,posts,true, Profile.MOOD_FINE)),"PersonalAreaFragment");
+
         vpMainAdapter.addFragment(new BroadcastersListFragment(), "BroadcastersListFragment");
         vpMainAdapter.addFragment(new FeedFragment(),"FeedFragment");
 

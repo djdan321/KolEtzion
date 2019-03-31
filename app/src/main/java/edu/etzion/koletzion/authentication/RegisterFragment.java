@@ -19,6 +19,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
@@ -26,6 +28,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import edu.etzion.koletzion.MainActivity;
 import edu.etzion.koletzion.R;
+import edu.etzion.koletzion.database.DataDAO;
+import edu.etzion.koletzion.models.BroadcastPost;
+import edu.etzion.koletzion.models.Profile;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
@@ -123,7 +128,10 @@ public class RegisterFragment extends Fragment implements Button.OnClickListener
 					FirebaseUser currentUser = auth.getCurrentUser();
 					if (task.isSuccessful()) {
 						User.getInstance().setCredentials(email, password);
-						//todo write to server with method parameters
+						//creating a new profile and saving to the server.
+						List<BroadcastPost> relatedBroadcasts = new ArrayList<>();
+						Profile profile = new Profile(email,firstName,lastName,false,relatedBroadcasts,false,Profile.MOOD_NONE);
+						DataDAO.getInstance().writeMyProfile(profile);
 						// Sign in success, update UI with the signed-in user's information
 						startActivity(new Intent(getContext(), MainActivity.class));
 						Log.d(TAG, "createUserWithEmail:success");

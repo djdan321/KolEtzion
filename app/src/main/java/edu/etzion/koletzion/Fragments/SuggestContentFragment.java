@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -23,6 +24,9 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import edu.etzion.koletzion.R;
+import edu.etzion.koletzion.database.DataDAO;
+import edu.etzion.koletzion.models.Profile;
+import edu.etzion.koletzion.models.SuggestedContent;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -33,10 +37,14 @@ public class SuggestContentFragment extends Fragment {
 
     private static int RESULT_LOAD_IMAGE = 1;
 
-    Button btn;
-    ImageView imageView;
+    private Button btn;
+    private Button btnSuggest;
+    private ImageView imageView;
+    private EditText etSuggest;
+    private Profile profile;
     public SuggestContentFragment() {
         // Required empty public constructor
+        //todo get current profile from server
     }
 
 
@@ -52,11 +60,23 @@ public class SuggestContentFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         btn = view.findViewById(R.id.button);
         imageView = view.findViewById(R.id.ivSuggestedContent);
+        btnSuggest=view.findViewById(R.id.btnSuggest);
+        etSuggest=view.findViewById(R.id.etSuggest);
         btn.setOnClickListener((v -> {
             Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
             photoPickerIntent.setType("image/*");
             startActivityForResult(photoPickerIntent, RESULT_LOAD_IMAGE);
         }));
+        btnSuggest.setOnClickListener((v -> {
+            if(etSuggest.getText().toString().length()>15) {
+                SuggestedContent sc = new SuggestedContent(profile, etSuggest.getText().toString());
+                DataDAO.getInstance().writeSuggestedContent(sc);
+            }
+            else{
+                Toast.makeText(getContext(), "התוכן חייב להכיל 15 תווים לפחות", Toast.LENGTH_SHORT).show();
+            }
+        }));
+
     }
 
     @Override
