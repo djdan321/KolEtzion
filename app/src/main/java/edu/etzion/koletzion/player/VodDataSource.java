@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import edu.etzion.koletzion.Adapters.rvFeedAdapter;
@@ -69,8 +68,8 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 	}
 	
 	private void parseJson(List<Vod> vods, String json) throws JSONException {
-
-
+		
+		
 		JSONArray jsonArray = new JSONArray(json);
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject o = (JSONObject) jsonArray.get(i);
@@ -89,7 +88,7 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 		}
 	}
 	//collecting 2 lists, one of vods from the restapi and the other is from our server.
-
+	
 	@Override
 	protected List<Object> doInBackground(Void... voids) {
 		List<Object> lists = new ArrayList<>();
@@ -97,19 +96,20 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 		List<BroadcastPost> broadcastPosts = getBroadcastPostsFromCloud();
 		lists.add(vods);
 		lists.add(broadcastPosts);
+		
 		return lists;
 	}
 //this methods gets a list with all the broadcasts from the cloud.
-
+	
 	private List<BroadcastPost> getBroadcastPostsFromCloud() {
 		List<BroadcastPost> postsList = new ArrayList<>();
 		CloudantClient client = ClientBuilder.account(DB_USER_NAME)
 				.username(POSTS_API_KEY)
 				.password(POSTS_API_SECRET)
 				.build();
-
+		
 		Database db = client.database(POSTS_DB, false);
-
+		
 		List<BroadcastPost> list = db.findByIndex("{\n" +
 				"   \"selector\": {\n" +
 				"      \"_id\": {\n" +
@@ -117,69 +117,66 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 				"      }\n" +
 				"   }\n" +
 				"}", BroadcastPost.class);
-
+		
 		for (BroadcastPost item : list) {
-			Log.e("check", "checkResult: "+item.toString());
+			Log.e("check", "checkResult: " + item.toString());
 			postsList.add(item);
 		}
 		Log.e("check", list.toString());
 		Collections.sort(postsList);
 		return postsList;
 	}
-
-    // after getting the two lists , we compare between them and looking for a difference.
-    // if the vods list has an extra vods we will update them in our server as well.
-
+	
+	// after getting the two lists , we compare between them and looking for a difference.
+	// if the vods list has an extra vods we will update them in our server as well.
+	
 	@Override
 	protected void onPostExecute(List<Object> list) {
 		List<Vod> vods = (List<Vod>) list.get(0);
 		List<BroadcastPost> broadcastPosts = (List<BroadcastPost>) list.get(1);
-		if(vods.size()==broadcastPosts.size()){
+		if (vods.size() == broadcastPosts.size()) {
 			RecyclerView rv = this.rv.get();
 			rv.setLayoutManager(new LinearLayoutManager(this.rv.get().getContext()));
-			rv.setAdapter(new rvFeedAdapter(rv.getContext(), broadcastPosts,profile));
-		}
-		else{
-		    //checking how many new vods are updated and getting them in to our server.
-		    int diffNum = vods.size()-broadcastPosts.size();
-		    List<Vod> newVods = new ArrayList<>();
-            for (int i = 1; i < diffNum+1; i++) {
-			    Vod vod = vods.get(vods.size()-i);
-
+			rv.setAdapter(new rvFeedAdapter(rv.getContext(), broadcastPosts, profile));
+		} else {
+			//checking how many new vods are updated and getting them in to our server.
+			int diffNum = vods.size() - broadcastPosts.size();
+			List<Vod> newVods = new ArrayList<>();
+			for (int i = 1; i < diffNum + 1; i++) {
+				Vod vod = vods.get(vods.size() - i);
 
 
 //			 these are fictive lists and will be original when the admin will upload the files directly to our app.
 //			 they are nessecery for the instance so i made them
-
-
-
-			List<Profile> broadcasters = new ArrayList<>();
-			List<Profile> listeners = new ArrayList<>();
-			List<Comment> comments = new ArrayList<>();
-			List<Profile> likes = new ArrayList<>();
-
-			BroadcastPost broadcastPost = new BroadcastPost(
-					BroadcastCategory.MUSIC,
-					"description will be added",
-					vod.getFilePath()
-					, broadcasters,
-					listeners,
-					vod.getDuration()/*todo get duration from mp4*/,
-					vod.getStreamName(),
-					comments, likes);
-			broadcastPosts.add(broadcastPost);
-
-
-			DataDAO.getInstance().writeBroadcastPost(broadcastPost);
-            }
-
-            // creating instance of the recyclerview with the updated list from our server.
-
+				
+				
+				List<Profile> broadcasters = new ArrayList<>();
+				List<Profile> listeners = new ArrayList<>();
+				List<Comment> comments = new ArrayList<>();
+				List<Profile> likes = new ArrayList<>();
+				
+				BroadcastPost broadcastPost = new BroadcastPost(
+						BroadcastCategory.MUSIC,
+						"description will be added",
+						vod.getFilePath()
+						, broadcasters,
+						listeners,
+						vod.getDuration()/*todo get duration from mp4*/,
+						vod.getStreamName(),
+						comments, likes);
+				broadcastPosts.add(broadcastPost);
+				
+				
+				DataDAO.getInstance().writeBroadcastPost(broadcastPost);
+			}
+			
+			// creating instance of the recyclerview with the updated list from our server.
+			
 			RecyclerView rv = this.rv.get();
 			rv.setLayoutManager(new LinearLayoutManager(this.rv.get().getContext()));
-			rv.setAdapter(new rvFeedAdapter(rv.getContext(), broadcastPosts,profile));
-
+			rv.setAdapter(new rvFeedAdapter(rv.getContext(), broadcastPosts, profile));
 		}
-
+		
 	}
+	
 }
