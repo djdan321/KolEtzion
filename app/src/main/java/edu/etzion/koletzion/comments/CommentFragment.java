@@ -6,8 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +13,7 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 import edu.etzion.koletzion.R;
+import edu.etzion.koletzion.database.PostDataSource;
 import edu.etzion.koletzion.models.BroadcastPost;
 
 
@@ -43,7 +42,7 @@ public class CommentFragment extends AppCompatDialogFragment {
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		rv = view.findViewById(R.id.commentRecycler);
-		CommentsDataSource source = new CommentsDataSource(post, rv);
+		PostDataSource source = new PostDataSource(post, rv);
 		source.execute();
 		
 	}
