@@ -13,6 +13,7 @@ public class User {
 	}
 	//todo YAIR delete that class , make sure that i can get username from firebase
 	private User() {
+
 	}
 	
 	public Profile getProfile() {

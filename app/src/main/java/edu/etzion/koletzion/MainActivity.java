@@ -141,7 +141,9 @@ public class MainActivity extends AppCompatActivity
 		
 		if (id == R.id.homePage) {
 			// Handle the camera action
+
 			getSupportFragmentManager().beginTransaction().replace(R.id.contentMain,MainViewPagerFragment.newInstance()).commit();
+
 		} else if (id == R.id.logOut){
 			auth.signOut();
 			startAuthenticationActivityIfNeeded();

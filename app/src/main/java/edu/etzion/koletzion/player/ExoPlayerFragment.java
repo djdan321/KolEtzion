@@ -44,7 +44,6 @@ public class ExoPlayerFragment extends Fragment {
 	
 	
 	public void initPlayer(String filePath) {
-		//todo check how to swap the 3 to player.STATE_READY
 		if(player != null && player.getPlaybackState() == 3) player.stop(true);
 		//instantiate exoplayer
 		player = ExoPlayerFactory.newSimpleInstance(getContext());
