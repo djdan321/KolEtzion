@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import edu.etzion.koletzion.Adapters.rvBroadcastersAdapter;
 import edu.etzion.koletzion.R;
+import edu.etzion.koletzion.database.BroadcastersDataSource;
 import edu.etzion.koletzion.models.Profile;
 
 /**
@@ -23,8 +24,8 @@ import edu.etzion.koletzion.models.Profile;
  */
 public class BroadcastersListFragment extends Fragment {
 	
-	RecyclerView rvBroadcastersList;
-	List<Profile> broadcasters;
+	private RecyclerView rvBroadcastersList;
+	private List<Profile> broadcasters;
 	
 	public BroadcastersListFragment() {
 		// Required empty public constructor
@@ -35,10 +36,7 @@ public class BroadcastersListFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		broadcasters = new ArrayList<>();
-		broadcasters.add(new Profile("yair", "frid"));
-		broadcasters.add(new Profile("yossi", "appo"));
-		broadcasters.add(new Profile("joe", "joy"));
+
 		return inflater.inflate(R.layout.fragment_broadcasters_list, container, false);
 	}
 	
@@ -46,8 +44,6 @@ public class BroadcastersListFragment extends Fragment {
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		rvBroadcastersList = view.findViewById(R.id.rvBroadcastersList);
-		
-		rvBroadcastersList.setAdapter(new rvBroadcastersAdapter(broadcasters, getContext()));
-		rvBroadcastersList.setLayoutManager(new GridLayoutManager(getContext(), 3));
+		new BroadcastersDataSource(rvBroadcastersList,true).execute();
 	}
 }
