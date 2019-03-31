@@ -63,9 +63,10 @@ public class BroadcastersDataSource extends AsyncTask<Void,Void,List<Profile>> {
 
     @Override
     protected void onPostExecute(List<Profile> profiles) {
+        //todo set another xml that shows broadcaster profile in a bigger size and to make rvBroadcasteradapter gets bool and then display the relevant xml(by thye size of the view)
         RecyclerView rv = this.rv.get();
         if(isGrid)
-            rv.setLayoutManager(new GridLayoutManager(this.rv.get().getContext(), 3));
+            rv.setLayoutManager(new GridLayoutManager(this.rv.get().getContext(), 2));
         else
             rv.setLayoutManager(new LinearLayoutManager(this.rv.get().getContext(), LinearLayoutManager.HORIZONTAL, false));
         rv.setAdapter(new rvBroadcastersAdapter(profiles,rv.getContext()));
