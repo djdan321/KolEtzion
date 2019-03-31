@@ -18,14 +18,15 @@ import edu.etzion.koletzion.player.VodDataSource;
 
 
 public class PersonalAreaFragment extends Fragment {
-
+	
 	private RecyclerView rv;
-	 //if no profile, set user profile.
-
+	//if no profile, set user profile.
+	
 	private Profile profile;
 	private ImageView imagePersonalArea;
 	private TextView tvPersonalName;
 	private TextView tvPersonalExtra;
+	
 	public static PersonalAreaFragment newInstance() {
 		
 		Bundle args = new Bundle();
@@ -44,27 +45,28 @@ public class PersonalAreaFragment extends Fragment {
 		return fragment;
 	}
 	
-
+	
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		findViews(view);
 		tvPersonalName.setText(String.format("%s %s", profile.getFirstName(),
 				profile.getLastName()));
-
+		
 		//todo get image from profile.
 		
-
+		
 		//todo if(broadcaster) tvPersonalExtra.setText("Broadcast list")
 		// else tvPersonalExtra.setText("Favorites")
-
+		
 		displayMyFeed();
 	}
+	
 	private void displayMyFeed() {
 		//todo change to rvFeedAdapter instance with related posts
 		new VodDataSource(rv, profile).execute();
 	}
-
+	
 	private void findViews(@NonNull View view) {
 		rv = view.findViewById(R.id.rvProfileType);
 		imagePersonalArea = view.findViewById(R.id.imagePersonalArea);
@@ -73,14 +75,13 @@ public class PersonalAreaFragment extends Fragment {
 		profile = getArguments().getParcelable("profile");
 	}
 	
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_personal_area, container, false);
-    }
-
-   
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	                         Bundle savedInstanceState) {
+		// Inflate the layout for this fragment
+		return inflater.inflate(R.layout.fragment_personal_area, container, false);
+	}
+	
+	
 }

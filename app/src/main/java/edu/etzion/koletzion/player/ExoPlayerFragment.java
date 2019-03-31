@@ -50,6 +50,7 @@ public class ExoPlayerFragment extends Fragment {
 		
 		//bind exoplayer to a view
 		playerView.setPlayer(player);
+		playerView.setControllerHideOnTouch(false);
 		// Produces DataSource instances through which media data is loaded.
 		Uri audioUri = Uri.parse(APP_PATH + filePath);
 		ExtractorMediaSource audioSource =
