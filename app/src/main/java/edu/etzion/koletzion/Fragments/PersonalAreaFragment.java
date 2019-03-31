@@ -1,12 +1,21 @@
 package edu.etzion.koletzion.Fragments;
 
 
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.cloudant.client.api.ClientBuilder;
+import com.cloudant.client.api.CloudantClient;
+import com.cloudant.client.api.Database;
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,7 +27,12 @@ import edu.etzion.koletzion.player.VodDataSource;
 
 
 public class PersonalAreaFragment extends Fragment {
-	
+	private final static String PROFILES_API_KEY = "ctleyeaciedgedgessithurd";
+	private final static String PROFILES_API_SECRET = "a31366679368d7d26408f78ab1402a23485e061e";
+	private final static String PROFILES_DB = "profiles";
+	private final static String DB_USER_NAME = "41c99d88-3264-4be5-b546-ff5a5be07dfb-bluemix";
+
+
 	private RecyclerView rv;
 	//if no profile, set user profile.
 	
@@ -26,16 +40,48 @@ public class PersonalAreaFragment extends Fragment {
 	private ImageView imagePersonalArea;
 	private TextView tvPersonalName;
 	private TextView tvPersonalExtra;
-	
+
 	public static PersonalAreaFragment newInstance() {
-		
-		Bundle args = new Bundle();
-		//todo get profile from current user
+
 		PersonalAreaFragment fragment = new PersonalAreaFragment();
-		fragment.setArguments(args);
+		getCurrentProfileFromServer(fragment);
 		return fragment;
 	}
-	
+
+	private static void getCurrentProfileFromServer(Fragment fragment) {
+		new AsyncTask<Void,Void,Profile>(){
+			@Override
+			protected Profile doInBackground(Void... voids) {
+				Profile profile = null;
+				CloudantClient client = ClientBuilder.account(DB_USER_NAME)
+						.username(PROFILES_API_KEY)
+						.password(PROFILES_API_SECRET)
+						.build();
+
+				Database db = client.database(PROFILES_DB, false);
+
+				List<Profile> list = db.findByIndex("{\n" +
+						"   \"selector\": {\n" +
+						"      \"username\": \""+ FirebaseAuth.getInstance().getCurrentUser().getEmail()+"\"\n" +
+						"   }\n" +
+						"}", Profile.class);
+				for (Profile item : list) {
+					Log.e("check", "checkResult: "+item.toString());
+					profile=item;
+				}
+				Log.e("check", list.toString());
+				return profile;
+			}
+
+			@Override
+			protected void onPostExecute(Profile profile) {
+				Bundle args = new Bundle();
+				args.putParcelable("profile", profile);
+				fragment.setArguments(args);
+			}
+		}.execute();
+	}
+
 	public static PersonalAreaFragment newInstance(Profile p) {
 		
 		Bundle args = new Bundle();
