@@ -23,6 +23,7 @@ public class rvBroadcastersAdapter extends RecyclerView.Adapter<rvBroadcastersAd
     private Context context;
     private View view;
 
+
     public rvBroadcastersAdapter(List<Profile> broadccasters,Context context) {
         this.broadcasters = broadccasters;
 //        this.broadcasters = getBroadcastersList();
@@ -74,6 +75,7 @@ public class rvBroadcastersAdapter extends RecyclerView.Adapter<rvBroadcastersAd
             tvBroadcaster = itemView.findViewById(R.id.tvBroadcaster);
         }
     }
+
 
 }
 

@@ -20,8 +20,10 @@ import edu.etzion.koletzion.player.VodDataSource;
 
 
 public class PersonalAreaFragment extends Fragment {
+
 	private RecyclerView rv;
 	 //if no profile, set user profile.
+
 	private Profile profile;
 	private ImageView imagePersonalArea;
 	private TextView tvPersonalName;
@@ -51,11 +53,15 @@ public class PersonalAreaFragment extends Fragment {
 		findViews(view);
 		tvPersonalName.setText(String.format("%s %s", profile.getFirstName(),
 				profile.getLastName()));
+
 		//todo get image from profile.
-		//todo switch case on type for tvPersonalExtra.
+		
+
+		//todo if(broadcaster) tvPersonalExtra.setText("Broadcast list")
+		// else tvPersonalExtra.setText("Favorites")
+
 		displayMyFeed();
 	}
-
 	private void displayMyFeed() {
 		//todo change to rvFeedAdapter instance with related posts
 		new VodDataSource(rv, profile).execute();

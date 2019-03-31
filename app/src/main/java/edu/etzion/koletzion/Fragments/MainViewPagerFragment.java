@@ -53,10 +53,12 @@ public class MainViewPagerFragment extends Fragment {
     private void ViewPagerAdapterMainActivity() {
         //this method includes the viewpager adapter that includes all the mainactivity fragments.
         ViewPagerAdapter vpMainAdapter = new ViewPagerAdapter(getFragmentManager());
+
         /*todo get current profile from the server*/
         List<BroadcastPost> posts = new ArrayList<>();
         vpMainAdapter.addFragment(PersonalAreaFragment.newInstance(
                 new Profile("yossi","yossi","appo",true,posts,true, Profile.MOOD_FINE)),"PersonalAreaFragment");
+
         vpMainAdapter.addFragment(new BroadcastersListFragment(), "BroadcastersListFragment");
         vpMainAdapter.addFragment(new FeedFragment(),"FeedFragment");
 
