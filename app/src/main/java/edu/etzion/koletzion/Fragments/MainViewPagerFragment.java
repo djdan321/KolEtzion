@@ -11,9 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.viewpager.widget.ViewPager;
 import edu.etzion.koletzion.Adapters.ViewPagerAdapter;
 import edu.etzion.koletzion.R;
+import edu.etzion.koletzion.models.BroadcastPost;
 import edu.etzion.koletzion.models.Profile;
 
 /**
@@ -49,8 +53,10 @@ public class MainViewPagerFragment extends Fragment {
     private void ViewPagerAdapterMainActivity() {
         //this method includes the viewpager adapter that includes all the mainactivity fragments.
         ViewPagerAdapter vpMainAdapter = new ViewPagerAdapter(getFragmentManager());
-//        vpMainAdapter.addFragment(PersonalAreaFragment.newInstance(/*todo method getProfileByUserName() from server*/
-//                new Profile("yair", "frid")),"PersonalAreaFragment");
+        /*todo get current profile from the server*/
+        List<BroadcastPost> posts = new ArrayList<>();
+        vpMainAdapter.addFragment(PersonalAreaFragment.newInstance(
+                new Profile("yossi","yossi","appo",true,posts,true, Profile.MOOD_FINE)),"PersonalAreaFragment");
         vpMainAdapter.addFragment(new BroadcastersListFragment(), "BroadcastersListFragment");
         vpMainAdapter.addFragment(new FeedFragment(),"FeedFragment");
 

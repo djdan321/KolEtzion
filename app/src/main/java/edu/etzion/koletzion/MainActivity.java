@@ -35,13 +35,11 @@ import edu.etzion.koletzion.player.ExoPlayerFragment;
 
 public class MainActivity extends AppCompatActivity
 		implements NavigationView.OnNavigationItemSelectedListener {
-	FirebaseAuth auth;
-	ExoPlayerFragment playerFragment;
-	FrameLayout frame;
-	Toolbar toolbar;
-	List<Profile> profiles1;
-	Profile profile1;
-	Profile p;
+	private FirebaseAuth auth;
+	private ExoPlayerFragment playerFragment;
+	private FrameLayout frame;
+	private Toolbar toolbar;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -70,7 +68,7 @@ public class MainActivity extends AppCompatActivity
 	}
 
 	private void testDB() {
-		DataDAO db = DataDAO.getInstance(this);
+//		DataDAO db = DataDAO.getInstance(this);
 		List<BroadcastPost> posts = new ArrayList<>();
 		List<Profile> profiles = new ArrayList<>();
 		List<Comment> comments = new ArrayList<>();
@@ -81,7 +79,7 @@ public class MainActivity extends AppCompatActivity
 //		db.writeBroadcastPost(new BroadcastPost(BroadcastCategory.POLITICS,"blablablabla","URL",profiles,profiles,43545,"title",comments,profiles));
 //		List<BroadcastPost> list = db.getAllPosts();
 //		profiles1 = db.getBroadcasters();
-		profiles1 = db.getProfileByUserName("yossi");
+
 
 	}
 

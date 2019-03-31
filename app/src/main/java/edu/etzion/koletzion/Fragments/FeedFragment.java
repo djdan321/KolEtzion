@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import edu.etzion.koletzion.Adapters.rvBroadcastersAdapter;
 import edu.etzion.koletzion.R;
+import edu.etzion.koletzion.models.BroadcastPost;
 import edu.etzion.koletzion.models.Profile;
 import edu.etzion.koletzion.player.VodDataSource;
 
@@ -48,6 +49,12 @@ public class FeedFragment extends Fragment {
 	
 		rvBroadcasters.setAdapter(new rvBroadcastersAdapter(broadcasters, getContext()));
 		rvBroadcasters.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-		new VodDataSource(rvFeed).execute();
+
+//todo get the profile from the server.
+		List<BroadcastPost> posts = new ArrayList<>();
+		Profile profile = new Profile("yossi","yossi","appo",true,posts,true, Profile.MOOD_FINE);
+
+
+		new VodDataSource(rvFeed,profile).execute();
 	}
 }

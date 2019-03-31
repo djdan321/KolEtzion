@@ -29,7 +29,7 @@
         android:layout_marginBottom="8dp"
         android:src="@drawable/broadcastpost"
         app:layout_constraintBottom_toTopOf="@+id/guideline5"
-        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintEnd_toStartOf="@+id/ivFavorite"
         app:layout_constraintStart_toEndOf="@+id/imageView2"
         app:layout_constraintTop_toTopOf="@+id/guideline4"
         app:layout_constraintVertical_bias="0.6" />
@@ -65,7 +65,7 @@
 
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/etSuggest"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="24dp"
@@ -83,7 +83,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline5" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnSuggest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -106,7 +106,7 @@
         app:layout_constraintGuide_percent="0.9" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/ivFavorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"

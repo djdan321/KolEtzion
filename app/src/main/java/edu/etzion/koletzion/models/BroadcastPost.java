@@ -83,7 +83,8 @@ public class BroadcastPost implements Comparable<BroadcastPost>{
     public long getTimeStamp() {
         return timeStamp;
     }
-
+    public int getLikesCount(){return likes.size();}
+    public int getCommentsCount(){return comments.size();}
     //setter
 
     public void setTimeStamp(long timeStamp) {

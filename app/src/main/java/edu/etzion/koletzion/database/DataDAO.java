@@ -24,7 +24,7 @@ import edu.etzion.koletzion.models.SuggestedContent;
 public class DataDAO {
 
     private static DataDAO instance;
-    private WeakReference<Context> context;
+
     private final String DB_USER_NAME = "41c99d88-3264-4be5-b546-ff5a5be07dfb-bluemix";
 
     //posts,profiles,suggested content , users
@@ -49,14 +49,10 @@ public class DataDAO {
 
     private DataDAO(){}
 
-    private DataDAO(Context context) {
 
-        this.context = new WeakReference<>(context);
-    }
-
-    public static DataDAO getInstance(Context context) {
+    public static DataDAO getInstance() {
         if (instance == null)
-            instance = new DataDAO(context);
+            instance = new DataDAO();
         return instance;
     }
 
@@ -223,12 +219,12 @@ public class DataDAO {
 
     // this method returns list of all the broadcasts from server.
     @SuppressLint("StaticFieldLeak")
-    public  List<BroadcastPost> getAllPosts() {
-        List<BroadcastPost> postsList = new ArrayList<>();
-        new AsyncTask<Void, Void, Void>() {
+    public void getAllPosts() {
+        new AsyncTask<Void, Void, List<BroadcastPost>>() {
 
             @Override
-            protected Void doInBackground(Void... voids) {
+            protected List<BroadcastPost> doInBackground(Void... voids) {
+                List<BroadcastPost> postsList = new ArrayList<>();
                 CloudantClient client = ClientBuilder.account(DB_USER_NAME)
                         .username(POSTS_API_KEY)
                         .password(POSTS_API_SECRET)
@@ -249,26 +245,25 @@ public class DataDAO {
                     postsList.add(item);
                 }
                 Log.e("check", list.toString());
-                return null;
+                Collections.sort(postsList);
+                return postsList;
             }
 
             @Override
-            protected void onPostExecute(Void aVoid) {
+            protected void onPostExecute(List<BroadcastPost> posts) {
 
             }
         }.execute();
-        Collections.sort(postsList);
-        return postsList;
     }
 
     // this method returns a list with all the broadcasters.
     @SuppressLint("StaticFieldLeak")
-    public List<Profile> getBroadcasters() {
-        List<Profile> profiles = new ArrayList<>();
-        new AsyncTask<Void, Void, Void>() {
+    public void getBroadcasters() {
+        new AsyncTask<Void, Void, List<Profile>>() {
 
             @Override
-            protected Void doInBackground(Void... voids) {
+            protected List<Profile> doInBackground(Void... voids) {
+                List<Profile> profiles = new ArrayList<>();
                 CloudantClient client = ClientBuilder.account(DB_USER_NAME)
                         .username(PROFILES_API_KEY)
                         .password(PROFILES_API_SECRET)
@@ -286,28 +281,29 @@ public class DataDAO {
                     profiles.add(item);
                 }
                 Log.e("check", list.toString());
-                return null;
+                Collections.sort(profiles);
+                return profiles;
             }
 
             @Override
-            protected void onPostExecute(Void aVoid) {
+            protected void onPostExecute(List<Profile> profiles) {
 
             }
         }.execute();
-        Collections.sort(profiles);
-        return profiles;
+
     }
 
 
     //this method returns a Profile object
     @SuppressLint("StaticFieldLeak")
-    public List<Profile> getProfileByUserName(String userName) {
+    public void getProfileByUserName(String userName) {
 
-        List<Profile> profiles =new ArrayList<>();
-        new AsyncTask<Void, Void, Void>() {
+
+        new AsyncTask<Void, Void, Profile>() {
 
             @Override
-            protected Void doInBackground(Void... voids) {
+            protected Profile doInBackground(Void... voids) {
+                Profile profile = null;
                 CloudantClient client = ClientBuilder.account(DB_USER_NAME)
                         .username(PROFILES_API_KEY)
                         .password(PROFILES_API_SECRET)
@@ -322,17 +318,16 @@ public class DataDAO {
                         "}", Profile.class);
                 for (Profile item : list) {
                     Log.e("check", "checkResult: "+item.toString());
-                    profiles.add(item);
+                    profile=item;
                 }
                 Log.e("check", list.toString());
-                return null;
+                return profile;
             }
 
             @Override
-            protected void onPostExecute(Void aVoid) {
+            protected void onPostExecute(Profile profile) {
 
             }
         }.execute();
-        return profiles;
     }
 }

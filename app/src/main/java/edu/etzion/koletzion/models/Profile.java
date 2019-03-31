@@ -77,6 +77,7 @@ public class Profile implements Parcelable , Comparable<Profile> {
         return timeStamp;
     }
 
+
     // Setters
 
     public void setUsername(String username) {
