@@ -91,10 +91,13 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
 
         //adding a comment to the broadcast
         holder.ivComment.setOnClickListener((v -> {
-            broadcasts.get(position).addComment(new Comment(profile,holder.etComment.getText().toString()));
-            DataDAO.getInstance().updateBroadcastPost(broadcasts.get(position));
-            commentsCounter++;
-            holder.tvCommentsCount.setText(commentsCounter+ " תגובות");
+            if(holder.etComment.getText().toString().length()>0) {
+                broadcasts.get(position).addComment(new Comment(profile, holder.etComment.getText().toString()));
+                DataDAO.getInstance().updateBroadcastPost(broadcasts.get(position));
+                commentsCounter++;
+                holder.tvCommentsCount.setText(commentsCounter + " תגובות");
+                holder.etComment.setText("");
+            }
         }));
 
 

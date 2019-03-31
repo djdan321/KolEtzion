@@ -330,4 +330,27 @@ public class DataDAO {
             }
         }.execute();
     }
+
+    public BroadcastPost getBroadcastPostById(String id){
+        BroadcastPost broadcastPost = null;
+        CloudantClient client = ClientBuilder.account(DB_USER_NAME)
+                .username(POSTS_API_KEY)
+                .password(POSTS_API_SECRET)
+                .build();
+
+        Database db = client.database(POSTS_DB, false);
+
+        List<BroadcastPost> list = db.findByIndex("{\n" +
+                "   \"selector\": {\n" +
+                "      \"_id\": \""+id+"\"\n" +
+                "   }\n" +
+                "}", BroadcastPost.class);
+        for (BroadcastPost item : list) {
+            Log.e("check", "checkResult: "+item.toString());
+            broadcastPost=item;
+        }
+        Log.e("check", list.toString());
+        return broadcastPost;
+
+    }
 }
