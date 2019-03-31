@@ -1,8 +1,12 @@
 package edu.etzion.koletzion.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class BroadcastPost implements Comparable<BroadcastPost>{
+public class BroadcastPost implements Comparable<BroadcastPost>, Parcelable {
     private BroadcastCategory type;
     private String description;
     private String streamURL;
@@ -135,4 +139,54 @@ public class BroadcastPost implements Comparable<BroadcastPost>{
     public int compareTo(BroadcastPost o) {
         return (int) (this.timeStamp-o.getTimeStamp());
     }
+    
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+    
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.type == null ? -1 : this.type.ordinal());
+        dest.writeString(this.description);
+        dest.writeString(this.streamURL);
+        dest.writeTypedList(this.broadcasters);
+        dest.writeTypedList(this.listeners);
+        dest.writeLong(this.duration);
+        dest.writeString(this._id);
+        dest.writeString(this._rev);
+        dest.writeString(this.title);
+        dest.writeList(this.comments);
+        dest.writeTypedList(this.likes);
+        dest.writeLong(this.timeStamp);
+    }
+    
+    protected BroadcastPost(Parcel in) {
+        int tmpType = in.readInt();
+        this.type = tmpType == -1 ? null : BroadcastCategory.values()[tmpType];
+        this.description = in.readString();
+        this.streamURL = in.readString();
+        this.broadcasters = in.createTypedArrayList(Profile.CREATOR);
+        this.listeners = in.createTypedArrayList(Profile.CREATOR);
+        this.duration = in.readLong();
+        this._id = in.readString();
+        this._rev = in.readString();
+        this.title = in.readString();
+        this.comments = new ArrayList<Comment>();
+        in.readList(this.comments, Comment.class.getClassLoader());
+        this.likes = in.createTypedArrayList(Profile.CREATOR);
+        this.timeStamp = in.readLong();
+    }
+    
+    public static final Parcelable.Creator<BroadcastPost> CREATOR = new Parcelable.Creator<BroadcastPost>() {
+        @Override
+        public BroadcastPost createFromParcel(Parcel source) {
+            return new BroadcastPost(source);
+        }
+        
+        @Override
+        public BroadcastPost[] newArray(int size) {
+            return new BroadcastPost[size];
+        }
+    };
 }

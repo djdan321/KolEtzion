@@ -195,7 +195,6 @@ public class DataDAO {
                         .username(POSTS_API_KEY)
                         .password(POSTS_API_SECRET)
                         .build();
-
                 Database db = client.database(POSTS_DB, false);
                 db.update(broadcastPost);
                 Log.e("TAG", "doInBackground: cloudant data was saved.... ");
