@@ -9,7 +9,7 @@ import com.cloudant.client.api.ClientBuilder;
 import com.cloudant.client.api.CloudantClient;
 import com.cloudant.client.api.Database;
 
-import java.lang.ref.WeakReference;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -207,13 +207,7 @@ public class DataDAO {
         }.execute();
     }
 
-    /*
-
-    todo add readers
-
-    smart and generic readers using find querys and bringing only relevant data.
-
-     */
+//todo delete readers from here when donr writing them.(YOSSI)
 
     // this method returns list of all the broadcasts from server.
     @SuppressLint("StaticFieldLeak")

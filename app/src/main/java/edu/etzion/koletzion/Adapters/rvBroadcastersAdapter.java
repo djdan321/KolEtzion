@@ -26,15 +26,7 @@ public class rvBroadcastersAdapter extends RecyclerView.Adapter<rvBroadcastersAd
 
     public rvBroadcastersAdapter(List<Profile> broadccasters,Context context) {
         this.broadcasters = broadccasters;
-//        this.broadcasters = getBroadcastersList();
         this.context = context;
-    }
-
-    private List<Profile> getBroadcastersList() {
-        List<Profile> profiles = new ArrayList<>();
-        //todo get the list of the profiles of the broadcasters from the server.
-
-        return profiles;
     }
 
     @NonNull

@@ -1,4 +1,4 @@
-package edu.etzion.koletzion.comments;
+package edu.etzion.koletzion.database;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -12,10 +12,10 @@ import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import edu.etzion.koletzion.Adapters.rvFeedAdapter;
+import edu.etzion.koletzion.comments.CommentAdapter;
 import edu.etzion.koletzion.models.BroadcastPost;
 
-public class CommentsDataSource extends AsyncTask<Void,Void, BroadcastPost> {
+public class PostDataSource extends AsyncTask<Void,Void, BroadcastPost> {
     private final String POSTS_API_KEY = "mitereeneringledituriess";
     private final String POSTS_API_SECRET = "7a76edb293ad60dbef1a92be96248116b74d9ea3";
     private final String POSTS_DB = "posts";
@@ -24,7 +24,7 @@ public class CommentsDataSource extends AsyncTask<Void,Void, BroadcastPost> {
     private BroadcastPost postClicked;
     private WeakReference<RecyclerView> rv;
 
-    public CommentsDataSource(BroadcastPost postClicked, RecyclerView rv) {
+    public PostDataSource(BroadcastPost postClicked, RecyclerView rv) {
         this.postClicked = postClicked;
         this.rv = new WeakReference<>(rv);
     }

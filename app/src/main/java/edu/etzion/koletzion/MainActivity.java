@@ -68,14 +68,14 @@ public class MainActivity extends AppCompatActivity
 	}
 
 	private void testDB() {
-//		DataDAO db = DataDAO.getInstance(this);
+//		DataDAO db = DataDAO.getInstance();
 		List<BroadcastPost> posts = new ArrayList<>();
 		List<Profile> profiles = new ArrayList<>();
 		List<Comment> comments = new ArrayList<>();
-		Profile profile = new Profile("yossi","yossi","appo",true,posts,true, Profile.MOOD_FINE);
+//		Profile profile = new Profile("joy","gedgje","appo",true,posts,true, Profile.MOOD_FINE);
+
 //		db.writeSuggestedContent(new SuggestedContent(profile,"you should right this"));
-//		db.writeMyProfile(profile);
-//		db.writeMyProfile(profile);
+
 //		db.writeBroadcastPost(new BroadcastPost(BroadcastCategory.POLITICS,"blablablabla","URL",profiles,profiles,43545,"title",comments,profiles));
 //		List<BroadcastPost> list = db.getAllPosts();
 //		profiles1 = db.getBroadcasters();
