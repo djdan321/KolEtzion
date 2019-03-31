@@ -9,7 +9,7 @@ import com.cloudant.client.api.ClientBuilder;
 import com.cloudant.client.api.CloudantClient;
 import com.cloudant.client.api.Database;
 
-import java.lang.ref.WeakReference;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
