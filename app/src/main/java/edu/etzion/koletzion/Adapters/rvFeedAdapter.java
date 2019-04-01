@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import edu.etzion.koletzion.MainActivity;
 import edu.etzion.koletzion.R;
 import edu.etzion.koletzion.comments.CommentFragment;
+import edu.etzion.koletzion.comments.LikeFragment;
 import edu.etzion.koletzion.database.DataDAO;
 import edu.etzion.koletzion.models.BroadcastPost;
 import edu.etzion.koletzion.models.Comment;
@@ -91,6 +92,13 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
 			holder.tvLikesCount.setText(likes.size() + " לייקים");
 		});
 		
+		//showing Likers
+		holder.tvLikesCount.setOnClickListener(v -> {
+			MainActivity a = (MainActivity) context;
+			LikeFragment.newInstance(broadcasts.get(position)).
+					show(a.getSupportFragmentManager(), "tag");
+		});
+		
 		//adding a comment to the broadcast
 		holder.ivComment.setOnClickListener((v -> {
 			if (holder.etComment.getText().toString().length() > 0) {
@@ -105,8 +113,7 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
 		//displaying all comments in fragment dialog
 		
 		holder.tvCommentsCount.setOnClickListener((v) -> {
-			MainActivity a;
-			a = (MainActivity) context;
+			MainActivity a = (MainActivity) context;
 			
 			CommentFragment.newInstance(broadcasts.get(position)).
 					show(a.getSupportFragmentManager(), "tag");
