@@ -60,16 +60,12 @@ public class PersonalAreaFragment extends Fragment {
 		//todo if(broadcaster) tvPersonalExtra.setText("Broadcast list")
 		// else tvPersonalExtra.setText("Favorites")
 		
-		if(getArguments().getString("flag") == null){
-			displayMyFeed(new rvFeedAdapter(getContext(), profile, true));
-		}else{
-			displayMyFeed(new rvFeedAdapter(getContext(), profile));
-		}
+		displayMyFeed();
 	}
 	
-	private void displayMyFeed(rvFeedAdapter adapter) {
+	private void displayMyFeed() {
 		//todo change to rvFeedAdapter instance with related posts
-		new VodDataSource(rv, profile, adapter).execute();
+		new VodDataSource(rv, profile, false).execute();
 	}
 	
 	private void findViews(@NonNull View view) {
