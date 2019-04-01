@@ -1,11 +1,16 @@
 package edu.etzion.koletzion.player;
 
+import android.media.MediaDataSource;
+import android.media.MediaMetadataRetriever;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.cloudant.client.api.ClientBuilder;
 import com.cloudant.client.api.CloudantClient;
 import com.cloudant.client.api.Database;
+import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,6 +20,7 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -96,7 +102,6 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 		List<BroadcastPost> broadcastPosts = getBroadcastPostsFromCloud();
 		lists.add(vods);
 		lists.add(broadcastPosts);
-		
 		return lists;
 	}
 //this methods gets a list with all the broadcasts from the cloud.
@@ -161,7 +166,8 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 						vod.getFilePath()
 						, broadcasters,
 						listeners,
-						vod.getDuration()/*todo get duration from mp4*/,
+						getDurationFromFile(ExoPlayerFragment.APP_PATH + vod.getFilePath()),
+						
 						vod.getStreamName(),
 						comments, likes);
 				broadcastPosts.add(broadcastPost);
@@ -177,6 +183,15 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 			rv.setAdapter(new rvFeedAdapter(rv.getContext(), broadcastPosts, profile));
 		}
 		
+	}
+	
+	private long getDurationFromFile(String filePath) {
+		MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+		retriever.setDataSource(filePath, new HashMap<String, String>());
+		long l = Long.parseLong(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
+		System.out.println(l);
+		retriever.release();
+		return l;
 	}
 	
 }

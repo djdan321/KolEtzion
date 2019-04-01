@@ -172,7 +172,7 @@ public class DataDAO {
 	
 	// this method updates BroadcastPost Object to the server
 	@SuppressLint("StaticFieldLeak")
-	public synchronized void updateBroadcastPost(BroadcastPost broadcastPost) {
+	public void updateBroadcastPost(BroadcastPost broadcastPost) {
 		
 		new AsyncTask<Void, Void, Void>() {
 			
