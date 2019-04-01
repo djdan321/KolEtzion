@@ -53,18 +53,19 @@ public class PersonalAreaFragment extends Fragment {
 		findViews(view);
 		tvPersonalName.setText(String.format("%s %s", profile.getFirstName(),
 				profile.getLastName()));
-		displayMyFeed();
+		
 		//todo get image from profile.
 		
 		
-
+		//todo if(broadcaster) tvPersonalExtra.setText("Broadcast list")
 		// else tvPersonalExtra.setText("Favorites")
-
+		
+		displayMyFeed();
 	}
 	
 	private void displayMyFeed() {
 		//todo change to rvFeedAdapter instance with related posts
-		new VodDataSource(rv, profile,false).execute();
+		new VodDataSource(rv, profile, false).execute();
 	}
 	
 	private void findViews(@NonNull View view) {

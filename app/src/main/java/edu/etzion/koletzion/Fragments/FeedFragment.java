@@ -78,7 +78,7 @@ public class FeedFragment extends Fragment {
 			
 			@Override
 			protected void onPostExecute(Profile profile) {
-				new VodDataSource(rvFeed,profile, true).execute();
+				new VodDataSource(rvFeed, profile, true).execute();
 			}
 		}.execute();
 		

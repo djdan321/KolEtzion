@@ -32,9 +32,9 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
+	private boolean isMainFeed;
 	private WeakReference<RecyclerView> rv;
 	private Profile profile;
-	boolean isMainFeed;
 	private final String POSTS_API_KEY = "mitereeneringledituriess";
 	private final String POSTS_API_SECRET = "7a76edb293ad60dbef1a92be96248116b74d9ea3";
 	private final String POSTS_DB = "posts";
@@ -43,9 +43,9 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 	public VodDataSource(RecyclerView rv, Profile profile, boolean isMainFeed) {
 		this.rv = new WeakReference<>(rv);
 		this.profile = profile;
-		this.isMainFeed=isMainFeed;
-
+		this.isMainFeed = isMainFeed;
 	}
+	
 	
 	private List<Vod> getVodList() {
 		List<Vod> vods = new ArrayList<>();
@@ -140,9 +140,11 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 			List<Vod> newVods = new ArrayList<>();
 			for (int i = 1; i < diffNum + 1; i++) {
 				Vod vod = vods.get(vods.size() - i);
-//				newVods.add(vod);
+
+
 //			 these are fictive lists and will be original when the admin will upload the files directly to our app.
 //			 they are nessecery for the instance so i made them
+				
 				
 				List<Profile> broadcasters = new ArrayList<>();
 				List<Profile> listeners = new ArrayList<>();
@@ -156,27 +158,26 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 						, broadcasters,
 						listeners,
 						getDurationFromFile(ExoPlayerFragment.APP_PATH + vod.getFilePath()),
+						
 						vod.getStreamName(),
 						comments, likes);
 				broadcastPosts.add(broadcastPost);
-				
-				
 				DataDAO.getInstance().writeBroadcastPost(broadcastPost);
 			}
-			
 		}
+		// creating instance of the recyclerview with the updated list from our server.
 		RecyclerView rv = this.rv.get();
-		rv.setLayoutManager(new LinearLayoutManager(rv.getContext()));
+		rv.setLayoutManager(new LinearLayoutManager(this.rv.get().getContext()));
 		if(isMainFeed) {
 			rv.setAdapter(new rvFeedAdapter(rv.getContext(), broadcastPosts, profile));
-		}else {
-			rv.setAdapter(new rvFeedAdapter(rv.getContext(),profile));
+		}else{
+			rv.setAdapter(new rvFeedAdapter(rv.getContext(), profile));
 		}
 	}
 	
 	private long getDurationFromFile(String filePath) {
 		MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-		retriever.setDataSource(filePath, new HashMap<>());
+		retriever.setDataSource(filePath, new HashMap<String, String>());
 		long l = Long.parseLong(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
 		System.out.println(l);
 		retriever.release();
