@@ -132,7 +132,7 @@
             app:srcCompat="@drawable/star" />
 
         <ImageView
-            android:id="@+id/imageView6"
+            android:id="@+id/imagePostPlayClick"
             android:layout_width="91dp"
             android:layout_height="72dp"
             android:layout_marginStart="8dp"
