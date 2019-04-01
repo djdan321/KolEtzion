@@ -25,6 +25,9 @@ public class ExoPlayerFragment extends Fragment {
 	String filePath;
 	final static String APP_PATH = "http://be.repoai.com:5080/WebRTCAppEE/";
 	
+	public void stopPlayer() {
+		player.stop(true);
+	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
