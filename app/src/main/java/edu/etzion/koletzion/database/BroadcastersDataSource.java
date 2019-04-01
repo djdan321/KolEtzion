@@ -27,6 +27,7 @@ public class BroadcastersDataSource extends AsyncTask<Void,Void,List<Profile>> {
     private boolean isGrid;
     private WeakReference<RecyclerView> rv;
 
+
     public BroadcastersDataSource(RecyclerView rv,boolean isGrid) {
         this.rv =new WeakReference<>(rv);
         this.isGrid=isGrid;
