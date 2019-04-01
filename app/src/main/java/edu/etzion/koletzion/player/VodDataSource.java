@@ -34,22 +34,17 @@ import okhttp3.Response;
 public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 	private WeakReference<RecyclerView> rv;
 	private Profile profile;
-	private rvFeedAdapter adapter;
 	boolean isMainFeed;
 	private final String POSTS_API_KEY = "mitereeneringledituriess";
 	private final String POSTS_API_SECRET = "7a76edb293ad60dbef1a92be96248116b74d9ea3";
 	private final String POSTS_DB = "posts";
 	private final String DB_USER_NAME = "41c99d88-3264-4be5-b546-ff5a5be07dfb-bluemix";
 	
-	public VodDataSource(RecyclerView rv, Profile profile, rvFeedAdapter adapter) {
+	public VodDataSource(RecyclerView rv, Profile profile, boolean isMainFeed) {
 		this.rv = new WeakReference<>(rv);
 		this.profile = profile;
-		this.adapter = adapter;
-	}
-	
-	public VodDataSource(RecyclerView rv, Profile profile, rvFeedAdapter adapter, boolean isMainFeed) {
-		this(rv, profile, adapter);
-		this.isMainFeed = isMainFeed;
+		this.isMainFeed=isMainFeed;
+
 	}
 	
 	private List<Vod> getVodList() {
@@ -145,7 +140,7 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 			List<Vod> newVods = new ArrayList<>();
 			for (int i = 1; i < diffNum + 1; i++) {
 				Vod vod = vods.get(vods.size() - i);
-
+//				newVods.add(vod);
 //			 these are fictive lists and will be original when the admin will upload the files directly to our app.
 //			 they are nessecery for the instance so i made them
 				
@@ -175,7 +170,7 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 		if(isMainFeed) {
 			rv.setAdapter(new rvFeedAdapter(rv.getContext(), broadcastPosts, profile));
 		}else {
-			rv.setAdapter(adapter);
+			rv.setAdapter(new rvFeedAdapter(rv.getContext(),profile));
 		}
 	}
 	
