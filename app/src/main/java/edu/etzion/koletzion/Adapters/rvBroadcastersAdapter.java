@@ -1,6 +1,7 @@
 package edu.etzion.koletzion.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,7 @@ public class rvBroadcastersAdapter extends RecyclerView.Adapter<rvBroadcastersAd
    //todo set image resource
        holder.itemView.setOnClickListener((v) -> {
            AppCompatActivity activity = (AppCompatActivity) v.getContext();
+           Log.d("tag", String.valueOf(v.getContext()));
            activity.getSupportFragmentManager().beginTransaction().replace(
                    R.id.contentMain, PersonalAreaFragment.newInstance(broadcasters.get(position))
             ).commit();

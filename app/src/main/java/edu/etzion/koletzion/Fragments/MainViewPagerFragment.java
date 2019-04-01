@@ -39,7 +39,7 @@ public class MainViewPagerFragment extends Fragment {
     private final String DB_USER_NAME = "41c99d88-3264-4be5-b546-ff5a5be07dfb-bluemix";
 
     private ViewPager vpMain;
-
+    public MainViewPagerFragment(){}
     public static MainViewPagerFragment newInstance() {
 
         Bundle args = new Bundle();
