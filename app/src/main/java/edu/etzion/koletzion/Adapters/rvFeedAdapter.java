@@ -43,7 +43,6 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
 	private Profile profile;
 	private int likesCounter = 0;
 	private int commentsCounter = 0;
-	
 	public rvFeedAdapter(Context context, Profile profile) {
 		this.context = context;
 		this.profile = profile;
