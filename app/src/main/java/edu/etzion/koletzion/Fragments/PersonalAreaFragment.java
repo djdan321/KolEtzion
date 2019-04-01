@@ -8,22 +8,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
+import edu.etzion.koletzion.Adapters.rvFeedAdapter;
 import edu.etzion.koletzion.R;
 import edu.etzion.koletzion.models.Profile;
 import edu.etzion.koletzion.player.VodDataSource;
 
 
 public class PersonalAreaFragment extends Fragment {
-	private final static String PROFILES_API_KEY = "ctleyeaciedgedgessithurd";
-	private final static String PROFILES_API_SECRET = "a31366679368d7d26408f78ab1402a23485e061e";
-	private final static String PROFILES_DB = "profiles";
-	private final static String DB_USER_NAME = "41c99d88-3264-4be5-b546-ff5a5be07dfb-bluemix";
-	
-	
+
 	private RecyclerView rv;
 	//if no profile, set user profile.
 	
@@ -42,6 +40,7 @@ public class PersonalAreaFragment extends Fragment {
 		
 		Bundle args = new Bundle();
 		args.putParcelable("profile", p);
+		args.putString("flag", "f");
 		PersonalAreaFragment fragment = new PersonalAreaFragment();
 		fragment.setArguments(args);
 		return fragment;
@@ -66,7 +65,7 @@ public class PersonalAreaFragment extends Fragment {
 	
 	private void displayMyFeed() {
 		//todo change to rvFeedAdapter instance with related posts
-		new VodDataSource(rv, profile).execute();
+		new VodDataSource(rv, profile, false).execute();
 	}
 	
 	private void findViews(@NonNull View view) {
