@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity
 	private void initFragments() {
 		getSupportFragmentManager().beginTransaction().replace(frame.getId(),
 				playerFragment).commit();
-		getSupportFragmentManager().beginTransaction().replace(R.id.contentMain, MainViewPagerFragment.newInstance()).commit();
+		getSupportFragmentManager().beginTransaction().replace(R.id.contentMain, new MainViewPagerFragment()).commit();
 	}
 	
 	@SuppressLint("StaticFieldLeak")
@@ -192,8 +192,7 @@ public class MainActivity extends AppCompatActivity
 		
 		if (id == R.id.homePage) {
 			// Handle the camera action
-			
-			getSupportFragmentManager().beginTransaction().replace(R.id.contentMain, MainViewPagerFragment.newInstance()).commit();
+			getSupportFragmentManager().beginTransaction().replace(R.id.contentMain, MainViewPagerFragment.instantiate(this,MainViewPagerFragment.class.getName())).commit();
 			
 		} else if (id == R.id.logOut) {
 			auth.signOut();
