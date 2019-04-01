@@ -23,7 +23,7 @@
 
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                app:srcCompat="@drawable/kol" />
+                app:srcCompat="@drawable/logo3" />
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
