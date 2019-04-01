@@ -38,18 +38,18 @@ public class ExoPlayerFragment extends Fragment {
 		//class level instances
 		playerView = view.findViewById(R.id.pvPlayer);
 		
-		
-		super.onViewCreated(view, savedInstanceState);
-	}
-	
-	
-	public void initPlayer(String filePath) {
-		if(player != null && player.getPlaybackState() == 3) player.stop(true);
 		//instantiate exoplayer
 		player = ExoPlayerFactory.newSimpleInstance(getContext());
 		
 		//bind exoplayer to a view
 		playerView.setPlayer(player);
+		playerView.setControllerHideOnTouch(false);
+		super.onViewCreated(view, savedInstanceState);
+	}
+	
+	
+	public void initPlayer(String filePath) {
+		if (player != null && player.getPlaybackState() == 3) player.stop(true);
 		// Produces DataSource instances through which media data is loaded.
 		Uri audioUri = Uri.parse(APP_PATH + filePath);
 		ExtractorMediaSource audioSource =

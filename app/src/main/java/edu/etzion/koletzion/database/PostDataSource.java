@@ -22,7 +22,7 @@ public class PostDataSource extends AsyncTask<Void,Void, BroadcastPost> {
     private final String DB_USER_NAME = "41c99d88-3264-4be5-b546-ff5a5be07dfb-bluemix";
 
     private BroadcastPost postClicked;
-    private WeakReference<RecyclerView> rv;
+    public WeakReference<RecyclerView> rv;
 
     public PostDataSource(BroadcastPost postClicked, RecyclerView rv) {
         this.postClicked = postClicked;
