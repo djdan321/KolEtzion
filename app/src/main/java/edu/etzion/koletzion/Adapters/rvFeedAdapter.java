@@ -31,6 +31,7 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
 	private Profile profile;
 	private int likesCounter = 0;
 	private int commentsCounter = 0;
+	private boolean isMainFeed;
 	
 	public rvFeedAdapter(Context context, Profile profile) {
 		this.context = context;
@@ -45,12 +46,21 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
 		
 	}
 	
+	public rvFeedAdapter(Context context, Profile profile, boolean isMainFeed) {
+		this(context, profile);
+		this.isMainFeed = isMainFeed;
+	}
+	
 	@NonNull
 	@Override
 	public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.broadcaster_post, parent, false);
 		ViewHolder holder = new ViewHolder(view);
 		return holder;
+	}
+	
+	public boolean isMainFeed() {
+		return isMainFeed;
 	}
 	
 	@Override

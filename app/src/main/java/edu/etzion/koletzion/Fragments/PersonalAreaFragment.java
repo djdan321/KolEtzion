@@ -8,10 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
+import edu.etzion.koletzion.Adapters.rvFeedAdapter;
 import edu.etzion.koletzion.R;
 import edu.etzion.koletzion.models.Profile;
 import edu.etzion.koletzion.player.VodDataSource;
@@ -42,6 +45,7 @@ public class PersonalAreaFragment extends Fragment {
 		
 		Bundle args = new Bundle();
 		args.putParcelable("profile", p);
+		args.putString("flag", "f");
 		PersonalAreaFragment fragment = new PersonalAreaFragment();
 		fragment.setArguments(args);
 		return fragment;
@@ -61,12 +65,16 @@ public class PersonalAreaFragment extends Fragment {
 		//todo if(broadcaster) tvPersonalExtra.setText("Broadcast list")
 		// else tvPersonalExtra.setText("Favorites")
 		
-		displayMyFeed();
+		if(getArguments().getString("flag") == null){
+			displayMyFeed(new rvFeedAdapter(getContext(), profile, true));
+		}else{
+			displayMyFeed(new rvFeedAdapter(getContext(), profile));
+		}
 	}
 	
-	private void displayMyFeed() {
+	private void displayMyFeed(rvFeedAdapter adapter) {
 		//todo change to rvFeedAdapter instance with related posts
-		new VodDataSource(rv, profile).execute();
+		new VodDataSource(rv, profile, adapter).execute();
 	}
 	
 	private void findViews(@NonNull View view) {

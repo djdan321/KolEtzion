@@ -1,16 +1,12 @@
 package edu.etzion.koletzion.player;
 
-import android.media.MediaDataSource;
 import android.media.MediaMetadataRetriever;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.cloudant.client.api.ClientBuilder;
 import com.cloudant.client.api.CloudantClient;
 import com.cloudant.client.api.Database;
-import com.google.android.exoplayer2.source.ExtractorMediaSource;
-import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,18 +34,22 @@ import okhttp3.Response;
 public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 	private WeakReference<RecyclerView> rv;
 	private Profile profile;
+	private rvFeedAdapter adapter;
+	boolean isMainFeed;
 	private final String POSTS_API_KEY = "mitereeneringledituriess";
 	private final String POSTS_API_SECRET = "7a76edb293ad60dbef1a92be96248116b74d9ea3";
 	private final String POSTS_DB = "posts";
 	private final String DB_USER_NAME = "41c99d88-3264-4be5-b546-ff5a5be07dfb-bluemix";
 	
-	public VodDataSource(RecyclerView rv, Profile profile) {
+	public VodDataSource(RecyclerView rv, Profile profile, rvFeedAdapter adapter) {
 		this.rv = new WeakReference<>(rv);
 		this.profile = profile;
+		this.adapter = adapter;
 	}
 	
-	public VodDataSource(RecyclerView rv) {
-		this.rv = new WeakReference<>(rv);
+	public VodDataSource(RecyclerView rv, Profile profile, rvFeedAdapter adapter, boolean isMainFeed) {
+		this(rv, profile, adapter);
+		this.isMainFeed = isMainFeed;
 	}
 	
 	private List<Vod> getVodList() {
@@ -139,21 +139,15 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 	protected void onPostExecute(List<Object> list) {
 		List<Vod> vods = (List<Vod>) list.get(0);
 		List<BroadcastPost> broadcastPosts = (List<BroadcastPost>) list.get(1);
-		if (vods.size() == broadcastPosts.size()) {
-			RecyclerView rv = this.rv.get();
-			rv.setLayoutManager(new LinearLayoutManager(this.rv.get().getContext()));
-			rv.setAdapter(new rvFeedAdapter(rv.getContext(), broadcastPosts, profile));
-		} else {
+		if (vods.size() != broadcastPosts.size()) {
 			//checking how many new vods are updated and getting them in to our server.
 			int diffNum = vods.size() - broadcastPosts.size();
 			List<Vod> newVods = new ArrayList<>();
 			for (int i = 1; i < diffNum + 1; i++) {
 				Vod vod = vods.get(vods.size() - i);
 
-
 //			 these are fictive lists and will be original when the admin will upload the files directly to our app.
 //			 they are nessecery for the instance so i made them
-				
 				
 				List<Profile> broadcasters = new ArrayList<>();
 				List<Profile> listeners = new ArrayList<>();
@@ -167,7 +161,6 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 						, broadcasters,
 						listeners,
 						getDurationFromFile(ExoPlayerFragment.APP_PATH + vod.getFilePath()),
-						
 						vod.getStreamName(),
 						comments, likes);
 				broadcastPosts.add(broadcastPost);
@@ -176,18 +169,19 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 				DataDAO.getInstance().writeBroadcastPost(broadcastPost);
 			}
 			
-			// creating instance of the recyclerview with the updated list from our server.
-			
-			RecyclerView rv = this.rv.get();
-			rv.setLayoutManager(new LinearLayoutManager(this.rv.get().getContext()));
-			rv.setAdapter(new rvFeedAdapter(rv.getContext(), broadcastPosts, profile));
 		}
-		
+		RecyclerView rv = this.rv.get();
+		rv.setLayoutManager(new LinearLayoutManager(rv.getContext()));
+		if(isMainFeed) {
+			rv.setAdapter(new rvFeedAdapter(rv.getContext(), broadcastPosts, profile));
+		}else {
+			rv.setAdapter(adapter);
+		}
 	}
 	
 	private long getDurationFromFile(String filePath) {
 		MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-		retriever.setDataSource(filePath, new HashMap<String, String>());
+		retriever.setDataSource(filePath, new HashMap<>());
 		long l = Long.parseLong(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
 		System.out.println(l);
 		retriever.release();
