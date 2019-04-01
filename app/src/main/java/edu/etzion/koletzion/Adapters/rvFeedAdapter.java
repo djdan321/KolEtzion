@@ -89,12 +89,9 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
 		holder.tvCommentsCount.setText(commentsCounter + " תגובות");
 		
 		// playing the broadcast
-		holder.imagePostPlayBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (context instanceof MainActivity) ((MainActivity) context)
-						.initPlayer(broadcasts.get(position).getStreamURL());
-			}
+		holder.imagePostPlayBtn.setOnClickListener(v -> {
+			if (context instanceof MainActivity) ((MainActivity) context)
+					.initPlayer(broadcasts.get(position).getStreamURL());
 		});
 
 		//adding a like to the broadcast(only once per user)
@@ -121,16 +118,6 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
 					show(a.getSupportFragmentManager(), "tag");
 		});
 		
-		//adding a comment to the broadcast
-//		holder.ivComment.setOnClickListener((v -> {
-////			if (holder.etComment.getText().toString().length() > 0) {
-////				broadcasts.get(position).addComment(new Comment(profile, holder.etComment.getText().toString()));
-////				DataDAO.getInstance().updateBroadcastPost(broadcasts.get(position));
-////				commentsCounter++;
-////				holder.tvCommentsCount.setText(commentsCounter + " תגובות");
-////				holder.etComment.setText("");
-////			}
-////		}));
 		holder.ivComment.setOnClickListener((v)->{
 			if(holder.etComment.getText().toString().length()>0){
 				holder.ivComment.setOnClickListener(null);
@@ -140,30 +127,30 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
 			}
 
 		});
-		//displaying all comments in fragment dialog
 		
+		//displaying all comments in fragment dialog
 		holder.tvCommentsCount.setOnClickListener((v) -> {
 			MainActivity a = (MainActivity) context;
 			
 			CommentFragment.newInstance(broadcasts.get(position)).
 					show(a.getSupportFragmentManager(), "tag");
 		});
-		
+		//todo fix favorite button
 		//adding the broadcast to the user's favorites.
-		if (profile.isBroadcaster())
-			holder.ivFavorite.setVisibility(View.INVISIBLE);
-		else {
-			holder.ivFavorite.setVisibility(View.VISIBLE);
-			holder.ivFavorite.setOnClickListener((v -> {
-				List<BroadcastPost> favorites = profile.getRelatedPosts();
-				for (int i = 0; i < favorites.size(); i++) {
-					if (favorites.get(i).get_id().equals(broadcasts.get(position).get_id()))
-						return;
-				}
-				profile.addBroadcastPost(broadcasts.get(position));
-				DataDAO.getInstance().updateMyProfile(profile);
-			}));
-		}
+//		if (profile.isBroadcaster())
+//			holder.ivFavorite.setVisibility(View.INVISIBLE);
+//		else {
+//			holder.ivFavorite.setVisibility(View.VISIBLE);
+//			holder.ivFavorite.setOnClickListener((v -> {
+//				List<BroadcastPost> favorites = profile.getRelatedPosts();
+//				for (int i = 0; i < favorites.size(); i++) {
+//					if (favorites.get(i).get_id().equals(broadcasts.get(position).get_id()))
+//						return;
+//				}
+//				profile.addBroadcastPost(broadcasts.get(position));
+//				DataDAO.getInstance().updateMyProfile(profile);
+//			}));
+//		}
 	}
 
 	@SuppressLint("StaticFieldLeak")
