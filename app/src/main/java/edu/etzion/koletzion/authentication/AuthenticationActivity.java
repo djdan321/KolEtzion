@@ -1,9 +1,11 @@
 package edu.etzion.koletzion.authentication;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -21,6 +23,8 @@ public class AuthenticationActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_authentication);
 		Toolbar toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
+		if(FirebaseAuth.getInstance().getCurrentUser() != null) startActivity(
+				new Intent(this, MainActivity.class));
 		getSupportFragmentManager().beginTransaction().
 				replace(R.id.authenticationFrame, new LoginFragment()).commit();
 	}

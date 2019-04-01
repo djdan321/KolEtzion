@@ -83,10 +83,10 @@ public class MainActivity extends AppCompatActivity
 		
 		NavigationView navigationView = findViewById(R.id.nav_view);
 		navigationView.setNavigationItemSelectedListener(this);
-		
+
 		new AsyncTask<View, Void, Profile>() {
 			View v;
-			
+
 			@Override
 			protected Profile doInBackground(View... views) {
 				v = views[0];
@@ -95,9 +95,9 @@ public class MainActivity extends AppCompatActivity
 						.username(PROFILES_API_KEY)
 						.password(PROFILES_API_SECRET)
 						.build();
-				
+
 				Database db = client.database(PROFILES_DB, false);
-				
+
 				List<Profile> list = db.findByIndex("{\n" +
 						"   \"selector\": {\n" +
 						"      \"username\": \"" + FirebaseAuth.getInstance().getCurrentUser().getEmail() + "\"\n" +
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity
 				Log.e("check", list.toString());
 				return profile;
 			}
-			
+
 			@Override
 			protected void onPostExecute(Profile profile) {
 				TextView tvDrawerName = v.findViewById(R.id.tvDrawerName);
@@ -196,6 +196,7 @@ public class MainActivity extends AppCompatActivity
 			
 		} else if (id == R.id.logOut) {
 			auth.signOut();
+			playerFragment.stopPlayer();
 			startAuthenticationActivityIfNeeded();
 		}
 		

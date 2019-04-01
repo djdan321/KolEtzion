@@ -66,18 +66,18 @@ public class RegisterFragment extends Fragment implements Button.OnClickListener
 			
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
-			
+				if (!etRegisterConfirmPassword.getText().toString().equals(
+						etRegisterPassword.getText().toString())) {
+					match = false;
+				} else {
+					etRegisterPassword.setError("הסיסמאות לא תואמות");
+					match = true;
+				}
 			}
 			
 			@Override
 			public void afterTextChanged(Editable s) {
-				if (!etRegisterConfirmPassword.getText().toString().equals(
-						etRegisterPassword.getText().toString())) {
-					match = false;
-					etRegisterPassword.setError("הסיסמאות לא תואמות");
-				} else {
-					match = true;
-				}
+			
 			}
 		});
 		super.onViewCreated(view, savedInstanceState);
@@ -133,6 +133,7 @@ public class RegisterFragment extends Fragment implements Button.OnClickListener
 						DataDAO.getInstance().writeMyProfile(profile);
 						// Sign in success, update UI with the signed-in user's information
 						startActivity(new Intent(getContext(), MainActivity.class));
+						getActivity().finish();
 						Log.d(TAG, "createUserWithEmail:success");
 					} else {
 						if (task.getException() instanceof FirebaseAuthUserCollisionException) {
