@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity
 		
 		NavigationView navigationView = findViewById(R.id.nav_view);
 		navigationView.setNavigationItemSelectedListener(this);
-
+		if(auth.getCurrentUser() == null) return;
 		new AsyncTask<View, Void, Profile>() {
 			View v;
 
