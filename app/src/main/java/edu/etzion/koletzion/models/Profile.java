@@ -125,6 +125,9 @@ public class Profile implements Parcelable , Comparable<Profile> {
     public void addBroadcastPost(BroadcastPost broadcastPost){
         relatedPosts.add(broadcastPost);
     }
+    public void removeBroadcastPost(int position){
+        relatedPosts.remove(position);
+    }
 
     @Override
     public int describeContents() {
