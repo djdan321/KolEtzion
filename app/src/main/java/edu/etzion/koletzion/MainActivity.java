@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		setSupportActionBar(toolbar);
-		
 		main();
 	}
 	
@@ -82,7 +81,7 @@ public class MainActivity extends AppCompatActivity
 		
 		NavigationView navigationView = findViewById(R.id.nav_view);
 		navigationView.setNavigationItemSelectedListener(this);
-
+		if(auth.getCurrentUser() == null) return;
 		new AsyncTask<View, Void, Profile>() {
 			View v;
 
