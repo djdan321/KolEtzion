@@ -1,10 +1,15 @@
 package edu.etzion.koletzion;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.media.MediaMetadataRetriever;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +30,8 @@ import java.util.List;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import edu.etzion.koletzion.Fragments.MainViewPagerFragment;
@@ -55,6 +62,13 @@ public class MainActivity extends AppCompatActivity
 		setContentView(R.layout.activity_main);
 		setSupportActionBar(toolbar);
 		main();
+		ContextCompat.startForegroundService(this,
+				new Intent(this, ForegroundService.class));
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
 	}
 	
 	private void main() {
@@ -205,6 +219,9 @@ public class MainActivity extends AppCompatActivity
 	
 	public void initPlayer(String filePath) {
 		playerFragment.initPlayer(filePath);
+		
+		
+		
 	}
 }
 
