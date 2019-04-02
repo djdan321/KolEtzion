@@ -154,12 +154,11 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 				BroadcastPost broadcastPost = new BroadcastPost(
 						BroadcastCategory.MUSIC,
 						"description will be added",
-						vod.getFilePath()
-						, broadcasters,
+						vod.getFilePath(),
+						broadcasters,
 						listeners,
 						getDurationFromFile(ExoPlayerFragment.APP_PATH + vod.getFilePath()),
-						
-						vod.getStreamName(),
+						vod.getVodName(),
 						comments, likes);
 				broadcastPosts.add(broadcastPost);
 				DataDAO.getInstance().writeBroadcastPost(broadcastPost);
