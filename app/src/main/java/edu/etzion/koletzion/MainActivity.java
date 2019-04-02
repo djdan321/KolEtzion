@@ -54,8 +54,7 @@ public class MainActivity extends AppCompatActivity
 	private FrameLayout frame;
 	private Toolbar toolbar;
 	private DrawerLayout drawer;
-	//todo get profile from current user
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -75,7 +74,6 @@ public class MainActivity extends AppCompatActivity
 		findViews();
 		startAuthenticationActivityIfNeeded();
 		initFragments();
-		//todo yossi?? WTF? APP!
 		testDB();
 		initDrawer();
 	}
