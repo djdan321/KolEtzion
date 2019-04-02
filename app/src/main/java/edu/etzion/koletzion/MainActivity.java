@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity
 		setContentView(R.layout.activity_main);
 		//method that includes all the FindViewById
 		setSupportActionBar(toolbar);
-		
 		main();
 	}
 	

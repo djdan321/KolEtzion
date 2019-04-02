@@ -72,7 +72,7 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
 		holder.tvPostHeader.setText(name);
 		likesCounter = broadcasts.get(position).getLikesCount();
 		commentsCounter = broadcasts.get(position).getCommentsCount();
-		holder.tvPostDescription.setText(broadcasts.get(position).getDescription());
+//		holder.tvPostDescription.setText(broadcasts.get(position).getDescription());
 		holder.tvLikesCount.setText(likesCounter + " לייקים");
 		holder.tvCommentsCount.setText(commentsCounter + " תגובות");
 		
@@ -229,7 +229,6 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
 			super(itemView);
 			broadcastPost = itemView.findViewById(R.id.broadcasterPostLayout);
 			tvPostHeader = itemView.findViewById(R.id.tvPostHeader);
-			tvPostDescription = itemView.findViewById(R.id.tvPostDescription);
 			imagePostPlayBtn = itemView.findViewById(R.id.imagePostPlayClick);
 			tvLikesCount = itemView.findViewById(R.id.tvLikesCount);
 			tvLikesCount = itemView.findViewById(R.id.tvLikesCount);
