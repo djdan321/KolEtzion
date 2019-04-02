@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/broadcasterPostLayout"
     android:layout_width="match_parent"
-    app:cardCornerRadius="10dp"
     android:layout_height="wrap_content"
-    android:background="@color/blackTrans">
+    android:background="@color/blackTrans"
+    app:cardCornerRadius="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,22 +15,23 @@
             android:id="@+id/tvPostHeader"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:text="header"
             app:layout_constraintEnd_toStartOf="@+id/imageView7"
+            app:layout_constraintStart_toEndOf="@+id/imagePostPlayClick"
             app:layout_constraintTop_toTopOf="parent" />
-
         <TextView
-            android:id="@+id/tvPostDescription"
+            android:id="@+id/tvPostDuration"
+            app:layout_constraintStart_toStartOf="@id/tvPostHeader"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:text="duration"
+            android:layout_marginStart="0dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="description"
-            app:layout_constraintEnd_toStartOf="@+id/imageView7"
-            app:layout_constraintTop_toBottomOf="@+id/tvPostHeader" />
-
+            android:ems="6"
+            app:layout_constraintTop_toBottomOf="@id/tvPostHeader"
+            android:layout_height="wrap_content" />
         <ImageView
             android:id="@+id/imageView8"
             android:layout_width="wrap_content"
@@ -121,7 +121,7 @@
             app:srcCompat="@drawable/liky" />
 
         <ImageView
-            android:id="@+id/imageView5"
+            android:id="@+id/ivFavorite"
             android:layout_width="54dp"
             android:layout_height="40dp"
             android:layout_marginTop="8dp"
