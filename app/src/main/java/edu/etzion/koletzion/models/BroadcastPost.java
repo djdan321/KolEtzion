@@ -133,7 +133,9 @@ public class BroadcastPost implements Comparable<BroadcastPost>, Parcelable {
     public void addLike(Profile profile){
         likes.add(profile);
     }
-
+    public void removeLike(int position){
+        likes.remove(position);
+    }
 
     @Override
     public int compareTo(BroadcastPost o) {
