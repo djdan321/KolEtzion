@@ -12,6 +12,12 @@
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -21,10 +27,23 @@
 
             <ImageView
 
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@drawable/be_logo" />
+
+            <ImageView
+
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                app:srcCompat="@drawable/logo3" />
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/audio"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="end"
+                android:layout_marginRight="10dp"/>
+
         </androidx.appcompat.widget.Toolbar>
+
 
     </com.google.android.material.appbar.AppBarLayout>
 
