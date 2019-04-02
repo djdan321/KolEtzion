@@ -83,7 +83,6 @@ public class PersonalAreaFragment extends Fragment {
 	
 	@SuppressLint("StaticFieldLeak")
 	private void displayMyFeed() {
-		//todo change to rvFeedAdapter instance with related posts
 		new AsyncTask<Void, Void, Profile>() {
 			@Override
 			protected Profile doInBackground(Void... voids) {

@@ -17,7 +17,6 @@ import edu.etzion.koletzion.models.BroadcastPost;
 import edu.etzion.koletzion.models.Profile;
 import edu.etzion.koletzion.models.SuggestedContent;
 
-//todo test all the update methods
 public class DataDAO {
 	
 	private static DataDAO instance;
