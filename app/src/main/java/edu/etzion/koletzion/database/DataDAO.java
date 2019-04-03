@@ -115,8 +115,7 @@ public class DataDAO {
 	// this method writes SuggestedContent Object to the server
 	@SuppressLint("StaticFieldLeak")
 	public void writeSuggestedContent(SuggestedContent suggestedContent) {
-		
-		
+
 		new AsyncTask<Void, Void, Void>() {
 			
 			@Override
