@@ -61,7 +61,7 @@ public class PostDataSource extends AsyncTask<Void,Void, BroadcastPost> {
             Log.e("check", "checkResult: "+item.toString());
             broadcastPost=item;
         }
-        Log.e("check", list.toString());
+        Log.d("check", list.toString());
         return broadcastPost;
 
     }

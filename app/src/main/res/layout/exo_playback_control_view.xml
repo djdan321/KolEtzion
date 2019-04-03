@@ -2,14 +2,14 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:background="@color/grey"
-    android:layout_height="wrap_content">
+    android:layout_height="92dp">
 
     <ImageButton
         android:id="@id/exo_play"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginBottom="16dp"
-        android:layout_gravity="bottom|left"
+        android:layout_gravity="bottom|start"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/play" />
@@ -19,19 +19,21 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginBottom="16dp"
-        android:layout_marginLeft="20dp"
-        android:layout_gravity="bottom|left"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="20dp"
+        android:layout_gravity="bottom|start"
         android:background="@drawable/pause1" />
 
     <TextView
         android:id="@+id/exo_name"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="שם"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="50dp"
+        android:text=""
+        android:layout_gravity="top|end"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="20dp"
         android:padding="8dp"
+        android:textSize="16sp"
         android:ems="10"
         android:background="@color/grey"/>
 

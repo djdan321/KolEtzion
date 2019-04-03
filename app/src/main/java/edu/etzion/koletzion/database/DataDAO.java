@@ -17,7 +17,6 @@ import edu.etzion.koletzion.models.BroadcastPost;
 import edu.etzion.koletzion.models.Profile;
 import edu.etzion.koletzion.models.SuggestedContent;
 
-//todo test all the update methods
 public class DataDAO {
 	
 	private static DataDAO instance;
@@ -72,7 +71,7 @@ public class DataDAO {
 				Database db = client.database(PROFILES_DB, false);
 				profile.setTimeStamp(new Date().getTime());
 				db.save(profile);
-				Log.e("TAG", "doInBackground: cloudant data was saved.... ");
+				Log.d("TAG", "doInBackground: cloudant data was saved.... ");
 				return null;
 			}
 			
@@ -101,7 +100,7 @@ public class DataDAO {
 				Database db = client.database(POSTS_DB, false);
 				broadcastPost.setTimeStamp(new Date().getTime());
 				db.save(broadcastPost);
-				Log.e("TAG", "doInBackground: cloudant data was saved.... ");
+				Log.d("TAG", "doInBackground: cloudant data was saved.... ");
 				return null;
 			}
 			
@@ -130,7 +129,7 @@ public class DataDAO {
 				Database db = client.database(SC_DB, false);
 				suggestedContent.setTimestamp(new Date().getTime());
 				db.save(suggestedContent);
-				Log.e("TAG", "doInBackground: cloudant data was saved.... ");
+				Log.d("TAG", "doInBackground: cloudant data was saved.... ");
 				return null;
 			}
 			
@@ -158,7 +157,7 @@ public class DataDAO {
 				
 				Database db = client.database(PROFILES_DB, false);
 				db.update(profile);
-				Log.e("TAG", "doInBackground: cloudant data was saved.... ");
+				Log.d("TAG", "doInBackground: cloudant data was saved.... ");
 				return null;
 			}
 			
@@ -328,10 +327,10 @@ public class DataDAO {
 				"   }\n" +
 				"}", BroadcastPost.class);
 		for (BroadcastPost item : list) {
-			Log.e("check", "checkResult: " + item.toString());
+			Log.d("check", "checkResult: " + item.toString());
 			broadcastPost = item;
 		}
-		Log.e("check", list.toString());
+		Log.d("check", list.toString());
 		return broadcastPost;
 		
 	}

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -22,7 +23,7 @@ import edu.etzion.koletzion.R;
 public class ExoPlayerFragment extends Fragment {
 	SimpleExoPlayer player;
 	PlayerView playerView;
-	String filePath;
+	TextView tvFileName;
 	final static String APP_PATH = "http://be.repoai.com:5080/WebRTCAppEE/";
 	
 	public void stopPlayer() {
@@ -40,12 +41,13 @@ public class ExoPlayerFragment extends Fragment {
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		//class level instances
 		playerView = view.findViewById(R.id.pvPlayer);
-		
+		tvFileName = view.findViewById(R.id.exo_name);
 		//instantiate exoplayer
 		player = ExoPlayerFactory.newSimpleInstance(getContext());
 		
 		//bind exoplayer to a view
 		playerView.setPlayer(player);
+		playerView.setControllerShowTimeoutMs(0);
 		playerView.setControllerHideOnTouch(false);
 		super.onViewCreated(view, savedInstanceState);
 	}
@@ -55,6 +57,9 @@ public class ExoPlayerFragment extends Fragment {
 		if (player != null && player.getPlaybackState() == 3) player.stop(true);
 		// Produces DataSource instances through which media data is loaded.
 		Uri audioUri = Uri.parse(APP_PATH + filePath);
+		tvFileName.setText(filePath.substring(13, filePath.length() - 4).
+				replaceAll("_", " "));
+		
 		ExtractorMediaSource audioSource =
 				new ExtractorMediaSource.Factory(
 						new DefaultHttpDataSourceFactory("exoplayer-codelab")).
