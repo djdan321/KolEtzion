@@ -39,6 +39,7 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.1.13'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
     implementation 'com.google.android.exoplayer:exoplayer:2.9.6'
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.2.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
@@ -50,6 +51,7 @@ dependencies {
 
     implementation 'com.cloudant:cloudant-client:2.9.0'
     implementation 'com.cloudant:cloudant-sync-datastore-android:2.4.0'
+
 
 }
 apply plugin: 'com.google.gms.google-services'

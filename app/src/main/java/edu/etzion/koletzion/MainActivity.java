@@ -1,10 +1,15 @@
 package edu.etzion.koletzion;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.media.MediaMetadataRetriever;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +30,8 @@ import java.util.List;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import edu.etzion.koletzion.Fragments.MainViewPagerFragment;
@@ -47,23 +54,26 @@ public class MainActivity extends AppCompatActivity
 	private FrameLayout frame;
 	private Toolbar toolbar;
 	private DrawerLayout drawer;
-	//todo get profile from current user
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		//method that includes all the FindViewById
 		setSupportActionBar(toolbar);
-		
 		main();
+		ContextCompat.startForegroundService(this,
+				new Intent(this, ForegroundService.class));
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
 	}
 	
 	private void main() {
 		findViews();
 		startAuthenticationActivityIfNeeded();
 		initFragments();
-		//todo yossi?? WTF? APP!
 		testDB();
 		initDrawer();
 	}
@@ -71,7 +81,7 @@ public class MainActivity extends AppCompatActivity
 	private void initFragments() {
 		getSupportFragmentManager().beginTransaction().replace(frame.getId(),
 				playerFragment).commit();
-		getSupportFragmentManager().beginTransaction().replace(R.id.contentMain, MainViewPagerFragment.newInstance()).commit();
+		getSupportFragmentManager().beginTransaction().replace(R.id.contentMain, new MainViewPagerFragment()).commit();
 	}
 	
 	@SuppressLint("StaticFieldLeak")
@@ -83,10 +93,10 @@ public class MainActivity extends AppCompatActivity
 		
 		NavigationView navigationView = findViewById(R.id.nav_view);
 		navigationView.setNavigationItemSelectedListener(this);
-		
+		if(auth.getCurrentUser() == null) return;
 		new AsyncTask<View, Void, Profile>() {
 			View v;
-			
+
 			@Override
 			protected Profile doInBackground(View... views) {
 				v = views[0];
@@ -95,9 +105,9 @@ public class MainActivity extends AppCompatActivity
 						.username(PROFILES_API_KEY)
 						.password(PROFILES_API_SECRET)
 						.build();
-				
+
 				Database db = client.database(PROFILES_DB, false);
-				
+
 				List<Profile> list = db.findByIndex("{\n" +
 						"   \"selector\": {\n" +
 						"      \"username\": \"" + FirebaseAuth.getInstance().getCurrentUser().getEmail() + "\"\n" +
@@ -110,7 +120,7 @@ public class MainActivity extends AppCompatActivity
 				Log.e("check", list.toString());
 				return profile;
 			}
-			
+
 			@Override
 			protected void onPostExecute(Profile profile) {
 				TextView tvDrawerName = v.findViewById(R.id.tvDrawerName);
@@ -192,11 +202,11 @@ public class MainActivity extends AppCompatActivity
 		
 		if (id == R.id.homePage) {
 			// Handle the camera action
-			
-			getSupportFragmentManager().beginTransaction().replace(R.id.contentMain, MainViewPagerFragment.newInstance()).commit();
+			getSupportFragmentManager().beginTransaction().replace(R.id.contentMain, MainViewPagerFragment.instantiate(this,MainViewPagerFragment.class.getName())).commit();
 			
 		} else if (id == R.id.logOut) {
 			auth.signOut();
+			playerFragment.stopPlayer();
 			startAuthenticationActivityIfNeeded();
 		}
 		
@@ -207,6 +217,9 @@ public class MainActivity extends AppCompatActivity
 	
 	public void initPlayer(String filePath) {
 		playerFragment.initPlayer(filePath);
+		
+		
+		
 	}
 }
 

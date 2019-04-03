@@ -20,6 +20,8 @@
             android:id="@+id/nav_manage"
             android:icon="@drawable/abouts"
             android:title="אודות" />
+
+
         <item
             android:id="@+id/logOut"
             android:icon="@drawable/logout"

@@ -1,16 +1,12 @@
 package edu.etzion.koletzion.player;
 
-import android.media.MediaDataSource;
 import android.media.MediaMetadataRetriever;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.cloudant.client.api.ClientBuilder;
 import com.cloudant.client.api.CloudantClient;
 import com.cloudant.client.api.Database;
-import com.google.android.exoplayer2.source.ExtractorMediaSource;
-import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,6 +32,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
+	private boolean isMainFeed;
 	private WeakReference<RecyclerView> rv;
 	private Profile profile;
 	private final String POSTS_API_KEY = "mitereeneringledituriess";
@@ -43,14 +40,12 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 	private final String POSTS_DB = "posts";
 	private final String DB_USER_NAME = "41c99d88-3264-4be5-b546-ff5a5be07dfb-bluemix";
 	
-	public VodDataSource(RecyclerView rv, Profile profile) {
+	public VodDataSource(RecyclerView rv, Profile profile, boolean isMainFeed) {
 		this.rv = new WeakReference<>(rv);
 		this.profile = profile;
+		this.isMainFeed = isMainFeed;
 	}
 	
-	public VodDataSource(RecyclerView rv) {
-		this.rv = new WeakReference<>(rv);
-	}
 	
 	private List<Vod> getVodList() {
 		List<Vod> vods = new ArrayList<>();
@@ -139,11 +134,7 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 	protected void onPostExecute(List<Object> list) {
 		List<Vod> vods = (List<Vod>) list.get(0);
 		List<BroadcastPost> broadcastPosts = (List<BroadcastPost>) list.get(1);
-		if (vods.size() == broadcastPosts.size()) {
-			RecyclerView rv = this.rv.get();
-			rv.setLayoutManager(new LinearLayoutManager(this.rv.get().getContext()));
-			rv.setAdapter(new rvFeedAdapter(rv.getContext(), broadcastPosts, profile));
-		} else {
+		if (vods.size() != broadcastPosts.size()) {
 			//checking how many new vods are updated and getting them in to our server.
 			int diffNum = vods.size() - broadcastPosts.size();
 			List<Vod> newVods = new ArrayList<>();
@@ -163,26 +154,24 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 				BroadcastPost broadcastPost = new BroadcastPost(
 						BroadcastCategory.MUSIC,
 						"description will be added",
-						vod.getFilePath()
-						, broadcasters,
+						vod.getFilePath(),
+						broadcasters,
 						listeners,
 						getDurationFromFile(ExoPlayerFragment.APP_PATH + vod.getFilePath()),
-						
-						vod.getStreamName(),
+						vod.getVodName(),
 						comments, likes);
 				broadcastPosts.add(broadcastPost);
-				
-				
 				DataDAO.getInstance().writeBroadcastPost(broadcastPost);
 			}
-			
-			// creating instance of the recyclerview with the updated list from our server.
-			
-			RecyclerView rv = this.rv.get();
-			rv.setLayoutManager(new LinearLayoutManager(this.rv.get().getContext()));
-			rv.setAdapter(new rvFeedAdapter(rv.getContext(), broadcastPosts, profile));
 		}
-		
+		// creating instance of the recyclerview with the updated list from our server.
+		RecyclerView rv = this.rv.get();
+		rv.setLayoutManager(new LinearLayoutManager(this.rv.get().getContext()));
+		if(isMainFeed) {
+			rv.setAdapter(new rvFeedAdapter(rv.getContext(), broadcastPosts, profile));
+		}else{
+			rv.setAdapter(new rvFeedAdapter(rv.getContext(), profile));
+		}
 	}
 	
 	private long getDurationFromFile(String filePath) {

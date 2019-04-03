@@ -17,7 +17,6 @@ import edu.etzion.koletzion.models.BroadcastPost;
 import edu.etzion.koletzion.models.Profile;
 import edu.etzion.koletzion.models.SuggestedContent;
 
-//todo test all the update methods
 public class DataDAO {
 	
 	private static DataDAO instance;
@@ -175,32 +174,27 @@ public class DataDAO {
 	public void updateBroadcastPost(BroadcastPost broadcastPost) {
 		
 		new AsyncTask<Void, Void, Void>() {
-			
+
 			@Override
 			protected Void doInBackground(Void... voids) {
-				synchronizedPostUpdate(broadcastPost);
+				CloudantClient client = ClientBuilder.account(DB_USER_NAME)
+						.username(POSTS_API_KEY)
+						.password(POSTS_API_SECRET)
+						.build();
+				Database db = client.database(POSTS_DB, false);
+
+				db.update(broadcastPost);
+				Log.e("TAG", "doInBackground: cloudant data was saved.... ");
 				return null;
 			}
-			
+
 			@Override
 			protected void onPostExecute(Void aVoid) {
 				Log.e("TAG", "onPostExecute");
 			}
-		}.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+		}.execute();
 	}
-	
-	private void synchronizedPostUpdate(BroadcastPost broadcastPost) {
-		
-		CloudantClient client = ClientBuilder.account(DB_USER_NAME)
-				.username(POSTS_API_KEY)
-				.password(POSTS_API_SECRET)
-				.build();
-		Database db = client.database(POSTS_DB, false);
-		synchronized ("key") {
-			db.update(broadcastPost);
-			Log.e("TAG", "doInBackground: cloudant data was saved.... ");
-		}
-	}
+
 
 //todo delete readers from here when donr writing them.(YOSSI)
 	

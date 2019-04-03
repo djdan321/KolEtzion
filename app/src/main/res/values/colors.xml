@@ -5,14 +5,14 @@
     <color name="colorAccent">#D81B60</color>
     <color name="colorAddress">#2F7092</color>
     <color name="colorFollowers">#0D5D98</color>
-    <color name="colorHeadings">#3797CF</color>
+    <color name="colorHeadings">#12A3F8</color>
     <color name="solidCircle">#AAFFFFFF</color>
     <color name="circleBorder">#50FFFFFF</color>
     <color name="gradEnd">#b1f4cf</color>
     <color name="gradStart">#9890e3</color>
-    <color name="grad2End">#005bea</color>
-    <color name="grad3Start">#a3bded</color>
-    <color name="grad3End">#8989ba</color>
+    <color name="grad2End">#005BEA</color>
+    <color name="grad3Start">#dfe9f3</color>
+    <color name="grad3End">#ffffff</color>
     <color name="grad4Start">#accbee</color>
     <color name="grad4End">#04befe</color>
     <color name="grad2Start">#09203f</color>
@@ -22,8 +22,13 @@
     <color name="black">#434343</color>
     <color name="blackTrans">#7A000000 </color>
 
+    <color name="extra1">#004d40</color>
+    <color name="extra2">#00251a</color>
+    <color name="extra3">#39796b</color>
+
+
     <color name="white">#FFFFFF</color>
     
-    <color name="startBlue">#09c6df</color>
-    <color name="endBlue">#0bcce6</color>
+    <color name="startBlue">#09C6DF</color>
+    <color name="endBlue">#0BCCE6</color>
 </resources>
