@@ -57,10 +57,9 @@ public class MainViewPagerFragment extends Fragment {
     
     private void ViewPagerAdapterMainActivity() {
         //this method includes the viewpager adapter that includes all the mainactivity fragments.
-        ViewPagerAdapter vpMainAdapter = new ViewPagerAdapter(getFragmentManager());
 
         // getting the current latest update profile object from the server
-        new ViewPagerTask(vpMain, getFragmentManager()).execute();
+        new ViewPagerTask(vpMain, getChildFragmentManager()).execute();
 
     }
 }
