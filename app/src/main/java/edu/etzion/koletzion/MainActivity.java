@@ -1,52 +1,29 @@
 package edu.etzion.koletzion;
 
-import android.annotation.SuppressLint;
-import android.app.Notification;
-import android.app.PendingIntent;
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.media.MediaMetadataRetriever;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.IBinder;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
-import com.cloudant.client.api.ClientBuilder;
-import com.cloudant.client.api.CloudantClient;
-import com.cloudant.client.api.Database;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import edu.etzion.koletzion.Fragments.MainViewPagerFragment;
 import edu.etzion.koletzion.authentication.AuthenticationActivity;
-import edu.etzion.koletzion.models.BroadcastPost;
-import edu.etzion.koletzion.models.Comment;
-import edu.etzion.koletzion.models.Profile;
 import edu.etzion.koletzion.player.ExoPlayerFragment;
 
 public class MainActivity extends AppCompatActivity
 		implements NavigationView.OnNavigationItemSelectedListener {
-	private final String PROFILES_API_KEY = "ctleyeaciedgedgessithurd";
-	private final String PROFILES_API_SECRET = "a31366679368d7d26408f78ab1402a23485e061e";
-	private final String PROFILES_DB = "profiles";
-	private final String DB_USER_NAME = "41c99d88-3264-4be5-b546-ff5a5be07dfb-bluemix";
 	
 	
 	private FirebaseAuth auth;
@@ -54,7 +31,7 @@ public class MainActivity extends AppCompatActivity
 	private FrameLayout frame;
 	private Toolbar toolbar;
 	private DrawerLayout drawer;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -74,7 +51,6 @@ public class MainActivity extends AppCompatActivity
 		findViews();
 		startAuthenticationActivityIfNeeded();
 		initFragments();
-		testDB();
 		initDrawer();
 	}
 	
@@ -84,7 +60,6 @@ public class MainActivity extends AppCompatActivity
 		getSupportFragmentManager().beginTransaction().replace(R.id.contentMain, new MainViewPagerFragment()).commit();
 	}
 	
-	@SuppressLint("StaticFieldLeak")
 	private void initDrawer() {
 		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
 				this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -93,58 +68,10 @@ public class MainActivity extends AppCompatActivity
 		
 		NavigationView navigationView = findViewById(R.id.nav_view);
 		navigationView.setNavigationItemSelectedListener(this);
-		if(auth.getCurrentUser() == null) return;
-		new AsyncTask<View, Void, Profile>() {
-			View v;
-
-			@Override
-			protected Profile doInBackground(View... views) {
-				v = views[0];
-				Profile profile = null;
-				CloudantClient client = ClientBuilder.account(DB_USER_NAME)
-						.username(PROFILES_API_KEY)
-						.password(PROFILES_API_SECRET)
-						.build();
-
-				Database db = client.database(PROFILES_DB, false);
-
-				List<Profile> list = db.findByIndex("{\n" +
-						"   \"selector\": {\n" +
-						"      \"username\": \"" + FirebaseAuth.getInstance().getCurrentUser().getEmail() + "\"\n" +
-						"   }\n" +
-						"}", Profile.class);
-				for (Profile item : list) {
-					Log.e("check", "checkResult: " + item.toString());
-					profile = item;
-				}
-				Log.e("check", list.toString());
-				return profile;
-			}
-
-			@Override
-			protected void onPostExecute(Profile profile) {
-				TextView tvDrawerName = v.findViewById(R.id.tvDrawerName);
-				tvDrawerName.setText(profile.getFirstName() + " " + profile.getLastName());
-				//todo image
-			}
-		}.execute(drawer);
+		if (auth.getCurrentUser() == null) return;
+		new DrawerTask(findViewById(R.id.tvDrawerName)).execute(drawer);
 	}
 	
-	private void testDB() {
-//		DataDAO db = DataDAO.getInstance();
-		List<BroadcastPost> posts = new ArrayList<>();
-		List<Profile> profiles = new ArrayList<>();
-		List<Comment> comments = new ArrayList<>();
-//		Profile profile = new Profile("joy","gedgje","appo",true,posts,true, Profile.MOOD_FINE);
-
-//		db.writeSuggestedContent(new SuggestedContent(profile,"you should right this"));
-
-//		db.writeBroadcastPost(new BroadcastPost(BroadcastCategory.POLITICS,"blablablabla","URL",profiles,profiles,43545,"title",comments,profiles));
-//		List<BroadcastPost> list = db.getAllPosts();
-//		profiles1 = db.getBroadcasters();
-	
-	
-	}
 	
 	private void startAuthenticationActivityIfNeeded() {
 		if (auth.getCurrentUser() == null) {
@@ -202,8 +129,14 @@ public class MainActivity extends AppCompatActivity
 		
 		if (id == R.id.homePage) {
 			// Handle the camera action
-			getSupportFragmentManager().beginTransaction().replace(R.id.contentMain, MainViewPagerFragment.instantiate(this,MainViewPagerFragment.class.getName())).commit();
-			
+			List<Fragment> fragments = getSupportFragmentManager().getFragments();
+			for (Fragment fragment : fragments) {
+				if (fragment instanceof MainViewPagerFragment){
+					((MainViewPagerFragment) fragment).vpMain.setCurrentItem(2);
+					return true;
+				}
+			}
+			getSupportFragmentManager().beginTransaction().replace(R.id.contentMain, new MainViewPagerFragment()).commit();
 		} else if (id == R.id.logOut) {
 			auth.signOut();
 			playerFragment.stopPlayer();
@@ -217,7 +150,6 @@ public class MainActivity extends AppCompatActivity
 	
 	public void initPlayer(String filePath) {
 		playerFragment.initPlayer(filePath);
-		
 		
 		
 	}
