@@ -42,10 +42,6 @@ public class MainActivity extends AppCompatActivity
 				new Intent(this, ForegroundService.class));
 	}
 	
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-	}
 	
 	private void main() {
 		findViews();
