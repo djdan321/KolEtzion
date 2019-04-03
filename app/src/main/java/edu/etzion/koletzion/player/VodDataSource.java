@@ -119,10 +119,10 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 				"}", BroadcastPost.class);
 		
 		for (BroadcastPost item : list) {
-			Log.e("check", "checkResult: " + item.toString());
+			Log.d("check", "checkResult: " + item.toString());
 			postsList.add(item);
 		}
-		Log.e("check", list.toString());
+		Log.d("check", list.toString());
 		Collections.sort(postsList);
 		return postsList;
 	}
@@ -178,7 +178,6 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 		MediaMetadataRetriever retriever = new MediaMetadataRetriever();
 		retriever.setDataSource(filePath, new HashMap<String, String>());
 		long l = Long.parseLong(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
-		System.out.println(l);
 		retriever.release();
 		return l;
 	}
