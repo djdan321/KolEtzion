@@ -11,8 +11,8 @@
     <color name="gradEnd">#b1f4cf</color>
     <color name="gradStart">#9890e3</color>
     <color name="grad2End">#005BEA</color>
-    <color name="grad3Start">#a3bded</color>
-    <color name="grad3End">#8989ba</color>
+    <color name="grad3Start">#dfe9f3</color>
+    <color name="grad3End">#ffffff</color>
     <color name="grad4Start">#accbee</color>
     <color name="grad4End">#04befe</color>
     <color name="grad2Start">#09203f</color>
