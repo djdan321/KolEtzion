@@ -330,8 +330,11 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
 	@SuppressLint("StaticFieldLeak")
 	private void userListenListener(@NonNull ViewHolder holder, int position) {
 		holder.imagePostPlayBtn.setOnClickListener(v -> {
-			if (context instanceof MainActivity) ((MainActivity) context)
-					.initPlayer(broadcasts.get(position).getStreamURL());
+			if (context instanceof MainActivity) {
+				((MainActivity) context)
+						.initPlayer(broadcasts.get(position).getStreamURL());
+				((MainActivity) context).frame.setVisibility(View.VISIBLE);
+			}
 			holder.imagePostPlayBtn.setOnClickListener(null);
 			holder.ivLike.setOnClickListener(null);
 			holder.ivComment.setOnClickListener(null);

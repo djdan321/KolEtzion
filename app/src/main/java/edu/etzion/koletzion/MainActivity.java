@@ -4,10 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.ibm.mobilefirstplatform.clientsdk.android.core.api.BMSClient;
+import com.ibm.mobilefirstplatform.clientsdk.android.push.api.MFPPush;
+import com.ibm.mobilefirstplatform.clientsdk.android.push.api.MFPPushException;
+import com.ibm.mobilefirstplatform.clientsdk.android.push.api.MFPPushNotificationListener;
+import com.ibm.mobilefirstplatform.clientsdk.android.push.api.MFPPushResponseListener;
 
 import java.util.List;
 
@@ -28,9 +34,11 @@ public class MainActivity extends AppCompatActivity
 	
 	private FirebaseAuth auth;
 	private ExoPlayerFragment playerFragment;
-	private FrameLayout frame;
+	public FrameLayout frame;
 	private Toolbar toolbar;
 	private DrawerLayout drawer;
+	MFPPush push;
+	MFPPushNotificationListener notificationListener;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +46,43 @@ public class MainActivity extends AppCompatActivity
 		setContentView(R.layout.activity_main);
 		setSupportActionBar(toolbar);
 		main();
+		initIBMPush();
+		
 		ContextCompat.startForegroundService(this,
 				new Intent(this, ForegroundService.class));
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (push != null) {
+			System.out.println("onresume");
+			push.listen(notificationListener);
+		}
+	}
+	
+	private void initIBMPush() {
+		// Initialize the SDK
+		BMSClient.getInstance().initialize(this, BMSClient.REGION_UK);
+		//Initialize client Push SDK
+		push = MFPPush.getInstance();
+		push.initialize(getApplicationContext(), "179c47d1-0e7a-43cd-b274-8b284ace1f2e",
+				"456ec4ec-bf74-4cc9-bc0f-0a00b194e1ea");
+		
+		//callback wether success or not
+		push.registerDevice(new MFPPushResponseListener<String>() {
+			@Override
+			public void onSuccess(String response) {
+			}
+			
+			@Override
+			public void onFailure(MFPPushException exception) {
+			}
+		});
+		
+		notificationListener = message -> {
+			System.out.println(message);
+		};
 	}
 	
 	
@@ -53,6 +96,7 @@ public class MainActivity extends AppCompatActivity
 	private void initFragments() {
 		getSupportFragmentManager().beginTransaction().replace(frame.getId(),
 				playerFragment).commit();
+		frame.setVisibility(View.GONE);
 		getSupportFragmentManager().beginTransaction().replace(R.id.contentMain, new MainViewPagerFragment()).commit();
 	}
 	
@@ -93,6 +137,7 @@ public class MainActivity extends AppCompatActivity
 		toolbar = findViewById(R.id.toolbar);
 		drawer = findViewById(R.id.drawer_layout);
 		playerFragment = new ExoPlayerFragment();
+		
 	}
 	
 	@Override
@@ -127,7 +172,7 @@ public class MainActivity extends AppCompatActivity
 			// Handle the camera action
 			List<Fragment> fragments = getSupportFragmentManager().getFragments();
 			for (Fragment fragment : fragments) {
-				if (fragment instanceof MainViewPagerFragment){
+				if (fragment instanceof MainViewPagerFragment) {
 					((MainViewPagerFragment) fragment).vpMain.setCurrentItem(2);
 					return true;
 				}
@@ -146,8 +191,13 @@ public class MainActivity extends AppCompatActivity
 	
 	public void initPlayer(String filePath) {
 		playerFragment.initPlayer(filePath);
-		
-		
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		if (push != null) {
+			push.hold();
+		}
 	}
 }
-

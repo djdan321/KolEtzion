@@ -19,7 +19,7 @@ public class ForegroundService extends Service {
 	
 	// Constants
 	private static final int ID_SERVICE = 101;
-	
+	public static String streamName = "קול עציון";
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		super.onStartCommand(intent, flags, startId);
@@ -43,12 +43,14 @@ public class ForegroundService extends Service {
 		String channelId = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? createNotificationChannel(notificationManager) : "";
 		NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, channelId);
 		Notification notification = notificationBuilder.setOngoing(true)
-				.setSmallIcon(R.mipmap.ic_launcher)
+				.setStyle(new androidx.media.app.NotificationCompat.MediaStyle())
+				.setSmallIcon(R.drawable.audio)
 				.setPriority(PRIORITY_MIN)
 				.setCategory(NotificationCompat.CATEGORY_SERVICE)
 				.build();
 		
 		startForeground(ID_SERVICE, notification);
+		
 	}
 	
 	@Override
