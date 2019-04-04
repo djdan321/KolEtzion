@@ -43,19 +43,26 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
 	private Context context;
 	private List<BroadcastPost> broadcasts;
 	private Profile profile;
-	private int likesCounter = 0;
-	private int commentsCounter = 0;
+	private boolean isMainFeed;
+	private List<Profile> likes;
+	private List<BroadcastPost> favorites;
 	
 	public rvFeedAdapter(Context context, Profile profile) {
 		this.context = context;
 		this.profile = profile;
 		broadcasts = profile.getRelatedPosts();
+		isMainFeed = false;
+		favorites = profile.getRelatedPosts();
+		
+		
 	}
 	
 	public rvFeedAdapter(Context context, List<BroadcastPost> broadcastPosts, Profile profile) {
 		this.context = context;
 		this.broadcasts = broadcastPosts;
 		this.profile = profile;
+		favorites = profile.getRelatedPosts();
+		isMainFeed = true;
 		
 	}
 	
@@ -67,52 +74,71 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
 		return holder;
 	}
 	
+	@SuppressLint("StaticFieldLeak")
 	@Override
 	public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-		
-		if (broadcasts == null || broadcasts.size() == 0) return;
-		String name = broadcasts.get(position).getTitle().replaceAll("_", " ");
-		name = name.substring(0, name.length() - 4);
-		holder.tvPostHeader.setText(name);
-		likesCounter = broadcasts.get(position).getLikesCount();
-		commentsCounter = broadcasts.get(position).getCommentsCount();
-		holder.tvPostDuration.setText(broadcasts.get(position).getDurationString());
-		holder.tvLikesCount.setText(likesCounter + " לייקים");
-		holder.tvCommentsCount.setText(commentsCounter + " תגובות");
-		
-		// playing the broadcast
-		holder.imagePostPlayBtn.setOnClickListener(v -> {
-			if (context instanceof MainActivity) ((MainActivity) context)
-					.initPlayer(broadcasts.get(position).getStreamURL());
-		});
-		
-		//adding a like to the broadcast(only once per user)
-		likeToggleListener(holder, position);
-		
-		//showing Likers
-		holder.tvLikesCount.setOnClickListener(v -> {
-			MainActivity a = (MainActivity) context;
-			LikeFragment.newInstance(broadcasts.get(position)).
-					show(a.getSupportFragmentManager(), "tag");
-		});
-		
-		commentListener(holder, position);
-		
-		//displaying all comments in fragment dialog
-		holder.tvCommentsCount.setOnClickListener((v) -> {
-			MainActivity a = (MainActivity) context;
+		new AsyncTask<Void, Void, BroadcastPost>() {
 			
-			CommentFragment.newInstance(broadcasts.get(position)).
-					show(a.getSupportFragmentManager(), "tag");
-		});
-		//todo fix favorite button
-		//adding the broadcast to the user's favorites.
-		if (profile.isBroadcaster())
-			holder.ivFavorite.setVisibility(View.INVISIBLE);
-		else {
-			holder.ivFavorite.setVisibility(View.VISIBLE);
-			favoritesToggleListener(holder, position);
-		}
+			@Override
+			protected BroadcastPost doInBackground(Void... voids) {
+				return readBroadcastPost(broadcasts.get(position).get_id());
+			}
+			
+			@Override
+			protected void onPostExecute(BroadcastPost broadcastPost) {
+				likes = broadcastPost.getLikes();
+				boolean isLiked = false;
+				boolean isFavorite = false;
+				for (int i = 0; i < likes.size(); i++) {
+					if (likes.get(i).get_id().equals(profile.get_id()))
+						isLiked = true;
+				}
+				for (int i = 0; i < favorites.size(); i++) {
+					if (favorites.get(i).get_id().equals(broadcasts.get(position).get_id()))
+						isFavorite = true;
+				}
+				if (isFavorite)
+					holder.ivFavorite.setImageResource(R.drawable.star1);
+				else
+					holder.ivFavorite.setImageResource(R.drawable.star);
+				if (isLiked)
+					holder.ivLike.setImageResource(R.drawable.heart_like);
+				else
+					holder.ivLike.setImageResource(R.drawable.liky);
+				if (broadcasts == null || broadcasts.size() == 0) return;
+				String name = broadcasts.get(position).getTitle().replaceAll("_", " ");
+				name = name.substring(0, name.length() - 4);
+				holder.tvPostHeader.setText(name);
+				
+				holder.tvPostDuration.setText(broadcastPost.getDurationString());
+				holder.tvLikesCount.setText(broadcastPost.getLikes().size() + " לייקים");
+				holder.tvCommentsCount.setText(broadcastPost.getComments().size() + " תגובות");
+				holder.tvListenersCount.setText(String.valueOf(broadcastPost.getListeners().size()));
+				// playing the broadcast
+
+
+				likeToggleListener(holder, position);
+				userListenListener(holder,position);
+				commentListener(holder, position);
+				//showing Likers
+				if (broadcastPost.getLikes().size() > 0) {
+					likesCounterListener(holder, position);
+				}
+
+				//displaying all comments in fragment dialog
+				if (broadcastPost.getComments().size() > 0) {
+					commentsCountListener(holder, position);
+				}
+				//adding the broadcast to the user's favorites.
+				if (profile.isBroadcaster())
+					holder.ivFavorite.setVisibility(View.INVISIBLE);
+				else {
+					holder.ivFavorite.setVisibility(View.VISIBLE);
+					favoritesToggleListener(holder, position);
+				}
+				
+			}
+		}.execute();
 
 //			holder.ivFavorite.setOnClickListener((v -> {
 //				List<BroadcastPost> favorites = profile.getRelatedPosts();
@@ -124,6 +150,14 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
 //				DataDAO.getInstance().updateMyProfile(profile);
 //			}));
 //		}
+	}
+	
+	private void likesCounterListener(@NonNull ViewHolder holder, int position) {
+		holder.tvLikesCount.setOnClickListener(v -> {
+			MainActivity a = (MainActivity) context;
+			LikeFragment.newInstance(broadcasts.get(position)).
+					show(a.getSupportFragmentManager(), "tag");
+		});
 	}
 	
 	
@@ -195,6 +229,9 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
 			@Override
 			protected void onPostExecute(BroadcastPost broadcastPost) {
 				profile.removeBroadcastPost(broadCastPosition);
+				if (!isMainFeed)//todo fix it since it hides itemview but not removing it
+					holder.itemView.setVisibility(View.INVISIBLE);
+				
 				Toast.makeText(context, "הוסר מהמועדפים", Toast.LENGTH_SHORT).show();
 				holder.ivFavorite.setImageResource(R.drawable.star);
 				updateFavorites(profile, holder, position);
@@ -280,7 +317,6 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
 						if (likes.get(i).getUsername().
 								equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())) {
 							removeLike(broadcastPost, holder, position, i);
-							//todo replace return with unLike() method.
 							return;
 						}
 					}
@@ -291,8 +327,45 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
 //			holder.tvLikesCount.setText(likes.size() + " לייקים");
 		});
 	}
-	
-	//todo add 2 methods get updated post,updated profile.
+	@SuppressLint("StaticFieldLeak")
+	private void userListenListener(@NonNull ViewHolder holder, int position) {
+		holder.imagePostPlayBtn.setOnClickListener(v -> {
+			if (context instanceof MainActivity) {
+				((MainActivity) context)
+						.initPlayer(broadcasts.get(position).getStreamURL());
+				((MainActivity) context).frame.setVisibility(View.VISIBLE);
+			}
+			holder.imagePostPlayBtn.setOnClickListener(null);
+			holder.ivLike.setOnClickListener(null);
+			holder.ivComment.setOnClickListener(null);
+			holder.ivFavorite.setOnClickListener(null);
+			new AsyncTask<Void, Void, BroadcastPost>() {
+
+				@Override
+				protected BroadcastPost doInBackground(Void... voids) {
+					return readBroadcastPost(broadcasts.get(position).get_id());
+				}
+
+				@Override
+				protected void onPostExecute(BroadcastPost broadcastPost) {
+					List<Profile> listeners = broadcastPost.getListeners();
+					for (int i = 0; i < listeners.size(); i++) {
+						if (listeners.get(i).getUsername().equals(profile.getUsername())){
+							userListenListener(holder,position);
+							likeToggleListener(holder,position);
+							commentListener(holder,position);
+							favoritesToggleListener(holder,position);
+							return;
+						}
+					}
+					addListener(broadcastPost, holder, position);
+				}
+			}.execute();
+
+		});
+	}
+
+	//todo add ivListener onclickListner that updateson listenting.
 	//this method reads updated post,removing like from it , updating to the server, then reading it back updated from the server.
 	@SuppressLint("StaticFieldLeak")
 	private void removeLike(BroadcastPost broadcastPost, @NonNull ViewHolder holder, int position, int likePosition) {
@@ -306,6 +379,8 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
 			@Override
 			protected void onPostExecute(Profile profile) {
 				broadcastPost.removeLike(likePosition);
+				if (broadcastPost.getLikes().size() == 0)
+					holder.tvLikesCount.setOnClickListener(null);
 				holder.ivLike.setImageResource(R.drawable.liky);
 				updateLike(broadcastPost, holder, position);
 			}
@@ -325,12 +400,68 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
 			@Override
 			protected void onPostExecute(Profile profile) {
 				broadcastPost.addLike(profile);
-				holder.ivLike.setImageResource(R.drawable.share);
+				holder.ivLike.setImageResource(R.drawable.heart_like);
 				updateLike(broadcastPost, holder, position);
 			}
 		}.execute();
 	}
-	
+	@SuppressLint("StaticFieldLeak")
+	private void addListener(BroadcastPost broadcastPost, @NonNull ViewHolder holder, int position) {
+		new AsyncTask<Void, Void, Profile>() {
+
+			@Override
+			protected Profile doInBackground(Void... voids) {
+				return readUpdatedProfile(profile);
+			}
+
+			@Override
+			protected void onPostExecute(Profile profile) {
+				broadcastPost.addListener(profile);
+				updateListener(broadcastPost, holder, position);
+			}
+		}.execute();
+	}
+	@SuppressLint("StaticFieldLeak")
+	private void updateListener(BroadcastPost broadcastPost, @NonNull ViewHolder holder, int position) {
+		new AsyncTask<Void, Void, Void>() {
+
+			@Override
+			protected Void doInBackground(Void... voids) {
+				CloudantClient client = ClientBuilder.account(DB_USER_NAME)
+						.username(POSTS_API_KEY)
+						.password(POSTS_API_SECRET)
+						.build();
+				Database db = client.database(POSTS_DB, false);
+
+				db.update(broadcastPost);
+				Log.e("TAG", "doInBackground: cloudant data was saved.... ");
+				return null;
+			}
+
+			@Override
+			protected void onPostExecute(Void aVoid) {
+				new AsyncTask<Void, Void, BroadcastPost>() {
+
+					@SuppressLint("WrongThread")
+					@Override
+					protected BroadcastPost doInBackground(Void... voids) {
+						return readBroadcastPost(broadcastPost.get_id());
+					}
+
+					@Override
+					protected void onPostExecute(BroadcastPost broadcastPost) {
+						broadcasts.set(position, broadcastPost);
+						holder.tvListenersCount.setText(String.valueOf(broadcasts.get(position).getListeners().size()));
+						userListenListener(holder,position);
+						likeToggleListener(holder, position);
+						commentListener(holder, position);
+						favoritesToggleListener(holder, position);
+
+					}
+				}.execute();
+			}
+		}.execute();
+	}
 	@SuppressLint("StaticFieldLeak")
 	private void updateLike(BroadcastPost broadcastPost, @NonNull ViewHolder holder, int position) {
 		new AsyncTask<Void, Void, Void>() {
@@ -361,6 +492,9 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
 					@Override
 					protected void onPostExecute(BroadcastPost broadcastPost) {
 						broadcasts.set(position, broadcastPost);
+						holder.tvLikesCount.setText(broadcasts.get(position).getLikes().size() + " לייקים");
+						if (broadcasts.get(position).getLikes().size() > 0)
+							likesCounterListener(holder, position);
 						likeToggleListener(holder, position);
 						commentListener(holder, position);
 						favoritesToggleListener(holder, position);
@@ -402,6 +536,10 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
 					@Override
 					protected void onPostExecute(BroadcastPost broadcastPost) {
 						broadcasts.set(position, broadcastPost);
+						holder.tvCommentsCount.setText(broadcasts.get(position).getComments().size() + " תגובות");
+						if (broadcasts.get(position).getComments().size() > 0) {
+							commentsCountListener(holder, position);
+						}
 						commentListener(holder, position);
 						likeToggleListener(holder, position);
 						favoritesToggleListener(holder, position);
@@ -410,6 +548,15 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
 				}.execute();
 			}
 		}.execute();
+	}
+	
+	private void commentsCountListener(@NonNull ViewHolder holder, int position) {
+		holder.tvCommentsCount.setOnClickListener((v) -> {
+			MainActivity a = (MainActivity) context;
+			
+			CommentFragment.newInstance(broadcasts.get(position)).
+					show(a.getSupportFragmentManager(), "tag");
+		});
 	}
 	
 	public Profile readUpdatedProfile(Profile currentProfile) {
@@ -474,6 +621,7 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
 		ImageView ivComment;
 		ImageView ivFavorite;
 		EditText etComment;
+		ImageView ivListeners;
 		
 		public ViewHolder(View itemView) {
 			super(itemView);
@@ -489,6 +637,7 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
 			ivComment = itemView.findViewById(R.id.ivComment);
 			ivFavorite = itemView.findViewById(R.id.ivFavorite);
 			etComment = itemView.findViewById(R.id.etComment);
+			ivListeners = itemView.findViewById(R.id.ivListeners);
 			
 		}
 	}
