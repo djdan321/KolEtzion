@@ -23,8 +23,8 @@
 
     <ImageView
         android:id="@+id/ivSuggestedContent"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="245dp"
+        android:layout_height="143dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -33,15 +33,14 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline5"
         app:layout_constraintEnd_toStartOf="@+id/ivFavorite"
         app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toTopOf="@+id/guideline4"
-        app:layout_constraintVertical_bias="0.6" />
+        app:layout_constraintTop_toTopOf="@+id/guideline4" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.15" />
+        app:layout_constraintGuide_percent="0.13" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline5"
@@ -55,17 +54,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/alfa_slab_one"
-        android:text="הצע תוכן"
+        android:text="הצעת תוכן"
         android:textAlignment="center"
-        android:textAllCaps="false"
+        android:textAllCaps="true"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.521"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteY="37dp" />
 
 
     <EditText
