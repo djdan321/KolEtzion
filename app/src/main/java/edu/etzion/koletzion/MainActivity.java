@@ -1,20 +1,23 @@
 package edu.etzion.koletzion;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
+import com.backendless.Backendless;
+import com.backendless.async.callback.AsyncCallback;
+import com.backendless.exceptions.BackendlessFault;
+import com.backendless.push.DeviceRegistrationResult;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.ibm.mobilefirstplatform.clientsdk.android.core.api.BMSClient;
-import com.ibm.mobilefirstplatform.clientsdk.android.push.api.MFPPush;
-import com.ibm.mobilefirstplatform.clientsdk.android.push.api.MFPPushException;
-import com.ibm.mobilefirstplatform.clientsdk.android.push.api.MFPPushNotificationListener;
-import com.ibm.mobilefirstplatform.clientsdk.android.push.api.MFPPushResponseListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -37,52 +40,42 @@ public class MainActivity extends AppCompatActivity
 	public FrameLayout frame;
 	private Toolbar toolbar;
 	private DrawerLayout drawer;
-	MFPPush push;
-	MFPPushNotificationListener notificationListener;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		setSupportActionBar(toolbar);
+		// Enable Notification Channel for Android OREO
+		
+		
 		main();
-		initIBMPush();
 		
 		ContextCompat.startForegroundService(this,
 				new Intent(this, ForegroundService.class));
-	}
-	
-	@Override
-	protected void onResume() {
-		super.onResume();
-		if (push != null) {
-			System.out.println("onresume");
-			push.listen(notificationListener);
-		}
-	}
-	
-	private void initIBMPush() {
-		// Initialize the SDK
-		BMSClient.getInstance().initialize(this, BMSClient.REGION_UK);
-		//Initialize client Push SDK
-		push = MFPPush.getInstance();
-		push.initialize(getApplicationContext(), "179c47d1-0e7a-43cd-b274-8b284ace1f2e",
-				"456ec4ec-bf74-4cc9-bc0f-0a00b194e1ea");
+		//init backendless
+		initBackendless();
 		
-		//callback wether success or not
-		push.registerDevice(new MFPPushResponseListener<String>() {
+		
+	}
+	
+	private void initBackendless() {
+		Backendless.initApp(this, "B004AE57-963C-4667-FFAF-B3A5C251F100",
+				"C6A4B36A-A709-7AB2-FF1B-B5CDC4CAD200");
+		
+		List<String> channels = new ArrayList<>();
+		channels.add( "default" );
+		Backendless.Messaging.registerDevice(channels, new AsyncCallback<DeviceRegistrationResult>() {
 			@Override
-			public void onSuccess(String response) {
+			public void handleResponse(DeviceRegistrationResult response) {
+			
 			}
 			
 			@Override
-			public void onFailure(MFPPushException exception) {
+			public void handleFault(BackendlessFault fault) {
+			
 			}
 		});
-		
-		notificationListener = message -> {
-			System.out.println(message);
-		};
 	}
 	
 	
@@ -193,11 +186,4 @@ public class MainActivity extends AppCompatActivity
 		playerFragment.initPlayer(filePath);
 	}
 	
-	@Override
-	protected void onPause() {
-		super.onPause();
-		if (push != null) {
-			push.hold();
-		}
-	}
 }
