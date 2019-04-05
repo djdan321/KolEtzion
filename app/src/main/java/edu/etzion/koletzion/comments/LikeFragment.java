@@ -39,8 +39,7 @@ public class LikeFragment extends AppCompatDialogFragment {
 		// Inflate the layout for this fragment
 		return inflater.inflate(R.layout.fragment_like, container, false);
 	}
-	
-	@SuppressLint("StaticFieldLeak")
+	//todo static
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		rv = view.findViewById(R.id.likeRecycler);
