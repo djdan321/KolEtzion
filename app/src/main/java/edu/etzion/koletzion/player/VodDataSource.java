@@ -32,6 +32,11 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
+
+
+	List<Profile> broadcasters = new ArrayList<>();
+
+
 	private boolean isMainFeed;
 	private WeakReference<RecyclerView> rv;
 	private Profile profile;
@@ -92,6 +97,8 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 	
 	@Override
 	protected List<Object> doInBackground(Void... voids) {
+		//todo use it to create fictive data base. it includes everything!! but images,includes also related posts
+		// createProfiles();
 		List<Object> lists = new ArrayList<>();
 		List<Vod> vods = getVodList();
 		List<BroadcastPost> broadcastPosts = getBroadcastPostsFromCloud();
@@ -144,9 +151,10 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 
 //			 these are fictive lists and will be original when the admin will upload the files directly to our app.
 //			 they are nessecery for the instance so i made them
-				
-				
-				List<Profile> broadcasters = new ArrayList<>();
+				if(i<8) {
+					List<Profile> broadcasters = new ArrayList<>();
+
+
 				List<Profile> listeners = new ArrayList<>();
 				List<Comment> comments = new ArrayList<>();
 				List<Profile> likes = new ArrayList<>();
@@ -162,6 +170,9 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 						comments, likes);
 				broadcastPosts.add(broadcastPost);
 				DataDAO.getInstance().writeBroadcastPost(broadcastPost);
+				for (int j = 0; j < broadcasters.size(); j++) {
+					broadcasters.get(j).addBroadcastPost(broadcastPost);
+				}}
 			}
 		}
 		// creating instance of the recyclerview with the updated list from our server.
@@ -180,6 +191,16 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 		long l = Long.parseLong(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
 		retriever.release();
 		return l;
+	}//osher mozes, omri ben hanan,azriel friedman , rotem hadad,ori hasin, daniel shapira,shalev kody,elad termatzy
+	private void createProfiles(){
+		broadcasters.add(new Profile("broadcaster1","oher","mozes",true,null,true,Profile.MOOD_NONE));
+		broadcasters.add(new Profile("broadcaster2","omri","ben hanan",true,null,true,Profile.MOOD_NONE));
+		broadcasters.add(new Profile("broadcaster3","azriel","friedman",true,null,true,Profile.MOOD_NONE));
+		broadcasters.add(new Profile("broadcaster4","rotem","hadad",true,null,true,Profile.MOOD_NONE));
+		broadcasters.add( new Profile("broadcaster5","ori","hasin",true,null,true,Profile.MOOD_NONE));
+		broadcasters.add( new Profile("broadcaster6","daniel","shapira",true,null,true,Profile.MOOD_NONE));
+		broadcasters.add( new Profile("broadcaster7","shalev","kody",true,null,true,Profile.MOOD_NONE));
+		broadcasters.add( new Profile("broadcaster8","elad","termatzy",true,null,true,Profile.MOOD_NONE));
+
 	}
-	
 }
