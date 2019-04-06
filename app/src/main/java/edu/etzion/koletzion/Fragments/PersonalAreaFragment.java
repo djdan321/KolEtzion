@@ -1,6 +1,10 @@
 package edu.etzion.koletzion.Fragments;
 
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,22 +13,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cloudant.client.api.ClientBuilder;
 import com.cloudant.client.api.CloudantClient;
 import com.cloudant.client.api.Database;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import edu.etzion.koletzion.R;
 import edu.etzion.koletzion.database.BitmapSerializer;
 import edu.etzion.koletzion.models.Profile;
 import edu.etzion.koletzion.player.VodDataSource;
+
+import static android.app.Activity.RESULT_OK;
 
 
 public class PersonalAreaFragment extends Fragment {
@@ -111,6 +121,13 @@ public class PersonalAreaFragment extends Fragment {
 		tvPersonalName = view.findViewById(R.id.tvPersonalName);
 		tvSuggestContent = view.findViewById(R.id.tvSuggestContent);
 		profile = getArguments().getParcelable("profile");
+		
+		//todo set up button
+//		btn.setOnClickListener((v -> {
+//			Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+//			photoPickerIntent.setType("image/*");
+//			startActivityForResult(photoPickerIntent, 1);
+//		}));
 	}
 	
 	
@@ -121,5 +138,25 @@ public class PersonalAreaFragment extends Fragment {
 		return inflater.inflate(R.layout.fragment_personal_area, container, false);
 	}
 	
-	
+	@Override
+	public void onActivityResult(int reqCode, int resultCode, Intent data) {
+		super.onActivityResult(reqCode, resultCode, data);
+		
+		AppCompatActivity activity = (AppCompatActivity) getContext();
+		
+		if (resultCode == RESULT_OK) {
+			try {
+				final Uri imageUri = data.getData();
+				final InputStream imageStream = activity.getContentResolver().openInputStream(imageUri);
+				final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+				imagePersonalArea.setImageBitmap(selectedImage);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+			}
+		} else {
+			Toast.makeText(getContext(), "לא נמצאה תמונה", Toast.LENGTH_LONG).show();
+		}
+	}
 }
