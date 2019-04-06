@@ -2,16 +2,11 @@ package edu.etzion.koletzion;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
-
-import android.os.Handler;
-
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
@@ -19,7 +14,6 @@ import com.backendless.exceptions.BackendlessFault;
 import com.backendless.push.DeviceRegistrationResult;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-
 
 import org.threeten.bp.LocalDate;
 
@@ -29,7 +23,6 @@ import java.util.List;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -48,53 +41,51 @@ public class MainActivity extends AppCompatActivity
 	public FrameLayout frame;
 	private Toolbar toolbar;
 	private DrawerLayout drawer;
-
+	
 	private SharedPreferences sp;
 	private SharedPreferences.Editor spEditor;
 	
-
+	
 	public static PushNotificationReceiver receiver;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		setSupportActionBar(toolbar);
-		// Enable Notification Channel for Android OREO
 		moodPopUp();
-		
 		main();
-		
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-			startForegroundService(new Intent(this, ForegroundService.class));
-		}else{
-			startService(new Intent(this, ForegroundService.class));
-		}
+//		todo fix with tomer
+		// Enable Notification Channel for Android OREO
+//		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//			startForegroundService(new Intent(this, ForegroundService.class));
+//		}else{
+//			startService(new Intent(this, ForegroundService.class));
+//		}
 		//init backendless
 		initBackendless();
 		
 		
 	}
-
+	
 	private void moodPopUp() {
-			sp = getSharedPreferences("LocalData",MODE_PRIVATE);
-			spEditor=sp.edit();
-			if(!sp.contains("userName")){
-				createUserOnSP();
-				new MoodFragment().show(getSupportFragmentManager(),"tag");
-			}else
-				{
-					if(sp.getString("dateStamp","").equals(LocalDate.now().toString()))
-						return;
-					else
-						new MoodFragment().show(getSupportFragmentManager(),"tag");				}
+		sp = getSharedPreferences("LocalData", MODE_PRIVATE);
+		spEditor = sp.edit();
+		if (!sp.contains("userName")) {
+			createUserOnSP();
+			new MoodFragment().show(getSupportFragmentManager(), "tag");
+		} else {
+			if (!sp.getString("dateStamp", "").equals(LocalDate.now().toString())) {
+				new MoodFragment().show(getSupportFragmentManager(), "tag");
+			}
+		}
 	}
-
+	
 	private void createUserOnSP() {
 		spEditor.putString("userName", FirebaseAuth.getInstance().getCurrentUser().getEmail());
 		spEditor.putString("dateStamp", LocalDate.now().toString());
 	}
-
+	
 	private void initBackendless() {
 		Backendless.initApp(this, "B004AE57-963C-4667-FFAF-B3A5C251F100",
 				"C6A4B36A-A709-7AB2-FF1B-B5CDC4CAD200");
@@ -167,7 +158,6 @@ public class MainActivity extends AppCompatActivity
 		drawer = findViewById(R.id.drawer_layout);
 		playerFragment = new ExoPlayerFragment();
 		findViewById(R.id.btnLiveStream).setOnClickListener(this);
-		((ImageView)findViewById(R.id.btnLiveStream)).setBackgroundColor(0x9a0007);
 		receiver = new PushNotificationReceiver(findViewById(R.id.btnLiveStream));
 	}
 	
