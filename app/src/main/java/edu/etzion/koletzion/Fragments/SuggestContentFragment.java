@@ -52,10 +52,6 @@ public class SuggestContentFragment extends Fragment {
 	private EditText etSuggest;
 	private Profile profile;
 	
-	public SuggestContentFragment() {
-		// Required empty public constructor
-	}
-	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
