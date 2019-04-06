@@ -605,7 +605,6 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
 		ImageView ivComment;
 		ImageView ivFavorite;
 		EditText etComment;
-		ImageView ivListeners;
 		
 		public ViewHolder(View itemView) {
 			super(itemView);
@@ -621,8 +620,7 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
 			ivComment = itemView.findViewById(R.id.ivComment);
 			ivFavorite = itemView.findViewById(R.id.ivFavorite);
 			etComment = itemView.findViewById(R.id.etComment);
-			ivListeners = itemView.findViewById(R.id.ivListeners);
-			
+
 		}
 	}
 }
