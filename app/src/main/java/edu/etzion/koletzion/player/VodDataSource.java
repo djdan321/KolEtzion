@@ -98,7 +98,7 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 	@Override
 	protected List<Object> doInBackground(Void... voids) {
 		//todo use it to create fictive data base. it includes everything!! but images,includes also related posts
-		 createProfiles();
+//		 createProfiles();
 		List<Object> lists = new ArrayList<>();
 		List<Vod> vods = getVodList();
 		List<BroadcastPost> broadcastPosts = getBroadcastPostsFromCloud();
@@ -151,7 +151,9 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 
 //			 these are fictive lists and will be original when the admin will upload the files directly to our app.
 //			 they are nessecery for the instance so i made them
-				if(i<8) {
+				//todo add the if statement and the for statement for fictive database just after
+				//todo JUST AFTER Yossi deleted the current database from the server
+//				if(i<8) {
 					List<Profile> broadcasters = new ArrayList<>();
 
 
@@ -170,9 +172,9 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 						comments, likes);
 				broadcastPosts.add(broadcastPost);
 				DataDAO.getInstance().writeBroadcastPost(broadcastPost);
-				for (int j = 0; j < broadcasters.size(); j++) {
-					broadcasters.get(j).addBroadcastPost(broadcastPost);
-				}}
+//				for (int j = 0; j < broadcasters.size(); j++) {
+//					broadcasters.get(j).addBroadcastPost(broadcastPost);
+//				}}
 			}
 		}
 		// creating instance of the recyclerview with the updated list from our server.
