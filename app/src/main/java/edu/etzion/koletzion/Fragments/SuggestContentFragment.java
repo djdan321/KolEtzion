@@ -91,9 +91,8 @@ public class SuggestContentFragment extends Fragment {
 
     }
 
-
+    //todo
     //writing the suggestedContent to the server.
-    @SuppressLint("StaticFieldLeak")
     private void writeToServer() {
         // getting the current latest update profile object from the server
         new AsyncTask<Void,Void,Profile>(){
