@@ -6,7 +6,6 @@ public class SuggestedContent {
     private Profile profile;
     private String content;
     private long timeStamp;
-    //todo add image (learn how to add to server)
 
     //Constructors
 

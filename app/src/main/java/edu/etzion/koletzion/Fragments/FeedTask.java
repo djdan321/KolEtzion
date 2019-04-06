@@ -16,6 +16,7 @@ import edu.etzion.koletzion.models.Profile;
 import edu.etzion.koletzion.player.VodDataSource;
 
 public class FeedTask extends AsyncTask<Void, Void, Profile> {
+	private boolean isMainFeed;
 	WeakReference<RecyclerView> rvFeed;
 	private final String PROFILES_API_KEY = "ctleyeaciedgedgessithurd";
 	private final String PROFILES_API_SECRET = "a31366679368d7d26408f78ab1402a23485e061e";
@@ -24,11 +25,14 @@ public class FeedTask extends AsyncTask<Void, Void, Profile> {
 	
 	public FeedTask(RecyclerView rvFeed) {
 		this.rvFeed = new WeakReference<>(rvFeed);
+		this.isMainFeed = true;
 	}
-	
+	public FeedTask(RecyclerView rvFeed, boolean isMainFeed) {
+		this.rvFeed = new WeakReference<>(rvFeed);
+		this.isMainFeed = isMainFeed;
+	}
 	@Override
 	protected Profile doInBackground(Void... voids) {
-		Profile profile = null;
 		CloudantClient client = ClientBuilder.account(DB_USER_NAME)
 				.username(PROFILES_API_KEY)
 				.password(PROFILES_API_SECRET)
@@ -41,17 +45,13 @@ public class FeedTask extends AsyncTask<Void, Void, Profile> {
 				"      \"username\": \"" + FirebaseAuth.getInstance().getCurrentUser().getEmail() + "\"\n" +
 				"   }\n" +
 				"}", Profile.class);
-		for (Profile item : list) {
-			Log.e("check", "checkResult: " + item.toString());
-			profile = item;
-		}
-		Log.e("check", list.toString());
-		return profile;
+		
+		return list.get(list.size() - 1);
 	}
 	
 	@Override
 	protected void onPostExecute(Profile profile) {
-		new VodDataSource(rvFeed.get(), profile, true).execute();
+		new VodDataSource(rvFeed.get(), profile, isMainFeed).execute();
 	}
 }
 

@@ -1,16 +1,17 @@
 package edu.etzion.koletzion;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
+
+import android.os.Handler;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.Toast;
+import android.widget.ImageView;
 
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
@@ -36,9 +37,10 @@ import edu.etzion.koletzion.Fragments.MainViewPagerFragment;
 import edu.etzion.koletzion.Fragments.MoodFragment;
 import edu.etzion.koletzion.authentication.AuthenticationActivity;
 import edu.etzion.koletzion.player.ExoPlayerFragment;
+import edu.etzion.koletzion.player.StartLiveStreamTask;
 
 public class MainActivity extends AppCompatActivity
-		implements NavigationView.OnNavigationItemSelectedListener {
+		implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 	
 	
 	private FirebaseAuth auth;
@@ -46,9 +48,13 @@ public class MainActivity extends AppCompatActivity
 	public FrameLayout frame;
 	private Toolbar toolbar;
 	private DrawerLayout drawer;
+
 	private SharedPreferences sp;
 	private SharedPreferences.Editor spEditor;
 	
+
+	public static PushNotificationReceiver receiver;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -59,8 +65,11 @@ public class MainActivity extends AppCompatActivity
 		
 		main();
 		
-		ContextCompat.startForegroundService(this,
-				new Intent(this, ForegroundService.class));
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+			startForegroundService(new Intent(this, ForegroundService.class));
+		}else{
+			startService(new Intent(this, ForegroundService.class));
+		}
 		//init backendless
 		initBackendless();
 		
@@ -91,7 +100,7 @@ public class MainActivity extends AppCompatActivity
 				"C6A4B36A-A709-7AB2-FF1B-B5CDC4CAD200");
 		
 		List<String> channels = new ArrayList<>();
-		channels.add( "default" );
+		channels.add("default");
 		Backendless.Messaging.registerDevice(channels, new AsyncCallback<DeviceRegistrationResult>() {
 			@Override
 			public void handleResponse(DeviceRegistrationResult response) {
@@ -157,7 +166,9 @@ public class MainActivity extends AppCompatActivity
 		toolbar = findViewById(R.id.toolbar);
 		drawer = findViewById(R.id.drawer_layout);
 		playerFragment = new ExoPlayerFragment();
-		
+		findViewById(R.id.btnLiveStream).setOnClickListener(this);
+		((ImageView)findViewById(R.id.btnLiveStream)).setBackgroundColor(0x9a0007);
+		receiver = new PushNotificationReceiver(findViewById(R.id.btnLiveStream));
 	}
 	
 	@Override
@@ -203,7 +214,6 @@ public class MainActivity extends AppCompatActivity
 			playerFragment.stopPlayer();
 			startAuthenticationActivityIfNeeded();
 		}
-		
 		DrawerLayout drawer = findViewById(R.id.drawer_layout);
 		drawer.closeDrawer(GravityCompat.START);
 		return true;
@@ -213,4 +223,17 @@ public class MainActivity extends AppCompatActivity
 		playerFragment.initPlayer(filePath);
 	}
 	
+	@Override
+	public void onClick(View v) {
+		MainActivity activity = this;
+		new StartLiveStreamTask(playerFragment).execute();
+//		v.setOnClickListener(null);
+//		final Handler handler = new Handler();
+//		handler.postDelayed(new Runnable() {
+//			@Override
+//			public void run() {
+//				v.setOnClickListener(activity);
+//			}
+//		}, 3500);
+	}
 }
