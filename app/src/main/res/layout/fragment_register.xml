@@ -121,7 +121,7 @@
         app:layout_constraintTop_toBottomOf="@+id/etRegisterConfirmPassword" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/ivFine"
         android:layout_width="102dp"
         android:layout_height="90dp"
         android:layout_marginTop="8dp"
