@@ -201,6 +201,8 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 		broadcasters.add( new Profile("broadcaster6","daniel","shapira",true,null,true,Profile.MOOD_NONE));
 		broadcasters.add( new Profile("broadcaster7","shalev","kody",true,null,true,Profile.MOOD_NONE));
 		broadcasters.add( new Profile("broadcaster8","elad","termatzy",true,null,true,Profile.MOOD_NONE));
-
+		for (int i = 0; i < broadcasters.size(); i++) {
+			DataDAO.getInstance().writeMyProfile(broadcasters.get(i));
+		}
 	}
 }
