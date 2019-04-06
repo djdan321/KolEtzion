@@ -50,7 +50,8 @@ public class GetProfileByUserNameTask extends AsyncTask<Void, Void, Profile> {
 	
 	@Override
 	protected void onPostExecute(Profile profile) {
-		if(postExecuteRunnable == null) return;
-		postExecuteRunnable.run();
+		if (postExecuteRunnable != null) {
+			postExecuteRunnable.run();
+		}
 	}
 }
