@@ -8,9 +8,11 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tvFeeling"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+
+        android:id="@+id/tvMessage"
+        android:layout_width="372dp"
+        android:layout_height="55dp"
+
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
@@ -25,7 +27,9 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/ivOk"
+
+        android:id="@+id/ivFine"
+
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -50,7 +54,9 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline20"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/ivOk"
+
+        app:layout_constraintStart_toEndOf="@+id/ivFine"
+
         app:layout_constraintTop_toTopOf="@+id/guideline21"
         app:srcCompat="@drawable/happy" />
 
@@ -63,12 +69,16 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline20"
-        app:layout_constraintEnd_toStartOf="@+id/ivOk"
+
+        app:layout_constraintEnd_toStartOf="@+id/ivFine"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline21"
         app:srcCompat="@drawable/sad" />
 
     <Button
+
         android:id="@+id/btnSkip"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -78,7 +88,8 @@
         android:text="בוחר לא לשתף"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivOk" />
+        app:layout_constraintTop_toBottomOf="@id/ivFine" />
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline20"

@@ -103,11 +103,12 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tvFeeling"
+        app:layout_constraintStart_toEndOf="@+id/tvQuestion"
         app:layout_constraintTop_toTopOf="@+id/guideline8" />
 
     <TextView
-        android:id="@+id/tvFeeling"
+        android:id="@+id/tvQuestion"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -138,7 +139,9 @@
 עם מוגבלות והובלת
 שינוי עמדות בחברה"
         app:layout_constraintBottom_toTopOf="@+id/guideline9"
-        app:layout_constraintEnd_toStartOf="@+id/tvFeeling"
+
+        app:layout_constraintEnd_toStartOf="@+id/tvQuestion"
+
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline8" />
