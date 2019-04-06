@@ -22,14 +22,14 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@drawable/grad4"
+            android:background="@drawable/grad"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
-            <ImageView
+            <!--<ImageView-->
 
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            app:srcCompat="@drawable/be_logo" />
+            <!--android:layout_width="50dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--app:srcCompat="@drawable/be_logo" />-->
 
             <ImageView
 
@@ -38,6 +38,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 app:srcCompat="@drawable/audio"
+
                 android:layout_alignParentEnd="true"
                 android:layout_gravity="end"
                 android:layout_marginRight="10dp"/>
