@@ -98,7 +98,7 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 	@Override
 	protected List<Object> doInBackground(Void... voids) {
 		//todo use it to create fictive data base. it includes everything!! but images,includes also related posts
-		// createProfiles();
+		 createProfiles();
 		List<Object> lists = new ArrayList<>();
 		List<Vod> vods = getVodList();
 		List<BroadcastPost> broadcastPosts = getBroadcastPostsFromCloud();
