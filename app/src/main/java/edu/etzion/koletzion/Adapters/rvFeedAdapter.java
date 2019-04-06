@@ -106,7 +106,7 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
 				else
 					holder.ivLike.setImageResource(R.drawable.liky);
 				if (broadcasts == null || broadcasts.size() == 0) return;
-				String name = broadcasts.get(position).getTitle().replaceAll("_", " ");
+				String name = broadcasts.get(position).getTitle().replaceAll("_", " ").trim();
 				name = name.substring(0, name.length() - 4);
 				holder.tvPostHeader.setText(name);
 				
@@ -605,7 +605,6 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
 		ImageView ivComment;
 		ImageView ivFavorite;
 		EditText etComment;
-		ImageView ivListeners;
 		
 		public ViewHolder(View itemView) {
 			super(itemView);
@@ -621,7 +620,6 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
 			ivComment = itemView.findViewById(R.id.ivComment);
 			ivFavorite = itemView.findViewById(R.id.ivFavorite);
 			etComment = itemView.findViewById(R.id.etComment);
-			ivListeners = itemView.findViewById(R.id.ivListeners);
 			
 		}
 	}

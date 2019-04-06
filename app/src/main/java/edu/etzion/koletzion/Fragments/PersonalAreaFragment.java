@@ -1,7 +1,6 @@
 package edu.etzion.koletzion.Fragments;
 
 
-import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,8 +21,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
-import edu.etzion.koletzion.Adapters.rvFeedAdapter;
 import edu.etzion.koletzion.R;
+import edu.etzion.koletzion.database.BitmapSerializer;
 import edu.etzion.koletzion.models.Profile;
 import edu.etzion.koletzion.player.VodDataSource;
 
@@ -40,13 +39,7 @@ public class PersonalAreaFragment extends Fragment {
 	private Profile profile;
 	private ImageView imagePersonalArea;
 	private TextView tvPersonalName;
-	private TextView tvPersonalExtra;
-	
-	public static PersonalAreaFragment newInstance() {
-		PersonalAreaFragment fragment = new PersonalAreaFragment();
-		return fragment;
-	}
-	
+	private TextView tvSuggestContent;
 	
 	public static PersonalAreaFragment newInstance(Profile p) {
 		
@@ -66,11 +59,9 @@ public class PersonalAreaFragment extends Fragment {
 		tvPersonalName.setText(String.format("%s %s", profile.getFirstName(),
 				profile.getLastName()));
 		
-		//todo get image from profile.
-		
-		
-		//todo if(broadcaster) tvPersonalExtra.setText("Broadcast list")
-		// else tvPersonalExtra.setText("Favorites")
+		imagePersonalArea.
+				setImageBitmap(BitmapSerializer.
+						decodeStringToBitmap(profile.getEncodedBitMapImage()));
 		
 		displayMyFeed();
 	}
@@ -80,6 +71,7 @@ public class PersonalAreaFragment extends Fragment {
 		super.onResume();
 		displayMyFeed();
 	}
+	
 	//todo
 	private void displayMyFeed() {
 		new AsyncTask<Void, Void, Profile>() {
@@ -111,14 +103,13 @@ public class PersonalAreaFragment extends Fragment {
 				new VodDataSource(rv, profile, false).execute();
 			}
 		}.execute();
-		
 	}
 	
 	private void findViews(@NonNull View view) {
 		rv = view.findViewById(R.id.rvProfileType);
 		imagePersonalArea = view.findViewById(R.id.imagePersonalArea);
 		tvPersonalName = view.findViewById(R.id.tvPersonalName);
-		tvPersonalExtra = view.findViewById(R.id.tvPersonalExtra);
+		tvSuggestContent = view.findViewById(R.id.tvSuggestContent);
 		profile = getArguments().getParcelable("profile");
 	}
 	

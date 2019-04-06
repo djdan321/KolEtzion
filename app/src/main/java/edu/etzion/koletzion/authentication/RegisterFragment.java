@@ -129,7 +129,7 @@ public class RegisterFragment extends Fragment implements Button.OnClickListener
 					if (task.isSuccessful()) {
 						//creating a new profile and saving to the server.
 						List<BroadcastPost> relatedBroadcasts = new ArrayList<>();
-						Profile profile = new Profile(email,firstName,lastName,false,relatedBroadcasts,false,Profile.MOOD_NONE);
+						Profile profile = new Profile(email, firstName, lastName, false, relatedBroadcasts, false, Profile.MOOD_NONE);
 						DataDAO.getInstance().writeMyProfile(profile);
 						// Sign in success, update UI with the signed-in user's information
 						startActivity(new Intent(getContext(), MainActivity.class));
