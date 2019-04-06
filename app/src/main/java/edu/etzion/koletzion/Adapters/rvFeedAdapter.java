@@ -218,7 +218,7 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
 			protected void onPostExecute(BroadcastPost broadcastPost) {
 				profile.removeBroadcastPost(broadCastPosition);
 				if (!isMainFeed)//todo fix it since it hides itemview but not removing it
-					holder.itemView.setVisibility(View.INVISIBLE);
+					holder.itemView.setVisibility(View.GONE);
 				
 				Toast.makeText(context, "הוסר מהמועדפים", Toast.LENGTH_SHORT).show();
 				holder.ivFavorite.setImageResource(R.drawable.star);
