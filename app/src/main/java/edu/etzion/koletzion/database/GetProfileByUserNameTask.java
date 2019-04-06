@@ -18,17 +18,8 @@ public class GetProfileByUserNameTask extends AsyncTask<Void, Void, Profile> {
 	private final String PROFILES_DB = "profiles";
 	private final String DB_USER_NAME = "41c99d88-3264-4be5-b546-ff5a5be07dfb-bluemix";
 	
-
-	RunWithProfile runWithProfile;
-	WeakReference<String> userNameWeakRef;
-	
-	public GetProfileByUserNameTask(String userNameWeakRef,RunWithProfile runWithProfile) {
-		this.userNameWeakRef = new WeakReference<>(userNameWeakRef);
-		this.runWithProfile=runWithProfile;
-
 	Runnable postExecuteRunnable;
 	WeakReference<String> userNameWeakRef;
-	
 	public GetProfileByUserNameTask(String userName) {
 		this.userNameWeakRef = new WeakReference<>(userName);
 	}
@@ -36,7 +27,6 @@ public class GetProfileByUserNameTask extends AsyncTask<Void, Void, Profile> {
 	public GetProfileByUserNameTask(String userName, Runnable runnable) {
 		this.userNameWeakRef = new WeakReference<>(userName);
 		this.postExecuteRunnable = runnable;
-
 	}
 	
 	@Override
@@ -59,14 +49,8 @@ public class GetProfileByUserNameTask extends AsyncTask<Void, Void, Profile> {
 	
 	@Override
 	protected void onPostExecute(Profile profile) {
-		if(postExecuteRunnable == null) return;
-		postExecuteRunnable.run();
-	}
-
-	@Override
-	protected void onPostExecute(Profile profile) {
-		super.onPostExecute(profile);
-		if(runWithProfile!=null)
-			runWithProfile.run(profile);
+		if (postExecuteRunnable != null) {
+			postExecuteRunnable.run();
+		}
 	}
 }

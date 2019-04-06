@@ -38,9 +38,7 @@ import edu.etzion.koletzion.models.SuggestedContent;
 
 import static android.app.Activity.RESULT_OK;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class SuggestContentFragment extends Fragment {
 	private final String PROFILES_API_KEY = "ctleyeaciedgedgessithurd";
 	private final String PROFILES_API_SECRET = "a31366679368d7d26408f78ab1402a23485e061e";
@@ -53,10 +51,6 @@ public class SuggestContentFragment extends Fragment {
 	private ImageView imageView;
 	private EditText etSuggest;
 	private Profile profile;
-	
-	public SuggestContentFragment() {
-		// Required empty public constructor
-	}
 	
 	
 	@Override
@@ -81,7 +75,6 @@ public class SuggestContentFragment extends Fragment {
 		btnSuggest.setOnClickListener((v -> {
 			if (etSuggest.getText().toString().length() > 15) {
 				writeToServer();
-				
 			} else {
 				Toast.makeText(getContext(), "התוכן חייב להכיל 15 תווים לפחות", Toast.LENGTH_SHORT).show();
 			}
@@ -89,14 +82,15 @@ public class SuggestContentFragment extends Fragment {
 		
 	}
 	
-	//todo
 	//writing the suggestedContent to the server.
 	private void writeToServer() {
 		// getting the current latest update profile object from the server
-		
-		new GetProfileByUserNameTask(FirebaseAuth.getInstance().getCurrentUser().getEmail(), () -> {
-			new WriteSuggestedContentTask(new SuggestedContent(
-					profile, etSuggest.getText().toString()));
+		new GetProfileByUserNameTask(FirebaseAuth.getInstance().getCurrentUser().getEmail(), new Runnable() {
+			@Override
+			public void run() {
+				new WriteSuggestedContentTask(new SuggestedContent(
+						profile, etSuggest.getText().toString()));
+			}
 		});
 	}
 	
