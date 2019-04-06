@@ -1,14 +1,23 @@
 package edu.etzion.koletzion;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
+import com.backendless.Backendless;
+import com.backendless.async.callback.AsyncCallback;
+import com.backendless.exceptions.BackendlessFault;
+import com.backendless.push.DeviceRegistrationResult;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -28,7 +37,7 @@ public class MainActivity extends AppCompatActivity
 	
 	private FirebaseAuth auth;
 	private ExoPlayerFragment playerFragment;
-	private FrameLayout frame;
+	public FrameLayout frame;
 	private Toolbar toolbar;
 	private DrawerLayout drawer;
 	
@@ -37,9 +46,36 @@ public class MainActivity extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		setSupportActionBar(toolbar);
+		// Enable Notification Channel for Android OREO
+		
+		
 		main();
+		
 		ContextCompat.startForegroundService(this,
 				new Intent(this, ForegroundService.class));
+		//init backendless
+		initBackendless();
+		
+		
+	}
+	
+	private void initBackendless() {
+		Backendless.initApp(this, "B004AE57-963C-4667-FFAF-B3A5C251F100",
+				"C6A4B36A-A709-7AB2-FF1B-B5CDC4CAD200");
+		
+		List<String> channels = new ArrayList<>();
+		channels.add( "default" );
+		Backendless.Messaging.registerDevice(channels, new AsyncCallback<DeviceRegistrationResult>() {
+			@Override
+			public void handleResponse(DeviceRegistrationResult response) {
+			
+			}
+			
+			@Override
+			public void handleFault(BackendlessFault fault) {
+			
+			}
+		});
 	}
 	
 	
@@ -53,6 +89,7 @@ public class MainActivity extends AppCompatActivity
 	private void initFragments() {
 		getSupportFragmentManager().beginTransaction().replace(frame.getId(),
 				playerFragment).commit();
+		frame.setVisibility(View.GONE);
 		getSupportFragmentManager().beginTransaction().replace(R.id.contentMain, new MainViewPagerFragment()).commit();
 	}
 	
@@ -93,6 +130,7 @@ public class MainActivity extends AppCompatActivity
 		toolbar = findViewById(R.id.toolbar);
 		drawer = findViewById(R.id.drawer_layout);
 		playerFragment = new ExoPlayerFragment();
+		
 	}
 	
 	@Override
@@ -127,7 +165,7 @@ public class MainActivity extends AppCompatActivity
 			// Handle the camera action
 			List<Fragment> fragments = getSupportFragmentManager().getFragments();
 			for (Fragment fragment : fragments) {
-				if (fragment instanceof MainViewPagerFragment){
+				if (fragment instanceof MainViewPagerFragment) {
 					((MainViewPagerFragment) fragment).vpMain.setCurrentItem(2);
 					return true;
 				}
@@ -146,8 +184,6 @@ public class MainActivity extends AppCompatActivity
 	
 	public void initPlayer(String filePath) {
 		playerFragment.initPlayer(filePath);
-		
-		
 	}
+	
 }
-

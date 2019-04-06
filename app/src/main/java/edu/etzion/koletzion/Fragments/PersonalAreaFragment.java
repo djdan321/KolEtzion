@@ -80,8 +80,7 @@ public class PersonalAreaFragment extends Fragment {
 		super.onResume();
 		displayMyFeed();
 	}
-	
-	@SuppressLint("StaticFieldLeak")
+	//todo
 	private void displayMyFeed() {
 		new AsyncTask<Void, Void, Profile>() {
 			@Override

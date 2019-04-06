@@ -21,7 +21,7 @@ import edu.etzion.koletzion.R;
 
 
 public class ExoPlayerFragment extends Fragment {
-	SimpleExoPlayer player;
+	public SimpleExoPlayer player;
 	PlayerView playerView;
 	TextView tvFileName;
 	final static String APP_PATH = "http://be.repoai.com:5080/WebRTCAppEE/";
