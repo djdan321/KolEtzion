@@ -61,9 +61,10 @@ public class ForegroundService extends Service {
 	
 	@RequiresApi(Build.VERSION_CODES.O)
 	private String createNotificationChannel(NotificationManager notificationManager) {
-		String channelId = "my_service_channelid";
-		String channelName = "My Foreground Service";
-		NotificationChannel channel = new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_HIGH);
+		String channelId = "default";
+		
+		NotificationChannel channel = new NotificationChannel(channelId, channelId,
+				NotificationManager.IMPORTANCE_DEFAULT);
 		// omitted the LED color
 		channel.setImportance(NotificationManager.IMPORTANCE_NONE);
 		channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
