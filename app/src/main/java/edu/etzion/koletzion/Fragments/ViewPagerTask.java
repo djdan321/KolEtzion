@@ -6,6 +6,7 @@ import android.util.Log;
 import com.cloudant.client.api.ClientBuilder;
 import com.cloudant.client.api.CloudantClient;
 import com.cloudant.client.api.Database;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.lang.ref.WeakReference;
@@ -23,12 +24,14 @@ public class ViewPagerTask extends AsyncTask<Void, Void, Profile> {
 	private final String DB_USER_NAME = "41c99d88-3264-4be5-b546-ff5a5be07dfb-bluemix";
 	private WeakReference<ViewPager> vpMain;
 	private ViewPagerAdapter vpMainAdapter;
+	private WeakReference<TabLayout> tabLayout;
 	FragmentManager fm;
 	
-	public ViewPagerTask(ViewPager vpMain, FragmentManager fm) {
+	public ViewPagerTask(ViewPager vpMain, FragmentManager fm,TabLayout tabLayout) {
 		this.vpMain = new WeakReference<>(vpMain);
 		this.vpMainAdapter = new ViewPagerAdapter(fm);
 		this.fm = fm;
+		this.tabLayout = new WeakReference<>(tabLayout);
 	}
 	
 	@Override
@@ -58,12 +61,25 @@ public class ViewPagerTask extends AsyncTask<Void, Void, Profile> {
 	protected void onPostExecute(Profile profile) {
 		vpMainAdapter = new ViewPagerAdapter(fm);
 		vpMainAdapter.addFragment(PersonalAreaFragment.newInstance(profile),"PersonalAreaFragment");
-		vpMainAdapter.addFragment(new BroadcastersListFragment(), "BroadcastersListFragment");
 		vpMainAdapter.addFragment(new FeedFragment(),"FeedFragment");
-		vpMainAdapter.addFragment(new SuggestContentFragment(),"Suggest Content Fragment");
-		
 		vpMain.get().setAdapter(vpMainAdapter);
-		vpMain.get().setCurrentItem(2);
+		tabLayout.get().addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+			@Override
+			public void onTabSelected(TabLayout.Tab tab) {
+				vpMain.get().setCurrentItem(tab.getPosition());
+			}
+
+			@Override
+			public void onTabUnselected(TabLayout.Tab tab) {
+
+			}
+
+			@Override
+			public void onTabReselected(TabLayout.Tab tab) {
+
+			}
+		});
+		vpMain.get().addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout.get()));
 	}
 }
 

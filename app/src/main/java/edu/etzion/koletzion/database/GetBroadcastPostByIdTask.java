@@ -18,9 +18,10 @@ public class GetBroadcastPostByIdTask extends AsyncTask<Void, Void, BroadcastPos
 	private final String POSTS_API_SECRET = "7a76edb293ad60dbef1a92be96248116b74d9ea3";
 	private final String POSTS_DB = "posts";
 	WeakReference<String> idWeakRef;
-	
-	public GetBroadcastPostByIdTask(String id) {
+	Runnable run;
+	public GetBroadcastPostByIdTask(String id, Runnable run) {
 		this.idWeakRef = new WeakReference<>(id);
+		this.run = run;
 	}
 	
 	@Override
@@ -39,5 +40,10 @@ public class GetBroadcastPostByIdTask extends AsyncTask<Void, Void, BroadcastPos
 				"}", BroadcastPost.class);
 		
 		return list.get(list.size() - 1);
+	}
+	
+	@Override
+	protected void onPostExecute(BroadcastPost broadcastPost) {
+		if(run != null) run.run();
 	}
 }

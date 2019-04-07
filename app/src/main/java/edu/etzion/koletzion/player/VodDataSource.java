@@ -32,20 +32,21 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
+//	ArrayList<Profile> broadcasters = new ArrayList<>();
 	private boolean isMainFeed;
-	private WeakReference<RecyclerView> rv;
+	private RecyclerView rv;
 	private Profile profile;
 	private final String POSTS_API_KEY = "mitereeneringledituriess";
 	private final String POSTS_API_SECRET = "7a76edb293ad60dbef1a92be96248116b74d9ea3";
 	private final String POSTS_DB = "posts";
 	private final String DB_USER_NAME = "41c99d88-3264-4be5-b546-ff5a5be07dfb-bluemix";
 	
-	public VodDataSource(RecyclerView rv, Profile profile, boolean isMainFeed) {
-		this.rv = new WeakReference<>(rv);
+	public VodDataSource(WeakReference<RecyclerView> rv, Profile profile, boolean isMainFeed) {
+		this.rv = rv.get();
 		this.profile = profile;
 		this.isMainFeed = isMainFeed;
 	}
-	
+	public  VodDataSource(){}
 	
 	private List<Vod> getVodList() {
 		List<Vod> vods = new ArrayList<>();
@@ -92,6 +93,7 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 	
 	@Override
 	protected List<Object> doInBackground(Void... voids) {
+//		createProfiles();
 		List<Object> lists = new ArrayList<>();
 		List<Vod> vods = getVodList();
 		List<BroadcastPost> broadcastPosts = getBroadcastPostsFromCloud();
@@ -165,8 +167,7 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 			}
 		}
 		// creating instance of the recyclerview with the updated list from our server.
-		RecyclerView rv = this.rv.get();
-		rv.setLayoutManager(new LinearLayoutManager(this.rv.get().getContext()));
+		rv.setLayoutManager(new LinearLayoutManager(rv.getContext()));
 		if(isMainFeed) {
 			rv.setAdapter(new rvFeedAdapter(rv.getContext(), broadcastPosts, profile));
 		}else{
@@ -176,10 +177,23 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 	
 	private long getDurationFromFile(String filePath) {
 		MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-		retriever.setDataSource(filePath, new HashMap<String, String>());
+		retriever.setDataSource(filePath, new HashMap<>());
 		long l = Long.parseLong(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
 		retriever.release();
 		return l;
 	}
-	
+//	private void createProfiles(){
+//
+//		broadcasters.add(new Profile("broadcaster1","oher","mozes",true,null,true,Profile.MOOD_NONE));
+//		broadcasters.add(new Profile("broadcaster2","omri","ben hanan",true,null,true,Profile.MOOD_NONE));
+//		broadcasters.add(new Profile("broadcaster3","azriel","friedman",true,null,true,Profile.MOOD_NONE));
+//		broadcasters.add(new Profile("broadcaster4","rotem","hadad",true,null,true,Profile.MOOD_NONE));
+//		broadcasters.add( new Profile("broadcaster5","ori","hasin",true,null,true,Profile.MOOD_NONE));
+//		broadcasters.add( new Profile("broadcaster6","daniel","shapira",true,null,true,Profile.MOOD_NONE));
+//		broadcasters.add( new Profile("broadcaster7","shalev","kody",true,null,true,Profile.MOOD_NONE));
+//		broadcasters.add( new Profile("broadcaster8","elad","termatzy",true,null,true,Profile.MOOD_NONE));
+//		for (int i = 0; i < broadcasters.size(); i++) {
+//			DataDAO.getInstance().writeMyProfile(broadcasters.get(0));
+//		}
+//	}
 }

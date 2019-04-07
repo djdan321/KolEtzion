@@ -12,6 +12,7 @@ public class Profile implements Parcelable , Comparable<Profile> {
     private String username; // from current user.
     private String firstName;
     private String lastName;
+    private String encodedBitMapImage;
     private boolean isBroadcaster;
     private List<BroadcastPost> relatedPosts;
     private long timeStamp;
@@ -22,12 +23,13 @@ public class Profile implements Parcelable , Comparable<Profile> {
     public static final int MOOD_FINE=2;
     public static final int MOOD_SAD=3;
     public static final int MOOD_NONE=-1;
-//todo add image(learn how to save the image to the database)
 
 
     // Constructors
 
-    public Profile(String _id, String _rev, String username, String firstName, String lastName, boolean isBroadcaster, List<BroadcastPost> relatedPosts, long timeStamp, boolean isStudent, int mood ) {
+    public Profile(String _id, String _rev, String username, String firstName, String lastName,
+                   boolean isBroadcaster, List<BroadcastPost> relatedPosts, long timeStamp,
+                   boolean isStudent, int mood) {
         this._id = _id;
         this._rev = _rev;
         this.username = username;
@@ -51,7 +53,11 @@ public class Profile implements Parcelable , Comparable<Profile> {
     }
 
     // Getters
-
+    
+    public String getEncodedBitMapImage() {
+        return encodedBitMapImage;
+    }
+    
     public String get_id() {
         return _id;
     }
@@ -76,9 +82,13 @@ public class Profile implements Parcelable , Comparable<Profile> {
     public long getTimeStamp() {
         return timeStamp;
     }
-
-
+    
+    
+    
     // Setters
+    public void setEncodedBitMapImage(String encodedBitMapImage) {
+        this.encodedBitMapImage = encodedBitMapImage;
+    }
 
     public void setUsername(String username) {
         this.username = username;
@@ -100,7 +110,7 @@ public class Profile implements Parcelable , Comparable<Profile> {
     }
 
     // toString
-
+    
     @Override
     public String toString() {
         return "Profile{" +
@@ -109,6 +119,7 @@ public class Profile implements Parcelable , Comparable<Profile> {
                 ", username='" + username + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", encodedBitMapImage='" + encodedBitMapImage + '\'' +
                 ", isBroadcaster=" + isBroadcaster +
                 ", relatedPosts=" + relatedPosts +
                 ", timeStamp=" + timeStamp +
@@ -116,8 +127,8 @@ public class Profile implements Parcelable , Comparable<Profile> {
                 ", mood=" + mood +
                 '}';
     }
-
-
+    
+    
     //methods
 
     //this method adds a broadcast post to the list.

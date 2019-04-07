@@ -11,6 +11,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import edu.etzion.koletzion.R;
+import edu.etzion.koletzion.database.BitmapSerializer;
 import edu.etzion.koletzion.models.BroadcastPost;
 import edu.etzion.koletzion.models.Comment;
 import edu.etzion.koletzion.models.Profile;
@@ -35,7 +36,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
 		Profile p = comments.get(position).getProfile();
 		holder.tvCommentName.setText(p.getFirstName() + " " + p.getLastName());
 		holder.tvCommentContent.setText(comments.get(position).getContent());
-		//todo put image
+		holder.ivCommenter.setImageBitmap(BitmapSerializer.decodeStringToBitmap(
+				comments.get(position).getProfile().getEncodedBitMapImage()
+		));
 	}
 	
 	@Override
@@ -44,13 +47,13 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
 	}
 	
 	class CommentViewHolder extends RecyclerView.ViewHolder {
-		ImageView ivComment;
+		ImageView ivCommenter;
 		TextView tvCommentName;
 		TextView tvCommentContent;
 		
 		public CommentViewHolder(@NonNull View itemView) {
 			super(itemView);
-			this.ivComment = itemView.findViewById(R.id.ivComment);
+			this.ivCommenter = itemView.findViewById(R.id.ivCommenter);
 			this.tvCommentName = itemView.findViewById(R.id.tvCommentName);
 			this.tvCommentContent = itemView.findViewById(R.id.tvCommentContent);
 		}
