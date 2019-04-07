@@ -1,8 +1,5 @@
 package edu.etzion.koletzion.database;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
 import com.cloudant.client.api.ClientBuilder;
@@ -12,9 +9,6 @@ import com.cloudant.client.api.Database;
 import java.lang.ref.WeakReference;
 import java.util.Date;
 
-import javax.inject.Inject;
-
-import edu.etzion.koletzion.R;
 import edu.etzion.koletzion.models.Profile;
 
 public class WriteProfileTask extends AsyncTask<Void, Void, Void> {
@@ -23,11 +17,11 @@ public class WriteProfileTask extends AsyncTask<Void, Void, Void> {
 	private final String PROFILES_DB = "profiles";
 	private final String DB_USER_NAME = "41c99d88-3264-4be5-b546-ff5a5be07dfb-bluemix";
 	WeakReference<Profile> profile;
-	@Inject Context context;
+	
 	public WriteProfileTask(Profile profile) {
 		this.profile = new WeakReference<>(profile);
 	}
-	//todo context leak
+	
 	@Override
 	protected Void doInBackground(Void... voids) {
 		CloudantClient client = ClientBuilder.account(DB_USER_NAME)

@@ -44,6 +44,6 @@ public class BroadcastersListFragment extends Fragment {
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		rvBroadcastersList = view.findViewById(R.id.rvBroadcastersList);
-		new BroadcastersDataSource(rvBroadcastersList,true).execute();
+		new BroadcastersDataSource(rvBroadcastersList,true, this).execute();
 	}
 }
