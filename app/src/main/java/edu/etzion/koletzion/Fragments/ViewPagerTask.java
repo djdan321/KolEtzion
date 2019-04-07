@@ -63,6 +63,8 @@ public class ViewPagerTask extends AsyncTask<Void, Void, Profile> {
 		vpMainAdapter.addFragment(PersonalAreaFragment.newInstance(profile),"PersonalAreaFragment");
 		vpMainAdapter.addFragment(new FeedFragment(),"FeedFragment");
 		vpMain.get().setAdapter(vpMainAdapter);
+		vpMain.get().setCurrentItem(1);
+		
 		tabLayout.get().addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 			@Override
 			public void onTabSelected(TabLayout.Tab tab) {
