@@ -30,14 +30,13 @@ public class PostDataSource extends AsyncTask<Void, Void, BroadcastPost> {
 	}
 	
 	public PostDataSource(BroadcastPost post, RecyclerView rv, Runnable runnable) {
-		this.postClicked = postClicked;
+		this.postClicked = post;
 		this.rv = new WeakReference<>(rv);
 		this.runnable = runnable;
 	}
 	
 	@Override
 	protected BroadcastPost doInBackground(Void... voids) {
-		
 		return getBroadcastPostById(postClicked.get_id());
 	}
 	

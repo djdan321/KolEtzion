@@ -34,15 +34,15 @@ import okhttp3.Response;
 public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 //	ArrayList<Profile> broadcasters = new ArrayList<>();
 	private boolean isMainFeed;
-	private WeakReference<RecyclerView> rv;
+	private RecyclerView rv;
 	private Profile profile;
 	private final String POSTS_API_KEY = "mitereeneringledituriess";
 	private final String POSTS_API_SECRET = "7a76edb293ad60dbef1a92be96248116b74d9ea3";
 	private final String POSTS_DB = "posts";
 	private final String DB_USER_NAME = "41c99d88-3264-4be5-b546-ff5a5be07dfb-bluemix";
 	
-	public VodDataSource(RecyclerView rv, Profile profile, boolean isMainFeed) {
-		this.rv = new WeakReference<>(rv);
+	public VodDataSource(WeakReference<RecyclerView> rv, Profile profile, boolean isMainFeed) {
+		this.rv = rv.get();
 		this.profile = profile;
 		this.isMainFeed = isMainFeed;
 	}
@@ -167,8 +167,7 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 			}
 		}
 		// creating instance of the recyclerview with the updated list from our server.
-		RecyclerView rv = this.rv.get();
-		rv.setLayoutManager(new LinearLayoutManager(this.rv.get().getContext()));
+		rv.setLayoutManager(new LinearLayoutManager(rv.getContext()));
 		if(isMainFeed) {
 			rv.setAdapter(new rvFeedAdapter(rv.getContext(), broadcastPosts, profile));
 		}else{

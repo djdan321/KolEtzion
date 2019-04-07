@@ -6,15 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import edu.etzion.koletzion.Adapters.rvBroadcastersAdapter;
 import edu.etzion.koletzion.R;
 import edu.etzion.koletzion.database.BroadcastersDataSource;
 import edu.etzion.koletzion.models.Profile;
@@ -36,7 +34,7 @@ public class BroadcastersListFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-
+		
 		return inflater.inflate(R.layout.fragment_broadcasters_list, container, false);
 	}
 	
@@ -44,6 +42,11 @@ public class BroadcastersListFragment extends Fragment {
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		rvBroadcastersList = view.findViewById(R.id.rvBroadcastersList);
-		new BroadcastersDataSource(rvBroadcastersList,true, this).execute();
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		new BroadcastersDataSource(new WeakReference<>(rvBroadcastersList), true, this).execute();
 	}
 }

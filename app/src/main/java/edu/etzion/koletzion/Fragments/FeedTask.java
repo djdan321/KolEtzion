@@ -51,7 +51,7 @@ public class FeedTask extends AsyncTask<Void, Void, Profile> {
 	
 	@Override
 	protected void onPostExecute(Profile profile) {
-		new VodDataSource(rvFeed.get(), profile, isMainFeed).execute();
+		new VodDataSource(rvFeed, profile, isMainFeed).execute();
 	}
 }
 
