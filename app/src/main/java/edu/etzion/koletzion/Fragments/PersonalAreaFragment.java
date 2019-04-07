@@ -103,37 +103,10 @@ public class PersonalAreaFragment extends Fragment {
 						decodeStringToBitmap(profile.getEncodedBitMapImage()));
 	}
 	
-	//todo
 	private void displayMyFeed() {
-		new AsyncTask<Void, Void, Profile>() {
-			@Override
-			protected Profile doInBackground(Void... voids) {
-				Profile profile = null;
-				CloudantClient client = ClientBuilder.account(DB_USER_NAME)
-						.username(PROFILES_API_KEY)
-						.password(PROFILES_API_SECRET)
-						.build();
-				
-				Database db = client.database(PROFILES_DB, false);
-				
-				List<Profile> list = db.findByIndex("{\n" +
-						"   \"selector\": {\n" +
-						"      \"username\": \"" + FirebaseAuth.getInstance().getCurrentUser().getEmail() + "\"\n" +
-						"   }\n" +
-						"}", Profile.class);
-				for (Profile item : list) {
-					Log.e("check", "checkResult: " + item.toString());
-					profile = item;
-				}
-				Log.e("check", list.toString());
-				return profile;
-			}
-			
-			@Override
-			protected void onPostExecute(Profile profile) {
-				new VodDataSource(rv, profile, false).execute();
-			}
-		}.execute();
+		new GetProfileByUserNameTask(FirebaseAuth.getInstance().getCurrentUser().getEmail(), () -> {
+			new VodDataSource(rv, profile, false).execute();
+		}).execute();
 	}
 	
 	private void findViews(@NonNull View view) {
