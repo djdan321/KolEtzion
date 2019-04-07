@@ -22,11 +22,10 @@ import edu.etzion.koletzion.models.Profile;
 public class rvBroadcastersAdapter extends RecyclerView.Adapter<rvBroadcastersAdapter.ViewHolder> {
 	private List<Profile> broadcasters;
 	private Context context;
-	private View view;
 	
 	
-	public rvBroadcastersAdapter(List<Profile> broadccasters, Context context) {
-		this.broadcasters = broadccasters;
+	public rvBroadcastersAdapter(List<Profile> broadcasters, Context context) {
+		this.broadcasters = broadcasters;
 		this.context = context;
 	}
 	
@@ -49,9 +48,11 @@ public class rvBroadcastersAdapter extends RecyclerView.Adapter<rvBroadcastersAd
 		holder.itemView.setOnClickListener((v) -> {
 			AppCompatActivity activity = (AppCompatActivity) v.getContext();
 			Log.d("tag", String.valueOf(v.getContext()));
-			activity.getSupportFragmentManager().beginTransaction().replace(
-					R.id.contentMain, PersonalAreaFragment.newInstance(broadcasters.get(position))
-			).commit();
+			activity.getSupportFragmentManager().beginTransaction().
+					replace(R.id.contentMain, PersonalAreaFragment.
+							newInstance(broadcasters.get(position))).
+					addToBackStack(null).
+					commit();
 		});
 	}
 	

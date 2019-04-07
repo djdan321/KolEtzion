@@ -20,6 +20,7 @@ public class GetProfileByUserNameTask extends AsyncTask<Void, Void, Profile> {
 	
 	Runnable postExecuteRunnable;
 	WeakReference<String> userNameWeakRef;
+	RunWithProfile listener;
 	public GetProfileByUserNameTask(String userName) {
 		this.userNameWeakRef = new WeakReference<>(userName);
 	}
@@ -28,6 +29,12 @@ public class GetProfileByUserNameTask extends AsyncTask<Void, Void, Profile> {
 		this.userNameWeakRef = new WeakReference<>(userName);
 		this.postExecuteRunnable = runnable;
 	}
+	
+	public GetProfileByUserNameTask(String userName, RunWithProfile listener) {
+		this.userNameWeakRef = new WeakReference<>(userName);
+		this.listener = listener;
+	}
+	
 	
 	@Override
 	protected Profile doInBackground(Void... voids) {
@@ -51,6 +58,9 @@ public class GetProfileByUserNameTask extends AsyncTask<Void, Void, Profile> {
 	protected void onPostExecute(Profile profile) {
 		if (postExecuteRunnable != null) {
 			postExecuteRunnable.run();
+		}
+		if(listener != null){
+			listener.run(profile);
 		}
 	}
 }
