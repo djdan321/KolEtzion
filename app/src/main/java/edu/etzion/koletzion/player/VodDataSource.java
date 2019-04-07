@@ -167,13 +167,13 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 			}
 		}
 		// creating instance of the recyclerview with the updated list from our server.
-//		RecyclerView rv = this.rv.get();
-//		rv.setLayoutManager(new LinearLayoutManager(this.rv.get().getContext()));
-//		if(isMainFeed) {
-//			rv.setAdapter(new rvFeedAdapter(rv.getContext(), broadcastPosts, profile));
-//		}else{
-//			rv.setAdapter(new rvFeedAdapter(rv.getContext(), profile));
-//		}
+		RecyclerView rv = this.rv.get();
+		rv.setLayoutManager(new LinearLayoutManager(this.rv.get().getContext()));
+		if(isMainFeed) {
+			rv.setAdapter(new rvFeedAdapter(rv.getContext(), broadcastPosts, profile));
+		}else{
+			rv.setAdapter(new rvFeedAdapter(rv.getContext(), profile));
+		}
 	}
 	
 	private long getDurationFromFile(String filePath) {

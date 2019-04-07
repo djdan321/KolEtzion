@@ -53,7 +53,8 @@ public class MainActivity extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		setSupportActionBar(toolbar);
-		moodPopUp();
+		
+//		moodPopUp();
 		main();
 //		todo fix with tomer
 		// Enable Notification Channel for Android OREO
@@ -128,8 +129,6 @@ public class MainActivity extends AppCompatActivity
 		
 		NavigationView navigationView = findViewById(R.id.nav_view);
 		navigationView.setNavigationItemSelectedListener(this);
-		if (auth.getCurrentUser() == null) return;
-		new DrawerTask(findViewById(R.id.tvDrawerName)).execute(drawer);
 	}
 	
 	
@@ -183,7 +182,6 @@ public class MainActivity extends AppCompatActivity
 		return super.onOptionsItemSelected(item);
 	}
 	
-	@SuppressWarnings("StatementWithEmptyBody")
 	@Override
 	public boolean onNavigationItemSelected(MenuItem item) {
 		// Handle navigation view item clicks here.
