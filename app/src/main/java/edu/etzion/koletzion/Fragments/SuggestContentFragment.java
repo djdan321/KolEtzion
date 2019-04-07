@@ -40,15 +40,11 @@ import static android.app.Activity.RESULT_OK;
 
 
 public class SuggestContentFragment extends Fragment {
-	private final String PROFILES_API_KEY = "ctleyeaciedgedgessithurd";
-	private final String PROFILES_API_SECRET = "a31366679368d7d26408f78ab1402a23485e061e";
-	private final String PROFILES_DB = "profiles";
-	private final String DB_USER_NAME = "41c99d88-3264-4be5-b546-ff5a5be07dfb-bluemix";
+
 	private static int RESULT_LOAD_IMAGE = 1;
 	
-	private Button btn;
+
 	private Button btnSuggest;
-	private ImageView imageView;
 	private EditText etSuggest;
 	private Profile profile;
 	
@@ -63,15 +59,13 @@ public class SuggestContentFragment extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		btn = view.findViewById(R.id.button);
-		imageView = view.findViewById(R.id.ivSuggestedContent);
 		btnSuggest = view.findViewById(R.id.btnSuggest);
 		etSuggest = view.findViewById(R.id.etSuggest);
-		btn.setOnClickListener((v -> {
-			Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-			photoPickerIntent.setType("image/*");
-			startActivityForResult(photoPickerIntent, RESULT_LOAD_IMAGE);
-		}));
+//		btn.setOnClickListener((v -> {
+//			Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+//			photoPickerIntent.setType("image/*");
+//			startActivityForResult(photoPickerIntent, RESULT_LOAD_IMAGE);
+//		}));
 		btnSuggest.setOnClickListener((v -> {
 			if (etSuggest.getText().toString().length() > 15) {
 				writeToServer();
@@ -90,6 +84,7 @@ public class SuggestContentFragment extends Fragment {
 			public void run() {
 				new WriteSuggestedContentTask(new SuggestedContent(
 						profile, etSuggest.getText().toString()));
+				Toast.makeText(getContext(), "תודה על השיתוף, התוכן נשלח בהצלחה", Toast.LENGTH_SHORT).show();
 			}
 		});
 	}
@@ -98,21 +93,21 @@ public class SuggestContentFragment extends Fragment {
 	public void onActivityResult(int reqCode, int resultCode, Intent data) {
 		super.onActivityResult(reqCode, resultCode, data);
 		
-		AppCompatActivity activity = (AppCompatActivity) getContext();
-		
-		if (resultCode == RESULT_OK) {
-			try {
-				final Uri imageUri = data.getData();
-				final InputStream imageStream = activity.getContentResolver().openInputStream(imageUri);
-				final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-				imageView.setImageBitmap(selectedImage);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (NullPointerException e) {
-				e.printStackTrace();
-			}
-		} else {
-			Toast.makeText(getContext(), "לא נמצאה תמונה", Toast.LENGTH_LONG).show();
-		}
+//		AppCompatActivity activity = (AppCompatActivity) getContext();
+//
+//		if (resultCode == RESULT_OK) {
+//			try {
+//				final Uri imageUri = data.getData();
+//				final InputStream imageStream = activity.getContentResolver().openInputStream(imageUri);
+//				final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+//				imageView.setImageBitmap(selectedImage);
+//			} catch (FileNotFoundException e) {
+//				e.printStackTrace();
+//			} catch (NullPointerException e) {
+//				e.printStackTrace();
+//			}
+//		} else {
+//			Toast.makeText(getContext(), "לא נמצאה תמונה", Toast.LENGTH_LONG).show();
+//		}
 	}
 }
