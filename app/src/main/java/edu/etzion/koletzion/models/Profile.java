@@ -12,6 +12,7 @@ public class Profile implements Parcelable , Comparable<Profile> {
     private String username; // from current user.
     private String firstName;
     private String lastName;
+    private String encodedBitMapImage;
     private boolean isBroadcaster;
     private List<BroadcastPost> relatedPosts;
     private long timeStamp;
@@ -22,12 +23,13 @@ public class Profile implements Parcelable , Comparable<Profile> {
     public static final int MOOD_FINE=2;
     public static final int MOOD_SAD=3;
     public static final int MOOD_NONE=-1;
-//todo add image(learn how to save the image to the database)
 
 
     // Constructors
 
-    public Profile(String _id, String _rev, String username, String firstName, String lastName, boolean isBroadcaster, List<BroadcastPost> relatedPosts, long timeStamp, boolean isStudent, int mood ) {
+    public Profile(String _id, String _rev, String username, String firstName, String lastName,
+                   boolean isBroadcaster, List<BroadcastPost> relatedPosts, long timeStamp,
+                   boolean isStudent, int mood, String encodedBitMapImage ) {
         this._id = _id;
         this._rev = _rev;
         this.username = username;
@@ -38,6 +40,7 @@ public class Profile implements Parcelable , Comparable<Profile> {
         this.timeStamp = timeStamp;
         this.isStudent = isStudent;
         this.mood=mood;
+        this.encodedBitMapImage = encodedBitMapImage;
     }
 
     public Profile(String username, String firstName, String lastName, boolean isBroadcaster, List<BroadcastPost> relatedPosts, boolean isStudent, int mood) {
@@ -51,7 +54,11 @@ public class Profile implements Parcelable , Comparable<Profile> {
     }
 
     // Getters
-
+    
+    public String getEncodedBitMapImage() {
+        return encodedBitMapImage;
+    }
+    
     public String get_id() {
         return _id;
     }
@@ -76,9 +83,13 @@ public class Profile implements Parcelable , Comparable<Profile> {
     public long getTimeStamp() {
         return timeStamp;
     }
-
-
+    
+    
+    
     // Setters
+    public void setEncodedBitMapImage(String encodedBitMapImage) {
+        this.encodedBitMapImage = encodedBitMapImage;
+    }
 
     public void setUsername(String username) {
         this.username = username;

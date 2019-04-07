@@ -39,7 +39,6 @@ public class BroadcastersDataSource extends AsyncTask<Void,Void,List<Profile>> {
     }
 
     private List<Profile> getBroadcastersFromServer() {
-        List<Profile> profiles = new ArrayList<>();
         CloudantClient client = ClientBuilder.account(DB_USER_NAME)
                 .username(PROFILES_API_KEY)
                 .password(PROFILES_API_SECRET)
@@ -52,13 +51,7 @@ public class BroadcastersDataSource extends AsyncTask<Void,Void,List<Profile>> {
                 "      \"isBroadcaster\": true\n"+
                 "   }\n"+
                 "}", Profile.class);
-        for (Profile item : list) {
-            Log.e("check", "checkResult: "+item.toString());
-            profiles.add(item);
-        }
-        Log.e("check", list.toString());
-        Collections.sort(profiles);
-        return profiles;
+        return new ArrayList<>(list);
     }
 
     @Override

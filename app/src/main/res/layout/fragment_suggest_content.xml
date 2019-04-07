@@ -31,7 +31,7 @@
         android:layout_marginBottom="8dp"
         android:src="@drawable/broadcastpost"
         app:layout_constraintBottom_toTopOf="@+id/guideline5"
-        app:layout_constraintEnd_toStartOf="@+id/ivFavorite"
+        app:layout_constraintEnd_toStartOf="@+id/ivSad"
         app:layout_constraintStart_toEndOf="@+id/imageView2"
         app:layout_constraintTop_toTopOf="@+id/guideline4" />
 
@@ -112,7 +112,7 @@
         app:layout_constraintGuide_percent="0.9" />
 
     <ImageView
-        android:id="@+id/ivFavorite"
+        android:id="@+id/ivSad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
