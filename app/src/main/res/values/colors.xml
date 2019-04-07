@@ -18,6 +18,7 @@
     <color name="grad2Start">#09203f</color>
     <color name="followersBg">#30cfd0</color>
     <color name="followingBg">#49BEFF</color>
+    <color name="playerColor">#2196F3</color>
     <color name="grey">#E5E5E5</color>
     <color name="black">#434343</color>
     <color name="blackTrans">#7ABAB1B1</color>
