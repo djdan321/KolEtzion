@@ -1,14 +1,29 @@
 package edu.etzion.koletzion;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+
+import android.os.Handler;
+
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
+import com.backendless.Backendless;
+import com.backendless.async.callback.AsyncCallback;
+import com.backendless.exceptions.BackendlessFault;
+import com.backendless.push.DeviceRegistrationResult;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
+
+import org.threeten.bp.LocalDate;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -19,33 +34,86 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import edu.etzion.koletzion.Fragments.MainViewPagerFragment;
+import edu.etzion.koletzion.Fragments.MoodFragment;
 import edu.etzion.koletzion.authentication.AuthenticationActivity;
 import edu.etzion.koletzion.player.ExoPlayerFragment;
+import edu.etzion.koletzion.player.StartLiveStreamTask;
 
 public class MainActivity extends AppCompatActivity
-		implements NavigationView.OnNavigationItemSelectedListener {
+		implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 	
 	
 	private FirebaseAuth auth;
 	private ExoPlayerFragment playerFragment;
-	private FrameLayout frame;
+	public FrameLayout frame;
 	private Toolbar toolbar;
 	private DrawerLayout drawer;
+
+	private SharedPreferences sp;
+	private SharedPreferences.Editor spEditor;
 	
+
+	public static PushNotificationReceiver receiver;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		setSupportActionBar(toolbar);
+		// Enable Notification Channel for Android OREO
+		moodPopUp();
+		
 		main();
-		ContextCompat.startForegroundService(this,
-				new Intent(this, ForegroundService.class));
+		
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+			startForegroundService(new Intent(this, ForegroundService.class));
+		}else{
+			startService(new Intent(this, ForegroundService.class));
+		}
+		//init backendless
+		initBackendless();
+		
+		
+	}
+
+	private void moodPopUp() {
+			sp = getSharedPreferences("LocalData",MODE_PRIVATE);
+			spEditor=sp.edit();
+			if(!sp.contains("userName")){
+				createUserOnSP();
+				new MoodFragment().show(getSupportFragmentManager(),"tag");
+			}else
+				{
+					if(sp.getString("dateStamp","").equals(LocalDate.now().toString()))
+						return;
+					else
+						new MoodFragment().show(getSupportFragmentManager(),"tag");				}
+	}
+
+	private void createUserOnSP() {
+		spEditor.putString("userName", FirebaseAuth.getInstance().getCurrentUser().getEmail());
+		spEditor.putString("dateStamp", LocalDate.now().toString());
+	}
+
+	private void initBackendless() {
+		Backendless.initApp(this, "B004AE57-963C-4667-FFAF-B3A5C251F100",
+				"C6A4B36A-A709-7AB2-FF1B-B5CDC4CAD200");
+		
+		List<String> channels = new ArrayList<>();
+		channels.add("default");
+		Backendless.Messaging.registerDevice(channels, new AsyncCallback<DeviceRegistrationResult>() {
+			@Override
+			public void handleResponse(DeviceRegistrationResult response) {
+			
+			}
+			
+			@Override
+			public void handleFault(BackendlessFault fault) {
+			
+			}
+		});
 	}
 	
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-	}
 	
 	private void main() {
 		findViews();
@@ -57,6 +125,7 @@ public class MainActivity extends AppCompatActivity
 	private void initFragments() {
 		getSupportFragmentManager().beginTransaction().replace(frame.getId(),
 				playerFragment).commit();
+		frame.setVisibility(View.GONE);
 		getSupportFragmentManager().beginTransaction().replace(R.id.contentMain, new MainViewPagerFragment()).commit();
 	}
 	
@@ -97,6 +166,9 @@ public class MainActivity extends AppCompatActivity
 		toolbar = findViewById(R.id.toolbar);
 		drawer = findViewById(R.id.drawer_layout);
 		playerFragment = new ExoPlayerFragment();
+		findViewById(R.id.btnLiveStream).setOnClickListener(this);
+		((ImageView)findViewById(R.id.btnLiveStream)).setBackgroundColor(0x9a0007);
+		receiver = new PushNotificationReceiver(findViewById(R.id.btnLiveStream));
 	}
 	
 	@Override
@@ -131,7 +203,7 @@ public class MainActivity extends AppCompatActivity
 			// Handle the camera action
 			List<Fragment> fragments = getSupportFragmentManager().getFragments();
 			for (Fragment fragment : fragments) {
-				if (fragment instanceof MainViewPagerFragment){
+				if (fragment instanceof MainViewPagerFragment) {
 					((MainViewPagerFragment) fragment).vpMain.setCurrentItem(2);
 					return true;
 				}
@@ -142,7 +214,6 @@ public class MainActivity extends AppCompatActivity
 			playerFragment.stopPlayer();
 			startAuthenticationActivityIfNeeded();
 		}
-		
 		DrawerLayout drawer = findViewById(R.id.drawer_layout);
 		drawer.closeDrawer(GravityCompat.START);
 		return true;
@@ -150,8 +221,19 @@ public class MainActivity extends AppCompatActivity
 	
 	public void initPlayer(String filePath) {
 		playerFragment.initPlayer(filePath);
-		
-		
+	}
+	
+	@Override
+	public void onClick(View v) {
+		MainActivity activity = this;
+		new StartLiveStreamTask(playerFragment).execute();
+//		v.setOnClickListener(null);
+//		final Handler handler = new Handler();
+//		handler.postDelayed(new Runnable() {
+//			@Override
+//			public void run() {
+//				v.setOnClickListener(activity);
+//			}
+//		}, 3500);
 	}
 }
-
