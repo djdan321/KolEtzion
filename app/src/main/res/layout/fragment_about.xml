@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/grad2"
+    android:background="@drawable/grad3"
     android:orientation="vertical">
 
     <TextView
@@ -15,10 +15,10 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="אודות"
         android:fontFamily=""
+        android:text="אודות"
         android:textAllCaps="true"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="36sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toTopOf="@+id/guideline7"
@@ -30,9 +30,8 @@
     <TextView
         android:id="@+id/editText"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="167dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:ems="10"
@@ -51,8 +50,7 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline7" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button3"
@@ -65,8 +63,10 @@
         android:background="@drawable/paypal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/textView5"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView5" />
+        app:layout_constraintTop_toTopOf="@+id/textView5"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/textView5"
@@ -79,14 +79,15 @@
         android:text="אפשרות תרומה לבית הספר
 ניתנת בלחיצה על הקישור הבא:"
         android:textAllCaps="true"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline9" />
+        app:layout_constraintTop_toTopOf="@+id/guideline9"
+        app:layout_constraintVertical_bias="0.267" />
 
     <TextView
         android:id="@+id/textView6"
@@ -103,8 +104,11 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tvQuestion"
-        app:layout_constraintTop_toTopOf="@+id/guideline8" />
+
+        app:layout_constraintStart_toEndOf="@+id/textView7"
+        app:layout_constraintTop_toTopOf="@+id/guideline8"
+        app:layout_constraintVertical_bias="0.739" />
+
 
     <TextView
         android:id="@+id/tvQuestion"
@@ -124,7 +128,8 @@
         app:layout_constraintEnd_toStartOf="@+id/textView6"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/textView9"
-        app:layout_constraintTop_toTopOf="@+id/guideline8" />
+        app:layout_constraintTop_toTopOf="@+id/guideline8"
+        app:layout_constraintVertical_bias="0.739" />
 
     <TextView
         android:id="@+id/textView9"
@@ -144,7 +149,8 @@
 
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline8" />
+        app:layout_constraintTop_toTopOf="@+id/guideline8"
+        app:layout_constraintVertical_bias="0.739" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline7"
@@ -158,13 +164,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="439dp" />
+        app:layout_constraintGuide_begin="487dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.8" />
+        app:layout_constraintGuide_percent="0.84" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/girl"
+        tools:layout_editor_absoluteY="116dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
