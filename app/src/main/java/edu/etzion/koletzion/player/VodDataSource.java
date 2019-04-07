@@ -172,6 +172,7 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 						comments, likes);
 				broadcastPosts.add(broadcastPost);
 				DataDAO.getInstance().writeBroadcastPost(broadcastPost);
+				//todo spoke of this for
 //				for (int j = 0; j < broadcasters.size(); j++) {
 //					broadcasters.get(j).addBroadcastPost(broadcastPost);
 //				}}
