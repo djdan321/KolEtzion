@@ -31,6 +31,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import edu.etzion.koletzion.R;
 import edu.etzion.koletzion.database.BitmapSerializer;
+import edu.etzion.koletzion.database.GetProfileByUserNameTask;
+import edu.etzion.koletzion.database.RunWithProfile;
+import edu.etzion.koletzion.database.UpdateProfileTask;
 import edu.etzion.koletzion.models.Profile;
 import edu.etzion.koletzion.player.VodDataSource;
 
@@ -49,7 +52,6 @@ public class PersonalAreaFragment extends Fragment {
 	private Profile profile;
 	private ImageView imagePersonalArea;
 	private TextView tvPersonalName;
-	private TextView tvSuggestContent;
 	
 	public static PersonalAreaFragment newInstance(Profile p) {
 		
@@ -69,9 +71,7 @@ public class PersonalAreaFragment extends Fragment {
 		tvPersonalName.setText(String.format("%s %s", profile.getFirstName(),
 				profile.getLastName()));
 		
-		imagePersonalArea.
-				setImageBitmap(BitmapSerializer.
-						decodeStringToBitmap(profile.getEncodedBitMapImage()));
+		
 		
 		displayMyFeed();
 	}
@@ -80,6 +80,9 @@ public class PersonalAreaFragment extends Fragment {
 	public void onResume() {
 		super.onResume();
 		displayMyFeed();
+		imagePersonalArea.
+				setImageBitmap(BitmapSerializer.
+						decodeStringToBitmap(profile.getEncodedBitMapImage()));
 	}
 	
 	//todo
@@ -119,7 +122,7 @@ public class PersonalAreaFragment extends Fragment {
 		rv = view.findViewById(R.id.rvProfileType);
 		imagePersonalArea = view.findViewById(R.id.imagePersonalArea);
 		tvPersonalName = view.findViewById(R.id.tvPersonalName);
-		tvSuggestContent = view.findViewById(R.id.tvSuggestContent);
+		if(getArguments() == null) return;
 		profile = getArguments().getParcelable("profile");
 		
 		//todo set up button
@@ -150,6 +153,17 @@ public class PersonalAreaFragment extends Fragment {
 				final InputStream imageStream = activity.getContentResolver().openInputStream(imageUri);
 				final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
 				imagePersonalArea.setImageBitmap(selectedImage);
+				new GetProfileByUserNameTask(FirebaseAuth.getInstance().getCurrentUser().getEmail(),
+						new RunWithProfile() {
+							@Override
+							public void run(Profile p) {
+								profile.
+										setEncodedBitMapImage(BitmapSerializer.encodeBitmapToString(
+												BitmapSerializer.
+														getBitmapFromImageView(imagePersonalArea)));
+								new UpdateProfileTask(p).execute();
+							}
+						});
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			} catch (NullPointerException e) {

@@ -29,7 +29,7 @@ public class Profile implements Parcelable , Comparable<Profile> {
 
     public Profile(String _id, String _rev, String username, String firstName, String lastName,
                    boolean isBroadcaster, List<BroadcastPost> relatedPosts, long timeStamp,
-                   boolean isStudent, int mood, String encodedBitMapImage ) {
+                   boolean isStudent, int mood) {
         this._id = _id;
         this._rev = _rev;
         this.username = username;
@@ -40,7 +40,6 @@ public class Profile implements Parcelable , Comparable<Profile> {
         this.timeStamp = timeStamp;
         this.isStudent = isStudent;
         this.mood=mood;
-        this.encodedBitMapImage = encodedBitMapImage;
     }
 
     public Profile(String username, String firstName, String lastName, boolean isBroadcaster, List<BroadcastPost> relatedPosts, boolean isStudent, int mood) {
@@ -111,7 +110,7 @@ public class Profile implements Parcelable , Comparable<Profile> {
     }
 
     // toString
-
+    
     @Override
     public String toString() {
         return "Profile{" +
@@ -120,6 +119,7 @@ public class Profile implements Parcelable , Comparable<Profile> {
                 ", username='" + username + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", encodedBitMapImage='" + encodedBitMapImage + '\'' +
                 ", isBroadcaster=" + isBroadcaster +
                 ", relatedPosts=" + relatedPosts +
                 ", timeStamp=" + timeStamp +
@@ -127,8 +127,8 @@ public class Profile implements Parcelable , Comparable<Profile> {
                 ", mood=" + mood +
                 '}';
     }
-
-
+    
+    
     //methods
 
     //this method adds a broadcast post to the list.
