@@ -43,7 +43,6 @@ public class ForegroundService extends Service {
 		String channelId = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? createNotificationChannel(notificationManager) : "";
 		NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, channelId);
 		Notification notification = notificationBuilder.setOngoing(true)
-				.setStyle(new androidx.media.app.NotificationCompat.MediaStyle())
 				.setSmallIcon(R.drawable.audio)
 				.setPriority(PRIORITY_MIN)
 				.setCategory(NotificationCompat.CATEGORY_SERVICE)
