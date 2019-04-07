@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.lang.ref.WeakReference;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -39,6 +41,6 @@ public class FeedFragment extends Fragment {
 	public void onResume() {
 		super.onResume();
 		new FeedTask(rvFeed).execute();
-		new BroadcastersDataSource(rvBroadcasters, false, this).execute();
+		new BroadcastersDataSource(new WeakReference<>(rvBroadcasters), false, this).execute();
 	}
 }
