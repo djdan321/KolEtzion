@@ -4,28 +4,12 @@
     tools:showIn="navigation_view">
 
 
-        <item
-            android:id="@+id/homePage"
-            android:icon="@drawable/broadcast"
-            android:title="מסך הבית" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/suggest"
-            android:title="הצע תוכן" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/user"
-            android:title="איזור אישי" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/abouts"
-            android:title="אודות" />
-
-
-        <item
-            android:id="@+id/logOut"
-            android:icon="@drawable/logout"
-            android:title="התנתק" />
-
-
+    <item
+        android:id="@+id/homePage"
+        android:icon="@drawable/broadcast"
+        android:title="מסך הבית" />
+    <item
+        android:id="@+id/nav_gallery"
+        android:icon="@drawable/suggest"
+        android:title="הצע תוכן" />
 </menu>

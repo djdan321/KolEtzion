@@ -17,9 +17,14 @@ public class UpdateProfileTask extends AsyncTask<Void, Void, Void> {
 	private final String PROFILES_DB = "profiles";
 	private final String DB_USER_NAME = "41c99d88-3264-4be5-b546-ff5a5be07dfb-bluemix";
 	WeakReference<Profile> profile;
-	
+	Runnable runnable;
 	public UpdateProfileTask(Profile profile) {
 		this.profile = new WeakReference<>(profile);
+	}
+	
+	public UpdateProfileTask(Profile profile, Runnable runnable) {
+		this.profile = new WeakReference<>(profile);
+		this.runnable = runnable;
 	}
 	
 	@Override
