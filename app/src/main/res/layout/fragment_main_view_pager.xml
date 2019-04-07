@@ -30,15 +30,13 @@
             android:id="@+id/personalProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:icon="@mipmap/ic_launcher_round"
-            />
+            android:icon="@drawable/userprofile" />
 
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/mainPage"
+            android:id="@+id/feedicon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:icon="@mipmap/ic_launcher_round"
-            />
+            android:icon="@drawable/feedicon" />
 
     </com.google.android.material.tabs.TabLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
