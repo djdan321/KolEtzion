@@ -24,16 +24,11 @@ public class BroadcastersDataSource extends AsyncTask<Void, Void, List<Profile>>
 	private final String DB_USER_NAME = "41c99d88-3264-4be5-b546-ff5a5be07dfb-bluemix";
 	private Fragment fragment;
 	private boolean isGrid;
-	private WeakReference<RecyclerView> rv;
+	private RecyclerView rv;
 	
 	
-	public BroadcastersDataSource(RecyclerView rv, boolean isGrid) {
-		this.rv = new WeakReference<>(rv);
-		this.isGrid = isGrid;
-	}
-	
-	public BroadcastersDataSource(RecyclerView rv, boolean isGrid, Fragment fragment) {
-		this.rv = new WeakReference<>(rv);
+	public BroadcastersDataSource(WeakReference<RecyclerView> rv, boolean isGrid, Fragment fragment) {
+		this.rv = rv.get();
 		this.isGrid = isGrid;
 		this.fragment = fragment;
 	}
@@ -41,10 +36,6 @@ public class BroadcastersDataSource extends AsyncTask<Void, Void, List<Profile>>
 	
 	@Override
 	protected List<Profile> doInBackground(Void... voids) {
-		return getBroadcastersFromServer();
-	}
-	
-	private List<Profile> getBroadcastersFromServer() {
 		CloudantClient client = ClientBuilder.account(DB_USER_NAME)
 				.username(PROFILES_API_KEY)
 				.password(PROFILES_API_SECRET)
@@ -60,14 +51,15 @@ public class BroadcastersDataSource extends AsyncTask<Void, Void, List<Profile>>
 		return new ArrayList<>(list);
 	}
 	
+	
 	@Override
 	protected void onPostExecute(List<Profile> profiles) {
 		//todo set another xml that shows broadcaster profile in a bigger size and to make rvBroadcasteradapter gets bool and then display the relevant xml(by thye size of the view)
-		RecyclerView rv = this.rv.get();
-		if (isGrid)
-			rv.setLayoutManager(new GridLayoutManager(rv.getContext(), 2));
-		else
-			rv.setLayoutManager(new LinearLayoutManager(rv.getContext(), LinearLayoutManager.HORIZONTAL, false));
-		rv.setAdapter(new rvBroadcastersAdapter(profiles, rv.getContext()));
+		RecyclerView recyclerView = rv;
+		if (isGrid) {
+			recyclerView.setLayoutManager(new GridLayoutManager(fragment.getContext(), 2));
+		} else
+			recyclerView.setLayoutManager(new LinearLayoutManager(fragment.getContext(), LinearLayoutManager.HORIZONTAL, false));
+		recyclerView.setAdapter(new rvBroadcastersAdapter(profiles, fragment.getContext()));
 	}
 }

@@ -37,7 +37,6 @@ public class PostDataSource extends AsyncTask<Void, Void, BroadcastPost> {
 	
 	@Override
 	protected BroadcastPost doInBackground(Void... voids) {
-		
 		return getBroadcastPostById(postClicked.get_id());
 	}
 	
