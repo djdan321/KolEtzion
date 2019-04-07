@@ -6,16 +6,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.tabs.TabLayout;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
+import edu.etzion.koletzion.Adapters.ViewPagerAdapter;
 import edu.etzion.koletzion.R;
 
 public class MainViewPagerFragment extends Fragment {
 	
 	public ViewPager vpMain;
-	
+	private TabLayout tabLayout;
 	public MainViewPagerFragment() {
 	}
 	
@@ -31,7 +34,9 @@ public class MainViewPagerFragment extends Fragment {
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		vpMain = view.findViewById(R.id.vpMain);
-		
+		tabLayout = view.findViewById(R.id.tabLayout);
+
+
 	}
 	
 	@Override
@@ -44,7 +49,7 @@ public class MainViewPagerFragment extends Fragment {
 		//this method includes the viewpager adapter that includes all the mainactivity fragments.
 		
 		// getting the current latest update profile object from the server
-		new ViewPagerTask(vpMain, getChildFragmentManager()).execute();
+		new ViewPagerTask(vpMain, getChildFragmentManager(),tabLayout).execute();
 		
 	}
 }
