@@ -60,7 +60,7 @@
             app:layout_constraintTop_toTopOf="@+id/guideline12" />
 
         <ImageView
-            android:id="@+id/ivComment"
+            android:id="@+id/ivCommenter"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"

@@ -17,7 +17,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import org.threeten.bp.LocalDate;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,8 +28,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import edu.etzion.koletzion.Fragments.MainViewPagerFragment;
 import edu.etzion.koletzion.Fragments.MoodFragment;
 import edu.etzion.koletzion.authentication.AuthenticationActivity;
+import edu.etzion.koletzion.on_back_pressed_listener.OnBackPressedListener;
 import edu.etzion.koletzion.player.ExoPlayerFragment;
 import edu.etzion.koletzion.player.StartLiveStreamTask;
+import edu.etzion.koletzion.push_notification.PushNotificationReceiver;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 	
