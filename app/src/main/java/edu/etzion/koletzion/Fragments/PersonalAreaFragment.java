@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,20 +13,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cloudant.client.api.ClientBuilder;
-import com.cloudant.client.api.CloudantClient;
-import com.cloudant.client.api.Database;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.List;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import edu.etzion.koletzion.BaseBackPressedListener;
 import edu.etzion.koletzion.MainActivity;
@@ -36,7 +30,6 @@ import edu.etzion.koletzion.R;
 import edu.etzion.koletzion.authentication.AuthenticationActivity;
 import edu.etzion.koletzion.database.BitmapSerializer;
 import edu.etzion.koletzion.database.GetProfileByUserNameTask;
-import edu.etzion.koletzion.database.RunWithProfile;
 import edu.etzion.koletzion.database.UpdateProfileTask;
 import edu.etzion.koletzion.models.Profile;
 import edu.etzion.koletzion.player.VodDataSource;
@@ -103,37 +96,10 @@ public class PersonalAreaFragment extends Fragment {
 						decodeStringToBitmap(profile.getEncodedBitMapImage()));
 	}
 	
-	//todo
 	private void displayMyFeed() {
-		new AsyncTask<Void, Void, Profile>() {
-			@Override
-			protected Profile doInBackground(Void... voids) {
-				Profile profile = null;
-				CloudantClient client = ClientBuilder.account(DB_USER_NAME)
-						.username(PROFILES_API_KEY)
-						.password(PROFILES_API_SECRET)
-						.build();
-				
-				Database db = client.database(PROFILES_DB, false);
-				
-				List<Profile> list = db.findByIndex("{\n" +
-						"   \"selector\": {\n" +
-						"      \"username\": \"" + FirebaseAuth.getInstance().getCurrentUser().getEmail() + "\"\n" +
-						"   }\n" +
-						"}", Profile.class);
-				for (Profile item : list) {
-					Log.e("check", "checkResult: " + item.toString());
-					profile = item;
-				}
-				Log.e("check", list.toString());
-				return profile;
-			}
-			
-			@Override
-			protected void onPostExecute(Profile profile) {
-				new VodDataSource(rv, profile, false).execute();
-			}
-		}.execute();
+		new GetProfileByUserNameTask(FirebaseAuth.getInstance().getCurrentUser().getEmail(), () -> {
+			new VodDataSource(rv, profile, false).execute();
+		}).execute();
 	}
 	
 	private void findViews(@NonNull View view) {
@@ -147,12 +113,11 @@ public class PersonalAreaFragment extends Fragment {
 		if (getArguments() == null) return;
 		profile = getArguments().getParcelable("profile");
 		
-		//todo set up button
-//		btn.setOnClickListener((v -> {
-//			Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-//			photoPickerIntent.setType("image/*");
-//			startActivityForResult(photoPickerIntent, 1);
-//		}));
+		view.findViewById(R.id.tvChangeImage).setOnClickListener((v -> {
+			Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+			photoPickerIntent.setType("image/*");
+			startActivityForResult(photoPickerIntent, 1);
+		}));
 	}
 	
 	private void setClickListeners() {
@@ -185,7 +150,7 @@ public class PersonalAreaFragment extends Fragment {
 	public void onActivityResult(int reqCode, int resultCode, Intent data) {
 		super.onActivityResult(reqCode, resultCode, data);
 		
-		AppCompatActivity activity = (AppCompatActivity) getContext();
+		FragmentActivity activity = getActivity();
 		
 		if (resultCode == RESULT_OK) {
 			try {
@@ -194,15 +159,11 @@ public class PersonalAreaFragment extends Fragment {
 				final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
 				imagePersonalArea.setImageBitmap(selectedImage);
 				new GetProfileByUserNameTask(FirebaseAuth.getInstance().getCurrentUser().getEmail(),
-						new RunWithProfile() {
-							@Override
-							public void run(Profile p) {
-								profile.
-										setEncodedBitMapImage(BitmapSerializer.encodeBitmapToString(
-												BitmapSerializer.
-														getBitmapFromImageView(imagePersonalArea)));
-								new UpdateProfileTask(p).execute();
-							}
+						p -> {
+							profile.setEncodedBitMapImage(BitmapSerializer.encodeBitmapToString(
+											BitmapSerializer.
+													getBitmapFromImageView(imagePersonalArea)));
+							new UpdateProfileTask(p).execute();
 						});
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
@@ -210,6 +171,7 @@ public class PersonalAreaFragment extends Fragment {
 				e.printStackTrace();
 			}
 		} else {
+			startActivity(new Intent(getContext(), MainActivity.class));
 			Toast.makeText(getContext(), "לא נמצאה תמונה", Toast.LENGTH_LONG).show();
 		}
 	}
