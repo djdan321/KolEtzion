@@ -37,10 +37,11 @@ public class MainActivity extends AppCompatActivity
 	
 	
 	private FirebaseAuth auth;
-	private ExoPlayerFragment playerFragment;
+	public ExoPlayerFragment playerFragment;
 	public FrameLayout frame;
 	private Toolbar toolbar;
 	private DrawerLayout drawer;
+	protected OnBackPressedListener onBackPressedListener;
 	
 	private SharedPreferences sp;
 	private SharedPreferences.Editor spEditor;
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		setSupportActionBar(toolbar);
-		
+
 //		moodPopUp();
 		main();
 //		todo fix with tomer
@@ -139,16 +140,6 @@ public class MainActivity extends AppCompatActivity
 		}
 	}
 	
-	@Override
-	public void onBackPressed() {
-		DrawerLayout drawer = findViewById(R.id.drawer_layout);
-		if (drawer.isDrawerOpen(GravityCompat.START)) {
-			drawer.closeDrawer(GravityCompat.START);
-		} else {
-			finish();
-		}
-	}
-	
 	
 	private void findViews() {
 		auth = FirebaseAuth.getInstance();
@@ -209,6 +200,18 @@ public class MainActivity extends AppCompatActivity
 	
 	public void initPlayer(String filePath) {
 		playerFragment.initPlayer(filePath);
+	}
+	
+	@Override
+	public void onBackPressed() {
+		if (onBackPressedListener != null)
+			onBackPressedListener.doBack();
+		else
+			super.onBackPressed();
+	}
+	
+	public void setOnBackPressedListener(OnBackPressedListener onBackPressedListener) {
+		this.onBackPressedListener = onBackPressedListener;
 	}
 	
 	@Override

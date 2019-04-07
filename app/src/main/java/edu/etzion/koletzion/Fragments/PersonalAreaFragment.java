@@ -23,13 +23,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
+import edu.etzion.koletzion.BaseBackPressedListener;
+import edu.etzion.koletzion.MainActivity;
 import edu.etzion.koletzion.R;
+import edu.etzion.koletzion.authentication.AuthenticationActivity;
 import edu.etzion.koletzion.database.BitmapSerializer;
 import edu.etzion.koletzion.database.GetProfileByUserNameTask;
 import edu.etzion.koletzion.database.RunWithProfile;
@@ -48,10 +52,12 @@ public class PersonalAreaFragment extends Fragment {
 	
 	private RecyclerView rv;
 	//if no profile, set user profile.
-	
 	private Profile profile;
 	private ImageView imagePersonalArea;
 	private TextView tvPersonalName;
+	private TextView tvSignOut;
+	private TextView tvAbout;
+	private TextView tvSuggestContent;
 	
 	public static PersonalAreaFragment newInstance(Profile p) {
 		
@@ -71,6 +77,18 @@ public class PersonalAreaFragment extends Fragment {
 		tvPersonalName.setText(String.format("%s %s", profile.getFirstName(),
 				profile.getLastName()));
 		
+		if (!profile.getUsername().equals(
+				FirebaseAuth.getInstance().getCurrentUser().getEmail()
+		)) {
+			view.findViewById(R.id.tvSignOut).setVisibility(View.GONE);
+			view.findViewById(R.id.tvSuggestContent).setVisibility(View.GONE);
+			view.findViewById(R.id.tvAbout).setVisibility(View.GONE);
+		} else {
+			view.findViewById(R.id.tvSignOut).setVisibility(View.VISIBLE);
+			view.findViewById(R.id.tvSuggestContent).setVisibility(View.VISIBLE);
+			view.findViewById(R.id.tvAbout).setVisibility(View.VISIBLE);
+			((MainActivity) getActivity()).setOnBackPressedListener(new BaseBackPressedListener(getActivity()));
+		}
 		
 		
 		displayMyFeed();
@@ -122,7 +140,11 @@ public class PersonalAreaFragment extends Fragment {
 		rv = view.findViewById(R.id.rvProfileType);
 		imagePersonalArea = view.findViewById(R.id.imagePersonalArea);
 		tvPersonalName = view.findViewById(R.id.tvPersonalName);
-		if(getArguments() == null) return;
+		tvAbout = view.findViewById(R.id.tvAbout);
+		tvSuggestContent = view.findViewById(R.id.tvSuggestContent);
+		tvSignOut = view.findViewById(R.id.tvSignOut);
+		setClickListeners();
+		if (getArguments() == null) return;
 		profile = getArguments().getParcelable("profile");
 		
 		//todo set up button
@@ -131,6 +153,24 @@ public class PersonalAreaFragment extends Fragment {
 //			photoPickerIntent.setType("image/*");
 //			startActivityForResult(photoPickerIntent, 1);
 //		}));
+	}
+	
+	private void setClickListeners() {
+		tvAbout.setOnClickListener((v -> {
+			getActivity().getSupportFragmentManager().
+					beginTransaction().replace(R.id.contentMain, new AboutFragment()).
+					addToBackStack(null).commit();
+		}));
+		tvSignOut.setOnClickListener((v -> {
+			FirebaseAuth.getInstance().signOut();
+			((MainActivity) Objects.requireNonNull(getActivity())).playerFragment.stopPlayer();
+			startActivity(new Intent(getContext(), AuthenticationActivity.class));
+		}));
+		tvSuggestContent.setOnClickListener((v -> {
+			getActivity().getSupportFragmentManager().
+					beginTransaction().replace(R.id.contentMain, new SuggestContentFragment()).
+					addToBackStack(null).commit();
+		}));
 	}
 	
 	
@@ -173,4 +213,6 @@ public class PersonalAreaFragment extends Fragment {
 			Toast.makeText(getContext(), "לא נמצאה תמונה", Toast.LENGTH_LONG).show();
 		}
 	}
+	
+	
 }

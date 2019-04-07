@@ -39,6 +39,6 @@ public class FeedFragment extends Fragment {
 	public void onResume() {
 		super.onResume();
 		new FeedTask(rvFeed).execute();
-		new BroadcastersDataSource(rvBroadcasters, false).execute();
+		new BroadcastersDataSource(rvBroadcasters, false, this).execute();
 	}
 }

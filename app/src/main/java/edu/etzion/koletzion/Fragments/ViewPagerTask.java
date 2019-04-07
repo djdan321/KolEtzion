@@ -61,7 +61,6 @@ public class ViewPagerTask extends AsyncTask<Void, Void, Profile> {
 		vpMainAdapter.addFragment(new BroadcastersListFragment(), "BroadcastersListFragment");
 		vpMainAdapter.addFragment(new FeedFragment(),"FeedFragment");
 		vpMainAdapter.addFragment(new SuggestContentFragment(),"Suggest Content Fragment");
-		
 		vpMain.get().setAdapter(vpMainAdapter);
 		vpMain.get().setCurrentItem(2);
 	}
