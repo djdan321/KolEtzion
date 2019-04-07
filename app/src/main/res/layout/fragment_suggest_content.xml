@@ -11,16 +11,15 @@
         android:id="@+id/button"
         android:layout_width="96dp"
         android:layout_height="43dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/custom_button2"
+        android:layout_marginTop="16dp"
 
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/custom_button2"
         android:text="בחר תמונה"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/guideline5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline4"
-        app:layout_constraintVertical_bias="0.207" />
+        app:layout_constraintEnd_toEndOf="@+id/etSuggest"
+        app:layout_constraintTop_toTopOf="@+id/guideline4" />
 
     <ImageView
         android:id="@+id/ivSuggestedContent"
@@ -31,7 +30,7 @@
         android:src="@drawable/broadcastpost"
         app:layout_constraintBottom_toTopOf="@+id/guideline5"
         app:layout_constraintTop_toTopOf="@+id/guideline4"
-        tools:layout_editor_absoluteX="22dp" />
+        tools:layout_editor_absoluteX="40dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"
@@ -79,7 +78,6 @@
         android:hint="כתוב כאן"
         android:inputType="textMultiLine"
         android:textAlignment="center"
-        android:textColor="@color/blackTrans"
         app:layout_constraintBottom_toTopOf="@+id/guideline6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -90,16 +88,18 @@
         android:layout_width="134dp"
         android:layout_height="45dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="36dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/custom_button2"
+        android:layout_marginBottom="16dp"
 
+        android:background="@drawable/custom_button2"
         android:text="העלה"
         android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline6" />
+        app:layout_constraintTop_toTopOf="@+id/guideline6"
+        app:layout_constraintVertical_bias="1.0" />
 
 
     <androidx.constraintlayout.widget.Guideline
