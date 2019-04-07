@@ -39,7 +39,7 @@
 
     <TextView
         android:id="@+id/tvSuggestContent"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
@@ -49,7 +49,6 @@
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvPersonalName" />
 
@@ -99,7 +98,7 @@
         app:layout_constraintVertical_bias="0.8" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvChangeImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
