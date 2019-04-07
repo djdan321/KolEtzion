@@ -16,16 +16,20 @@ public class BitmapSerializer {
 	
 	public static String encodeBitmapToString(Bitmap bitmap) {
 		ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
-		int i = 50;
-		bitmap.compress(Bitmap.CompressFormat.JPEG, i, byteArrayOS);
+		float i = 50;
+		bitmap.compress(Bitmap.CompressFormat.JPEG, (int)i, byteArrayOS);
 		for (int j = 1; j < 10; j++) {
-			if (bitmap.getByteCount() == 700000) {
-				bitmap.compress(Bitmap.CompressFormat.JPEG, i, byteArrayOS);
-			} else if (bitmap.getByteCount() > 700000) {
-				bitmap.compress(Bitmap.CompressFormat.JPEG, (i /= (2 / j)), byteArrayOS);
-			} else if (bitmap.getByteCount() < 700000) {
-				bitmap.compress(Bitmap.CompressFormat.JPEG, (i *= (2 / j)), byteArrayOS);
+			if (bitmap.getAllocationByteCount() == 700000) {
+				bitmap.compress(Bitmap.CompressFormat.JPEG, (int) Math.ceil(i), byteArrayOS);
+				System.out.println("equals");
+			} else if (bitmap.getAllocationByteCount() > 700000) {
+				bitmap.compress(Bitmap.CompressFormat.JPEG, (int) Math.ceil(i /= (2f * j)), byteArrayOS);
+				System.out.println("large");
+			} else if (bitmap.getAllocationByteCount() < 700000) {
+				bitmap.compress(Bitmap.CompressFormat.JPEG, (int) Math.ceil(i *= (2f / j)), byteArrayOS);
+				System.out.println("small");
 			}
+			System.out.println(bitmap.getAllocationByteCount());
 		}
 		return Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT);
 	}
