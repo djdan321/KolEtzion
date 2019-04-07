@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import edu.etzion.koletzion.MainActivity;
 import edu.etzion.koletzion.R;
+import edu.etzion.koletzion.player.VodDataSource;
 
 public class AuthenticationActivity extends AppCompatActivity {
 	

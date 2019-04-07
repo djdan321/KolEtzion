@@ -114,10 +114,13 @@ public class RegisterFragment extends Fragment implements Button.OnClickListener
 		} else if (password.length() < 6) {
 			etRegisterPassword.setError("על הסיסמא להיות לפחות 6 אותיות או ספרות");
 			etRegisterPassword.requestFocus();
-		} else if (!match) {
+		} else if (!etRegisterPassword.getText().toString().
+				equals(etRegisterConfirmPassword.getText().toString())) {
+			match = false;
 			etRegisterConfirmPassword.setError("סיסמאות לא תואמות, נסה שנית");
 			etRegisterConfirmPassword.requestFocus();
 		} else {
+			match = true;
 			createUser(email, name, lastName, password);
 		}
 	}

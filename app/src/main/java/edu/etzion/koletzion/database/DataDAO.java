@@ -1,18 +1,5 @@
 package edu.etzion.koletzion.database;
 
-import android.annotation.SuppressLint;
-import android.os.AsyncTask;
-import android.util.Log;
-
-import com.cloudant.client.api.ClientBuilder;
-import com.cloudant.client.api.CloudantClient;
-import com.cloudant.client.api.Database;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
 import edu.etzion.koletzion.models.BroadcastPost;
 import edu.etzion.koletzion.models.Profile;
 import edu.etzion.koletzion.models.SuggestedContent;
