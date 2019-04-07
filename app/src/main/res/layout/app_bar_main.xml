@@ -22,7 +22,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@drawable/grad4"
+            android:background="@drawable/grad"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
 
@@ -34,6 +34,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 app:srcCompat="@drawable/audio"
+
                 android:layout_alignParentEnd="true"
                 android:layout_gravity="end"
                 android:layout_marginEnd="8dp"/>

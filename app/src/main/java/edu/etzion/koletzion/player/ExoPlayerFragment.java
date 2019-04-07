@@ -41,7 +41,7 @@ public class ExoPlayerFragment extends Fragment {
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		//class level instances
 		playerView = view.findViewById(R.id.pvPlayer);
-		tvFileName = view.findViewById(R.id.exo_name);
+//		tvFileName = view.findViewById(R.id.exo_name);
 		//instantiate exoplayer
 		player = ExoPlayerFactory.newSimpleInstance(getContext());
 		
