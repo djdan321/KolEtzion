@@ -59,7 +59,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		setContentView(R.layout.activity_main);
 		setSupportActionBar(toolbar);
 
+
 //		moodPopUp();
+
 		main();
 		// Enable Notification Channel for Android OREO
 //		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
