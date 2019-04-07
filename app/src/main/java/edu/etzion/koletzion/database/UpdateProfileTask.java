@@ -33,9 +33,9 @@ public class UpdateProfileTask extends AsyncTask<Void, Void, Void> {
 				.username(PROFILES_API_KEY)
 				.password(PROFILES_API_SECRET)
 				.build();
-		
+	
 		Database db = client.database(PROFILES_DB, false);
-		db.update(profile);
+		db.update(profile.get());
 		return null;
 	}
 }

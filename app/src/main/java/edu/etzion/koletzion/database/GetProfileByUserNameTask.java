@@ -1,6 +1,7 @@
 package edu.etzion.koletzion.database;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.cloudant.client.api.ClientBuilder;
 import com.cloudant.client.api.CloudantClient;
@@ -21,6 +22,7 @@ public class GetProfileByUserNameTask extends AsyncTask<Void, Void, Profile> {
 	Runnable postExecuteRunnable;
 	WeakReference<String> userNameWeakRef;
 	RunWithProfile listener;
+	
 	public GetProfileByUserNameTask(String userName) {
 		this.userNameWeakRef = new WeakReference<>(userName);
 	}
@@ -51,15 +53,17 @@ public class GetProfileByUserNameTask extends AsyncTask<Void, Void, Profile> {
 				"      \"username\": \"" + userName + "\"\n" +
 				"   }\n" +
 				"}", Profile.class);
+		Log.d("sas", "doInBackground: " + list.size());
+		if (list.size() == 0) return null;
 		return list.get(list.size() - 1);
 	}
 	
 	@Override
 	protected void onPostExecute(Profile profile) {
-		if (postExecuteRunnable != null) {
+		if (postExecuteRunnable != null && profile != null) {
 			postExecuteRunnable.run();
 		}
-		if(listener != null){
+		if (listener != null && profile != null) {
 			listener.run(profile);
 		}
 	}

@@ -196,13 +196,10 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
 	}
 	
 	private void updateFavorites(Profile profile, ViewHolder holder, int position) {
-		new UpdateProfileTask(profile, () -> {
-			new GetProfileByUserNameTask(profile.get_id(), () -> {
-				favoritesToggleListener(holder, position);
-				likeToggleListener(holder, position);
-				commentListener(holder, position);
-			}).execute();
-		}).execute();
+		
+		
+			new UpdateProfileTask(profile).execute();
+		
 	}
 	
 	private void likeToggleListener(@NonNull ViewHolder holder, int position) {

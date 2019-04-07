@@ -23,7 +23,6 @@ import edu.etzion.koletzion.R;
 public class ExoPlayerFragment extends Fragment {
 	public SimpleExoPlayer player;
 	PlayerView playerView;
-	TextView tvFileName;
 	final static String APP_PATH = "http://be.repoai.com:5080/WebRTCAppEE/";
 	
 	public void stopPlayer() {
@@ -41,7 +40,6 @@ public class ExoPlayerFragment extends Fragment {
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		//class level instances
 		playerView = view.findViewById(R.id.pvPlayer);
-//		tvFileName = view.findViewById(R.id.exo_name);
 		//instantiate exoplayer
 		player = ExoPlayerFactory.newSimpleInstance(getContext());
 		
@@ -57,8 +55,6 @@ public class ExoPlayerFragment extends Fragment {
 		if (player != null && player.getPlaybackState() == 3) player.stop(true);
 		// Produces DataSource instances through which media data is loaded.
 		Uri audioUri = Uri.parse(APP_PATH + filePath);
-		tvFileName.setText(filePath.substring(13, filePath.length() - 4).
-				replaceAll("_", " "));
 		
 		ExtractorMediaSource audioSource =
 				new ExtractorMediaSource.Factory(

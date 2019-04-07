@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.lang.ref.WeakReference;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
@@ -98,7 +99,7 @@ public class PersonalAreaFragment extends Fragment {
 	
 	private void displayMyFeed() {
 		new GetProfileByUserNameTask(FirebaseAuth.getInstance().getCurrentUser().getEmail(), () -> {
-			new VodDataSource(rv, profile, false).execute();
+			new VodDataSource(new WeakReference<>(rv), profile, false).execute();
 		}).execute();
 	}
 	
