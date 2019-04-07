@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity
 		setSupportActionBar(toolbar);
 		// Enable Notification Channel for Android OREO
 		
-		
+
 		main();
 		
 		ContextCompat.startForegroundService(this,
