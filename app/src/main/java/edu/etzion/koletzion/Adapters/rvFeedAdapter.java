@@ -306,20 +306,8 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
 		}).execute();
 	}
 	
-	private void updateComment(BroadcastPost broadcastPost, @NonNull ViewHolder holder, int position) {
-		new UpdatePostTask(broadcastPost, () -> {
-			new GetBroadcastPostByIdTask(broadcastPost.get_id(), () -> {
-				List<Profile> likes = broadcastPost.getLikes();
-				for (int i = 0; i < likes.size(); i++) {
-					if (likes.get(i).getUsername().
-							equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())) {
-						removeLike(broadcastPost, holder, position, i);
-						return;
-					}
-				}
-				addLike(broadcastPost, holder, position);
-			}).execute();
-		}).execute();
+	private void updateComment(BroadcastPost broadcastPost, @NonNull RecyclerView.ViewHolder holder, int position) {
+		new UpdatePostTask(broadcastPost).execute();
 	}
 	
 	private void commentsCountListener(@NonNull ViewHolder holder, int position) {
