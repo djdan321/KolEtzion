@@ -6,12 +6,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import edu.etzion.koletzion.R;
 import edu.etzion.koletzion.database.BitmapSerializer;
+import edu.etzion.koletzion.database.WriteProfileTask;
 import edu.etzion.koletzion.models.BroadcastPost;
 import edu.etzion.koletzion.models.Profile;
 
@@ -34,9 +37,7 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.LikeViewHolder
 	public void onBindViewHolder(@NonNull LikeViewHolder holder, int position) {
 		Profile p = likes.get(position);
 		holder.tvLikeName.setText(p.getFirstName() + " " + p.getLastName());
-		holder.ivLike.setImageBitmap(BitmapSerializer.decodeStringToBitmap(
-				likes.get(position).getEncodedBitMapImage()
-		));
+		Picasso.get().load(likes.get(position).getImgUrl()).into(holder.ivLike);
 	}
 	
 	@Override

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.squareup.picasso.Picasso;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -31,6 +32,7 @@ import edu.etzion.koletzion.authentication.AuthenticationActivity;
 import edu.etzion.koletzion.database.BitmapSerializer;
 import edu.etzion.koletzion.database.GetProfileByUserNameTask;
 import edu.etzion.koletzion.database.UpdateProfileTask;
+import edu.etzion.koletzion.database.UploadToImgurTask;
 import edu.etzion.koletzion.models.Profile;
 import edu.etzion.koletzion.on_back_pressed_listener.BaseBackPressedListener;
 import edu.etzion.koletzion.player.VodDataSource;
@@ -113,9 +115,7 @@ public class PersonalAreaFragment extends Fragment {
 		setClickListeners();
 		if (getArguments() == null) return;
 		profile = getArguments().getParcelable("profile");
-		imagePersonalArea.
-				setImageBitmap(BitmapSerializer.
-						decodeStringToBitmap(profile.getEncodedBitMapImage()));
+		Picasso.get().load(profile.getImgUrl()).into(imagePersonalArea);
 		view.findViewById(R.id.tvChangeImage).setOnClickListener((v -> {
 			Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
 			photoPickerIntent.setType("image/*");
@@ -161,16 +161,11 @@ public class PersonalAreaFragment extends Fragment {
 				final InputStream imageStream = activity.getContentResolver().openInputStream(imageUri);
 				final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
 				imagePersonalArea.setImageBitmap(selectedImage);
-				profile.setEncodedBitMapImage(BitmapSerializer.
-						encodeBitmapToString(BitmapSerializer.
-								getBitmapFromImageView(imagePersonalArea)));
-				new GetProfileByUserNameTask(FirebaseAuth.getInstance().getCurrentUser().getEmail(),
-						p -> {
-							profile.setEncodedBitMapImage(BitmapSerializer.encodeBitmapToString(
-									BitmapSerializer.
-											getBitmapFromImageView(imagePersonalArea)));
-							new UpdateProfileTask(p).execute();
-						});
+				new UploadToImgurTask(BitmapSerializer.encodeBitmapToString(BitmapSerializer.
+						getBitmapFromImageView(imagePersonalArea)), (link) -> {
+					profile.setImgUrl(link);
+					new UpdateProfileTask(profile).execute();
+				}).execute();
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			} catch (NullPointerException e) {

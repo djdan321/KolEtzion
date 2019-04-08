@@ -32,7 +32,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
-//	ArrayList<Profile> broadcasters = new ArrayList<>();
+//	ArrayList<Profile> broadcasters; = new ArrayList<>();
 	private boolean isMainFeed;
 	private RecyclerView rv;
 	private Profile profile;
@@ -146,13 +146,13 @@ public class VodDataSource extends AsyncTask<Void, Void, List<Object>> {
 
 //			 these are fictive lists and will be original when the admin will upload the files directly to our app.
 //			 they are nessecery for the instance so i made them
-				
-				
+
+
 				List<Profile> broadcasters = new ArrayList<>();
 				List<Profile> listeners = new ArrayList<>();
 				List<Comment> comments = new ArrayList<>();
 				List<Profile> likes = new ArrayList<>();
-				
+
 				BroadcastPost broadcastPost = new BroadcastPost(
 						BroadcastCategory.MUSIC,
 						"description will be added",

@@ -28,9 +28,13 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import edu.etzion.koletzion.Fragments.MainViewPagerFragment;
 import edu.etzion.koletzion.Fragments.MoodFragment;
 import edu.etzion.koletzion.authentication.AuthenticationActivity;
+import edu.etzion.koletzion.database.BitmapSerializer;
+import edu.etzion.koletzion.database.UploadToImgurTask;
+import edu.etzion.koletzion.database.WriteProfileTask;
 import edu.etzion.koletzion.on_back_pressed_listener.OnBackPressedListener;
 import edu.etzion.koletzion.player.ExoPlayerFragment;
 import edu.etzion.koletzion.player.StartLiveStreamTask;
+import edu.etzion.koletzion.player.VodDataSource;
 import edu.etzion.koletzion.push_notification.PushNotificationReceiver;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -44,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 	public ExoPlayerFragment playerFragment;
 	public FrameLayout frame;
 	private Toolbar toolbar;
-	private DrawerLayout drawer;
 	protected OnBackPressedListener onBackPressedListener;
 	
 	private SharedPreferences sp;
@@ -58,11 +61,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		setSupportActionBar(toolbar);
-
-
 //		moodPopUp();
-
 		main();
+		
 		// Enable Notification Channel for Android OREO
 //		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 //			startForegroundService(new Intent(this, ForegroundService.class));

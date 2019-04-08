@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,23 +14,19 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.cloudant.client.api.ClientBuilder;
-import com.cloudant.client.api.CloudantClient;
-import com.cloudant.client.api.Database;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import edu.etzion.koletzion.R;
-import edu.etzion.koletzion.database.DataDAO;
+import edu.etzion.koletzion.database.BitmapSerializer;
 import edu.etzion.koletzion.database.GetProfileByUserNameTask;
-import edu.etzion.koletzion.database.WriteSuggestedContentTask;
+import edu.etzion.koletzion.database.UploadToImgurTask;
 import edu.etzion.koletzion.models.Profile;
 import edu.etzion.koletzion.models.SuggestedContent;
 
@@ -88,8 +82,12 @@ public class SuggestContentFragment extends Fragment {
 		new GetProfileByUserNameTask(FirebaseAuth.getInstance().getCurrentUser().getEmail(), new Runnable() {
 			@Override
 			public void run() {
-				new WriteSuggestedContentTask(new SuggestedContent(
-						profile, etSuggest.getText().toString()));
+				SuggestedContent sc = new SuggestedContent(profile, etSuggest.getText().toString());
+				new UploadToImgurTask(BitmapSerializer.encodeBitmapToString(
+						BitmapSerializer.getBitmapFromImageView(imageView)
+				), (link) -> {
+					sc.setImgUrl(link);
+				}).execute();
 			}
 		});
 	}

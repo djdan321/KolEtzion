@@ -12,7 +12,7 @@ public class Profile implements Parcelable , Comparable<Profile> {
     private String username; // from current user.
     private String firstName;
     private String lastName;
-    private String encodedBitMapImage;
+    private String imgUrl;
     private boolean isBroadcaster;
     private List<BroadcastPost> relatedPosts;
     private long timeStamp;
@@ -54,10 +54,9 @@ public class Profile implements Parcelable , Comparable<Profile> {
 
     // Getters
     
-    public String getEncodedBitMapImage() {
-        return encodedBitMapImage;
+    public String getImgUrl() {
+        return imgUrl;
     }
-    
     public String get_id() {
         return _id;
     }
@@ -86,8 +85,8 @@ public class Profile implements Parcelable , Comparable<Profile> {
     
     
     // Setters
-    public void setEncodedBitMapImage(String encodedBitMapImage) {
-        this.encodedBitMapImage = encodedBitMapImage;
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
     public void setUsername(String username) {
@@ -119,7 +118,7 @@ public class Profile implements Parcelable , Comparable<Profile> {
                 ", username='" + username + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", encodedBitMapImage='" + encodedBitMapImage + '\'' +
+                ", imgUrl='" + imgUrl + '\'' +
                 ", isBroadcaster=" + isBroadcaster +
                 ", relatedPosts=" + relatedPosts +
                 ", timeStamp=" + timeStamp +

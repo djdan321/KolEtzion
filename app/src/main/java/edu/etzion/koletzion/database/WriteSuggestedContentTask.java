@@ -17,7 +17,7 @@ public class WriteSuggestedContentTask extends AsyncTask<Void, Void, Void> {
 	private final String SC_API_SECRET = "b873ae0e2398ad46034ed603fe12c721c1b90b5b";
 	private final String SC_DB = "suggested_content";
 	private final String DB_USER_NAME = "41c99d88-3264-4be5-b546-ff5a5be07dfb-bluemix";
-	WeakReference<SuggestedContent> sc;
+	private WeakReference<SuggestedContent> sc;
 	
 	public WriteSuggestedContentTask(SuggestedContent sc) {
 		this.sc = new WeakReference<>(sc);

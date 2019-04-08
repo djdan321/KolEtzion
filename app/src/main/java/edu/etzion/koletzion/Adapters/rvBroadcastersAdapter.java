@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -41,9 +43,7 @@ public class rvBroadcastersAdapter extends RecyclerView.Adapter<rvBroadcastersAd
 	public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 		holder.tvBroadcaster.setText(broadcasters.get(position).getFirstName() + " " + broadcasters.get(position).getLastName());
 		
-		holder.ivBroadcaster.setImageBitmap(BitmapSerializer.decodeStringToBitmap(
-				broadcasters.get(position).getEncodedBitMapImage()
-		));
+		Picasso.get().load(broadcasters.get(position).getImgUrl()).into(holder.ivBroadcaster);
 		
 		holder.itemView.setOnClickListener((v) -> {
 			AppCompatActivity activity = (AppCompatActivity) v.getContext();
