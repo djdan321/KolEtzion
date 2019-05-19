@@ -101,7 +101,7 @@ public class rvFeedAdapter extends RecyclerView.Adapter<rvFeedAdapter.ViewHolder
 			holder.tvPostHeader.setText(name);
 			
 			holder.tvPostDuration.setText(broadcastPost.getDurationString());
-			holder.tvLikesCount.setText(broadcastPost.getLikes().size() + " לייקים");
+			holder.tvLikesCount.setText("" + broadcastPost.getLikes().size());
 			holder.tvCommentsCount.setText(broadcastPost.getComments().size() + " תגובות");
 			holder.tvListenersCount.setText(String.valueOf(broadcastPost.getListeners().size()));
 			// playing the broadcast

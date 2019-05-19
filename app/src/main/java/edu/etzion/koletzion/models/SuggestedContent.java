@@ -5,6 +5,7 @@ public class SuggestedContent {
     private String _rev;
     private Profile profile;
     private String content;
+    private String imgUrl;
     private long timeStamp;
 
     //Constructors
@@ -25,7 +26,15 @@ public class SuggestedContent {
     }
 
     // Getters
-
+    
+    public String getImgUrl() {
+        return imgUrl;
+    }
+    
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+    
     public String get_id() {
         return _id;
     }

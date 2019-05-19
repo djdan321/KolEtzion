@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -136,6 +137,8 @@ public class RegisterFragment extends Fragment implements Button.OnClickListener
 						//creating a new profile and saving to the server.
 						List<BroadcastPost> relatedBroadcasts = new ArrayList<>();
 						Profile profile = new Profile(email, firstName, lastName, false, relatedBroadcasts, false, Profile.MOOD_NONE);
+						profile.setTimeStamp(new Date().getTime());
+						profile.setImgUrl("https://i.imgur.com/llxWkBj.png");
 						DataDAO.getInstance().writeMyProfile(profile);
 						// Sign in success, update UI with the signed-in user's information
 						startActivity(new Intent(getContext(), MainActivity.class));
